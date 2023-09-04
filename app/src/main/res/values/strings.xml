@@ -1,0 +1,39 @@
+<resources>
+    <string name="app_name">TempleKiosk</string>
+    <string name="make_a_donation">MAKE A DONATION</string>
+    <string name="english">English</string>
+    <string name="malayalam">മലയാളം</string>
+    <string name="tamil">தமிழ்</string>
+    <string name="kannada">ಕನ್ನಡ</string>
+    <string name="telugu">తెలుగు</string>
+    <string name="hindi">हिन्दी</string>
+
+    <string-array name="vazhipaduCategory">
+        <item>All</item>
+        <item>Kanika</item>
+        <item>Pushpanjali</item>
+        <item>Nivedyam</item>
+        <item>Archana</item>
+        <item>Seva</item>
+        <item>Pooja</item>
+        <item>Charthu</item>
+        <item>Dhara</item>
+        <item>Abhishekam</item>
+    </string-array>
+
+    <string-array name="vazhipaduItem">
+        <item>Aayursooktha Pushpanjali</item>
+        <item>Abhishekam</item>
+        <item>Ada Nivedhyam</item>
+        <item>Appa Nivedhyam</item>
+        <item>Bhagavath Seva</item>
+        <item>Chandhanam Charthal</item>
+        <item>Dhara</item>
+        <item>Noorum Paalum</item>
+        <item>Para</item>
+        <item>Pushpanjali</item>
+        <item>Rudrabhishekam</item>
+        <item>Vishnu Pooja</item>
+    </string-array>
+
+</resources>
