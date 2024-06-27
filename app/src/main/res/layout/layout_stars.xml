@@ -1,0 +1,399 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_weight="1.1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:layout_marginStart="22dp"
+            android:layout_marginTop="10dp">
+
+            <TextView
+                android:id="@+id/Ashwini"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:text="Ashwini"
+                android:gravity="center"
+                android:textColor="@color/black"
+                android:background="@drawable/textview_board"/>
+
+            <TextView
+                android:id="@+id/Bharani"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:text="Bharani"
+                android:gravity="center"
+                android:textColor="@color/black"
+                android:background="@drawable/textview_board"/>
+
+            <TextView
+                android:id="@+id/Krittika"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:text="Krittika"
+                android:gravity="center"
+                android:textColor="@color/black"
+                android:background="@drawable/textview_board"/>
+
+            <TextView
+                android:id="@+id/Rohini"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:text="Rohini"
+                android:gravity="center"
+                android:textColor="@color/black"
+                android:background="@drawable/textview_board"/>
+
+            <TextView
+                android:id="@+id/Mrigashirsha"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:text="Mrigashirsha"
+                android:gravity="center"
+                android:textColor="@color/black"
+                android:background="@drawable/textview_board"/>
+
+            <TextView
+                android:id="@+id/Ardra"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:text="Ardra"
+                android:gravity="center"
+                android:textColor="@color/black"
+                android:background="@drawable/textview_board"/>
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:layout_marginStart="22dp"
+            android:layout_marginTop="10dp">
+
+            <TextView
+                android:id="@+id/Punarvasu"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:text="Punarvasu"
+                android:gravity="center"
+                android:textColor="@color/black"
+                android:background="@drawable/textview_board"/>
+
+            <TextView
+                android:id="@+id/Pushya"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:text="Pushya"
+                android:gravity="center"
+                android:textColor="@color/black"
+                android:background="@drawable/textview_board"/>
+
+            <TextView
+                android:id="@+id/Ashlesha"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:text="Ashlesha"
+                android:gravity="center"
+                android:textColor="@color/black"
+                android:background="@drawable/textview_board"/>
+
+            <TextView
+                android:id="@+id/Magha"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:text="Magha"
+                android:gravity="center"
+                android:textColor="@color/black"
+                android:background="@drawable/textview_board"/>
+
+            <TextView
+                android:id="@+id/PurvaPhalguni"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:text="Purva Phalguni"
+                android:gravity="center"
+                android:textColor="@color/black"
+                android:background="@drawable/textview_board"/>
+
+            <TextView
+                android:id="@+id/UttaraPhalguni"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:text="Uttara Phalguni"
+                android:gravity="center"
+                android:textColor="@color/black"
+                android:background="@drawable/textview_board"/>
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:layout_marginStart="22dp"
+            android:layout_marginTop="10dp">
+
+            <TextView
+                android:id="@+id/Hasta"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:text="Hasta"
+                android:gravity="center"
+                android:textColor="@color/black"
+                android:background="@drawable/textview_board"/>
+
+            <TextView
+                android:id="@+id/Chitra"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:text="Chitra"
+                android:gravity="center"
+                android:textColor="@color/black"
+                android:background="@drawable/textview_board"/>
+
+            <TextView
+                android:id="@+id/Swati"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:text="Swati"
+                android:gravity="center"
+                android:textColor="@color/black"
+                android:background="@drawable/textview_board"/>
+
+            <TextView
+                android:id="@+id/Vishaka"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:text="Vishaka"
+                android:gravity="center"
+                android:textColor="@color/black"
+                android:background="@drawable/textview_board"/>
+
+            <TextView
+                android:id="@+id/Anuradha"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:text="Anuradha"
+                android:gravity="center"
+                android:textColor="@color/black"
+                android:background="@drawable/textview_board"/>
+
+            <TextView
+                android:id="@+id/Jyeshta"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:text="Jyeshta"
+                android:gravity="center"
+                android:textColor="@color/black"
+                android:background="@drawable/textview_board"/>
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:layout_marginStart="22dp"
+            android:layout_marginTop="10dp">
+
+            <TextView
+                android:id="@+id/Moola"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:text="Moola"
+                android:gravity="center"
+                android:textColor="@color/black"
+                android:background="@drawable/textview_board"/>
+
+            <TextView
+                android:id="@+id/PurvaAshadha"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:text="Purva Ashadha"
+                android:gravity="center"
+                android:textColor="@color/black"
+                android:background="@drawable/textview_board"/>
+
+            <TextView
+                android:id="@+id/UttaraAshada"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:text="Uttara Ashada"
+                android:gravity="center"
+                android:textColor="@color/black"
+                android:background="@drawable/textview_board"/>
+
+            <TextView
+                android:id="@+id/Shravana"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:text="Shravana"
+                android:gravity="center"
+                android:textColor="@color/black"
+                android:background="@drawable/textview_board"/>
+
+            <TextView
+                android:id="@+id/Dhanistha"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:text="Dhanistha"
+                android:gravity="center"
+                android:textColor="@color/black"
+                android:background="@drawable/textview_board"/>
+
+            <TextView
+                android:id="@+id/Shatabhisaa"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:text="Shatabhisaa"
+                android:gravity="center"
+                android:textColor="@color/black"
+                android:background="@drawable/textview_board"/>
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:layout_marginStart="22dp"
+            android:layout_marginTop="10dp">
+
+            <TextView
+                android:id="@+id/PurvaBhadrapada"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:text="Purva Bhadrapada"
+                android:gravity="center"
+                android:textColor="@color/black"
+                android:background="@drawable/textview_board"/>
+
+            <TextView
+                android:id="@+id/UttaraBhadrapada"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:text="Uttara Bhadrapada"
+                android:gravity="center"
+                android:textColor="@color/black"
+                android:background="@drawable/textview_board"/>
+
+            <TextView
+                android:id="@+id/Revati"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:text="Revati"
+                android:gravity="center"
+                android:textColor="@color/black"
+                android:background="@drawable/textview_board"/>
+
+            <TextView
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:gravity="center"
+                android:visibility="invisible"
+                android:textColor="@color/black"
+                android:background="@drawable/textview_board"/>
+
+            <TextView
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:gravity="center"
+                android:visibility="invisible"
+                android:textColor="@color/black"
+                android:background="@drawable/textview_board"/>
+
+            <TextView
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:gravity="center"
+                android:visibility="invisible"
+                android:textColor="@color/black"
+                android:background="@drawable/textview_board"/>
+
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+
+</LinearLayout>

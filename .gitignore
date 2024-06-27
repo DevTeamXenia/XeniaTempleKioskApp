@@ -1,25 +1,15 @@
-# NodeModules
-node_modules/
-
-# Image Folder
-assets/
-
-# Environment variables file
-.env
-
-# Log files
-logs/
-*.log
-
-# IDE and editor files
-.idea/
-.vscode/
-*.sublime-project
-*.sublime-workspace
-
-# OS generated files
+*.iml
+.gradle
+/local.properties
+/.idea/caches
+/.idea/libraries
+/.idea/modules.xml
+/.idea/workspace.xml
+/.idea/navEditor.xml
+/.idea/assetWizardSettings.xml
 .DS_Store
-Thumbs.db
-
-# npm debugging log file
-npm-debug.log*
+/build
+/captures
+.externalNativeBuild
+.cxx
+local.properties
