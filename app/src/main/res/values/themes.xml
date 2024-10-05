@@ -5,4 +5,11 @@
     </style>
 
     <style name="Theme.TempleKiosk" parent="Base.Theme.TempleKiosk" />
+
+    <style name="CustomAlertDialogTheme" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="android:windowMinWidthMajor">90%</item>
+        <item name="android:windowMinWidthMinor">90%</item>
+        <item name="android:colorBackground">#FFFFFF</item>
+    </style>
+
 </resources>

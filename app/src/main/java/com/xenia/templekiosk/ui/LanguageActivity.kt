@@ -4,27 +4,35 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.RelativeLayout
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import com.xenia.templekiosk.R
+import com.xenia.templekiosk.databinding.ActivityLanguageBinding
 
 class LanguageActivity : AppCompatActivity() {
 
-    private lateinit var cardEnglish : RelativeLayout
+    private lateinit var binding: ActivityLanguageBinding
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_language)
 
-        cardEnglish = findViewById(R.id.card_en)
+        binding = ActivityLanguageBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        cardEnglish.setOnClickListener {
-            startActivity(Intent(applicationContext, HomeActivity::class.java))
+
+        Glide.with(this)
+            .asGif()
+            .load(R.drawable.bg_home)
+            .apply(RequestOptions().fitCenter())
+            .into(binding.imgBackground)
+
+        binding.cardEn.setOnClickListener {
+            startActivity(Intent(applicationContext,HomeActivity::class.java))
         }
 
 
     }
 
-    override fun onBackPressed() {
-        finishAffinity()
-    }
+
 }

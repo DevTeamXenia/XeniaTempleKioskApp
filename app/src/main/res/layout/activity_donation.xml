@@ -46,39 +46,10 @@
         <Space
             android:id="@+id/space_left"
             android:layout_width="wrap_content"
-            android:layout_height="20dp"
+            android:layout_height="1dp"
             android:layout_centerInParent="true"
             tools:ignore="DuplicateIds" />
 
-        <RelativeLayout
-            android:id="@+id/left_language"
-            android:layout_width="300dp"
-            android:layout_height="100dp"
-            android:layout_below="@+id/space_left"
-            android:layout_centerInParent="true"
-            android:background="@drawable/language_card_backgorund">
-
-            <ImageView
-                android:layout_width="20dp"
-                android:layout_height="18dp"
-                android:layout_centerVertical="true"
-                android:layout_marginEnd="15dp"
-                android:layout_toLeftOf="@+id/txt_language"
-                android:scaleType="fitEnd"
-
-                android:src="@drawable/ic_language" />
-
-            <TextView
-                android:id="@+id/txt_language"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:fontFamily="@font/poppins_regular"
-                android:text="Language"
-                android:textColor="@color/primaryColor"
-                android:textSize="16sp" />
-
-        </RelativeLayout>
 
         <ImageView
             android:layout_width="match_parent"
@@ -108,7 +79,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Fill out your details for Donation"
+                android:text="@string/fill_out_your_details"
                 android:layout_gravity="center_horizontal"
                 android:textColor="@color/secondaryColor"
                 android:gravity="center_horizontal"
@@ -120,7 +91,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Donation Amount"
+                android:text="@string/donation_amount"
                 android:textSize="20sp"
                 android:layout_marginTop="10dp"
                 android:layout_marginStart="22dp"
@@ -139,7 +110,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="80dp"
                     android:layout_marginEnd="30dp"
-                    android:hint="₹10,000"
+                    android:hint="@string/_10_000"
                     android:paddingEnd="7dp"
                     android:layout_marginStart="22dp"
                     android:textSize="30sp"
@@ -147,7 +118,8 @@
                     android:inputType="phone"
                     android:textAlignment="textEnd"
                     android:textColor="@color/black"
-                    android:background="@drawable/textview_board"/>
+                    android:background="@drawable/textview_board"
+                    tools:ignore="RtlSymmetry" />
 
                 <Button
                     android:id="@+id/btn_pay"
@@ -159,9 +131,10 @@
                     android:layout_marginStart="22dp"
                     android:textSize="30sp"
                     android:maxLength="7"
-                    android:text="PAY"
+                    android:text="@string/pay"
                     android:textColor="@color/white"
-                    android:background="@drawable/textview_board"/>
+                    android:background="@drawable/textview_board"
+                    tools:ignore="RtlSymmetry" />
 
             </LinearLayout>
 
@@ -188,7 +161,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="22dp"
-                        android:text="Phone Number"
+                        android:text="@string/phone_number"
                         android:textColor="@color/black"
                         android:fontFamily="@font/poppins_regular"
                         android:textSize="18sp"
@@ -225,7 +198,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_centerVertical="true"
                                 android:layout_marginStart="10dp"
-                                android:text="+91"
+                                android:text="@string/_91"
                                 android:fontFamily="@font/poppins_regular"
                                 android:textSize="18sp"
                                 android:textColor="@color/black"
@@ -235,7 +208,7 @@
 
 
                         <EditText
-                            android:layout_toRightOf="@+id/phone_area"
+                            android:layout_toEndOf="@+id/phone_area"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="2dp"
@@ -262,7 +235,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="22dp"
-                        android:text="Name"
+                        android:text="@string/name"
                         android:textColor="@color/black"
                         android:fontFamily="@font/poppins_regular"
                         android:textSize="18sp"
@@ -294,7 +267,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Select Your Janma Nakshatra"
+                    android:text="@string/select_your_janma_nakshatra"
                     android:textSize="20sp"
                     android:layout_marginStart="22dp"
                     android:textColor="@color/black"

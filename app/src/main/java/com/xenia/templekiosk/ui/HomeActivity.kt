@@ -1,38 +1,34 @@
 package com.xenia.templekiosk.ui
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.RelativeLayout
-import androidx.cardview.widget.CardView
-import com.xenia.templekiosk.R
+import androidx.appcompat.app.AppCompatActivity
+import com.xenia.templekiosk.databinding.ActivityHomeBinding
 
 class HomeActivity : AppCompatActivity() {
 
-    private lateinit var cardDonation : CardView
-    private lateinit var cardVazhipadu : CardView
-    private lateinit var cardLanguage : RelativeLayout
+    private lateinit var binding: ActivityHomeBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_home)
+        binding = ActivityHomeBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        cardDonation = findViewById(R.id.card_donation)
-        cardVazhipadu = findViewById(R.id.card_Vazhipadu)
-        cardLanguage = findViewById(R.id.home_left_language)
+        binding.imgMelkavu.setOnClickListener { startDonationActivity("Melkavu") }
+        binding.imgKeezhkavu.setOnClickListener { startDonationActivity("Keezhkavu") }
+        binding.imgShiva.setOnClickListener { startDonationActivity("shiva") }
+        binding.imgAyyappa.setOnClickListener { startDonationActivity("Ayyappa") }
 
-
-        cardDonation.setOnClickListener {
-            startActivity(Intent(applicationContext, DonationActivity::class.java))
+        binding.leftHome.setOnClickListener {
+            startActivity(Intent(applicationContext,LanguageActivity::class.java))
+            finish()
         }
+    }
 
-        cardVazhipadu.setOnClickListener {
-            startActivity(Intent(applicationContext, VazhipaduActivity::class.java))
-        }
 
-        cardLanguage.setOnClickListener {
-            startActivity(Intent(applicationContext, LanguageActivity::class.java))
-        }
-
+    private fun startDonationActivity(key: String) {
+        val intent = Intent(this, DonationActivity::class.java)
+        intent.putExtra("KEY", key)
+        startActivity(intent)
     }
 }

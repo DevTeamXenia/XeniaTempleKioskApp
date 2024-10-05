@@ -7,8 +7,8 @@ import android.os.Handler
 import android.widget.Button
 import android.widget.TextView
 import com.xenia.templekiosk.R
-import com.xenia.templekiosk.data.common.DialogUtils
-import com.xenia.templekiosk.data.common.Screen
+import com.xenia.templekiosk.common.DialogUtils
+import com.xenia.templekiosk.common.Screen
 
 class SummaryActivity : AppCompatActivity() {
 
@@ -28,7 +28,7 @@ class SummaryActivity : AppCompatActivity() {
         }
 
         btnPay.setOnClickListener {
-            DialogUtils.showQRPayPopup(this,"maheshmohan7319@okaxis","100",Screen.VazhipaduAreaScreen )
+            DialogUtils.showQRPayPopup(this,"maheshmohan7319@okaxis","100", Screen.VazhipaduAreaScreen )
         }
 
     }

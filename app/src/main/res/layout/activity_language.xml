@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -10,21 +9,30 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:baselineAligned="false"
         android:orientation="horizontal">
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@drawable/main_background">
+            android:layout_weight="2.8">
+
+            <ImageView
+                android:id="@+id/img_background"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:adjustViewBounds="true"
+                android:contentDescription="@string/todo"
+                android:scaleType="fitXY" />
 
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="3"
-            android:background="@color/smokey_white">
+            android:layout_weight="1"
+            android:background="@color/smokey_white"
+            android:baselineAligned="false">
 
         </LinearLayout>
 
@@ -33,35 +41,29 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        tools:ignore="DisableBaselineAlignment">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:gravity="center_horizontal"
-            android:layout_weight="1">
+            android:layout_weight="1"
+            android:gravity="center_horizontal">
 
-            <ImageView
-                android:layout_width="500dp"
-                android:layout_height="wrap_content"
-                android:src="@drawable/temple_name"
-                android:layout_gravity="bottom|center_horizontal"
-                android:layout_marginBottom="30dp"
-                />
 
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1.3"
+            android:layout_weight="1"
             android:orientation="vertical">
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="40dp"
-                android:layout_marginBottom="50dp"
+                android:layout_marginBottom="20dp"
                 android:gravity="center_horizontal">
 
                 <ImageView
@@ -69,6 +71,7 @@
                     android:layout_width="40dp"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="30dp"
+                    android:contentDescription="@string/todo"
                     android:src="@drawable/ic_language" />
 
                 <TextView
@@ -76,9 +79,9 @@
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
                     android:layout_centerVertical="true"
-                    android:layout_toRightOf="@+id/language_icon"
+                    android:layout_toEndOf="@+id/language_icon"
                     android:fontFamily="@font/poppins_regular"
-                    android:text="Choose your language"
+                    android:text="@string/choose_your_language"
                     android:textColor="@color/secondaryColor"
                     android:textSize="20sp" />
 
@@ -86,17 +89,20 @@
             </RelativeLayout>
 
             <LinearLayout
-                android:layout_weight="1"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginStart="10dp"
                 android:layout_marginEnd="10dp"
-                android:orientation="vertical">
+                android:layout_weight="1"
+                android:baselineAligned="false"
+                android:orientation="vertical"
+                tools:ignore="NestedWeights">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    tools:ignore="UselessParent">
 
 
                     <RelativeLayout
@@ -106,15 +112,19 @@
                         android:layout_weight="1"
                         android:background="@drawable/card_background">
 
-                        <ImageView
+                        <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_above="@+id/space"
+                            android:layout_above="@+id/space1"
                             android:layout_centerInParent="true"
-                            android:src="@drawable/ic_en" />
+                            android:fontFamily="@font/segoe_ui_bold"
+                            android:text="@string/eng_e_kanike"
+                            android:textColor="@color/white"
+                            android:textSize="40sp"
+                            android:textStyle="bold" />
 
-                        <Space
-                            android:id="@+id/space"
+                        <View
+                            android:id="@+id/space1"
                             android:layout_width="wrap_content"
                             android:layout_height="5dp"
                             android:layout_centerInParent="true"
@@ -123,7 +133,7 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_below="@id/space"
+                            android:layout_below="@id/space1"
                             android:fontFamily="@font/montserrat_semibold"
                             android:text="@string/english"
                             android:textAlignment="center"
@@ -139,15 +149,19 @@
                         android:layout_weight="1"
                         android:background="@drawable/card_background">
 
-                        <ImageView
+                        <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_above="@+id/space"
-                            android:layout_centerHorizontal="true"
-                            android:src="@drawable/ic_mal" />
+                            android:layout_above="@+id/space2"
+                            android:layout_centerInParent="true"
+                            android:fontFamily="@font/segoe_ui_bold"
+                            android:text="ഇ ഭണ്ഡാരം"
+                            android:textColor="@color/white"
+                            android:textSize="40sp"
+                            android:textStyle="bold" />
 
-                        <Space
-                            android:id="@+id/space"
+                        <View
+                            android:id="@+id/space2"
                             android:layout_width="wrap_content"
                             android:layout_height="10dp"
                             android:layout_centerInParent="true"
@@ -156,7 +170,7 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_below="@id/space"
+                            android:layout_below="@id/space2"
                             android:fontFamily="@font/montserrat_semibold"
                             android:text="@string/malayalam"
                             android:textAlignment="center"
@@ -170,17 +184,19 @@
             </LinearLayout>
 
             <LinearLayout
-                android:layout_weight="1"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginStart="10dp"
                 android:layout_marginEnd="10dp"
+                android:layout_weight="1"
+                android:baselineAligned="false"
                 android:orientation="vertical">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    tools:ignore="UselessParent">
 
 
                     <RelativeLayout
@@ -189,15 +205,20 @@
                         android:layout_weight="1"
                         android:background="@drawable/card_background">
 
-                        <ImageView
+                        <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_above="@+id/space"
+                            android:layout_above="@+id/space3"
                             android:layout_centerInParent="true"
-                            android:src="@drawable/ic_tamil" />
+                            android:fontFamily="@font/segoe_ui_bold"
+                            android:text="இ கனிகே"
+                            android:textColor="@color/white"
+                            android:textSize="40sp"
+                            android:textStyle="bold"
+                            tools:ignore="TextContrastCheck" />
 
-                        <Space
-                            android:id="@+id/space"
+                        <View
+                            android:id="@+id/space3"
                             android:layout_width="wrap_content"
                             android:layout_height="10dp"
                             android:layout_centerInParent="true"
@@ -206,7 +227,7 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_below="@id/space"
+                            android:layout_below="@id/space3"
                             android:fontFamily="@font/montserrat_semibold"
                             android:text="@string/tamil"
                             android:textAlignment="center"
@@ -222,24 +243,27 @@
                         android:layout_weight="1"
                         android:background="@drawable/card_background">
 
-                        <ImageView
+                        <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_above="@+id/space"
-                            android:layout_centerHorizontal="true"
-                            android:src="@drawable/ic_kannada" />
+                            android:layout_above="@+id/space4"
+                            android:layout_centerInParent="true"
+                            android:fontFamily="@font/segoe_ui_bold"
+                            android:text="ಇ ಕಾಣಿಕೆ"
+                            android:textColor="@color/white"
+                            android:textSize="40sp"
+                            android:textStyle="bold" />
 
-                        <Space
-                            android:id="@+id/space"
+                        <View
+                            android:id="@+id/space4"
                             android:layout_width="wrap_content"
                             android:layout_height="10dp"
-                            android:layout_centerInParent="true"
-                            tools:ignore="DuplicateIds" />
+                            android:layout_centerInParent="true" />
 
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_below="@id/space"
+                            android:layout_below="@id/space4"
                             android:fontFamily="@font/montserrat_semibold"
                             android:text="@string/kannada"
                             android:textAlignment="center"
@@ -253,11 +277,12 @@
             </LinearLayout>
 
             <LinearLayout
-                android:layout_weight="1"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginStart="10dp"
                 android:layout_marginEnd="10dp"
+                android:layout_weight="1"
+                android:baselineAligned="false"
                 android:orientation="vertical">
 
                 <LinearLayout
@@ -272,24 +297,27 @@
                         android:layout_weight="1"
                         android:background="@drawable/card_background">
 
-                        <ImageView
+                        <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_above="@+id/space"
-                            android:layout_centerHorizontal="true"
-                            android:src="@drawable/ic_telugu" />
+                            android:layout_above="@+id/space5"
+                            android:layout_centerInParent="true"
+                            android:fontFamily="@font/segoe_ui_bold"
+                            android:text="ఇ కనికే"
+                            android:textColor="@color/white"
+                            android:textSize="40sp"
+                            android:textStyle="bold" />
 
-                        <Space
-                            android:id="@+id/space"
+                        <View
+                            android:id="@+id/space5"
                             android:layout_width="wrap_content"
                             android:layout_height="10dp"
-                            android:layout_centerInParent="true"
-                            tools:ignore="DuplicateIds" />
+                            android:layout_centerInParent="true" />
 
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_below="@id/space"
+                            android:layout_below="@id/space5"
                             android:fontFamily="@font/montserrat_semibold"
                             android:text="@string/telugu"
                             android:textAlignment="center"
@@ -305,24 +333,27 @@
                         android:layout_weight="1"
                         android:background="@drawable/card_background">
 
-                        <ImageView
+                        <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_above="@+id/space"
-                            android:layout_centerHorizontal="true"
-                            android:src="@drawable/ic_hindi" />
+                            android:layout_above="@+id/space6"
+                            android:layout_centerInParent="true"
+                            android:fontFamily="@font/segoe_ui_bold"
+                            android:text="ई हुंडी"
+                            android:textColor="@color/white"
+                            android:textSize="40sp"
+                            android:textStyle="bold" />
 
-                        <Space
-                            android:id="@+id/space"
+                        <View
+                            android:id="@+id/space6"
                             android:layout_width="wrap_content"
                             android:layout_height="10dp"
-                            android:layout_centerInParent="true"
-                            tools:ignore="DuplicateIds" />
+                            android:layout_centerInParent="true" />
 
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_below="@id/space"
+                            android:layout_below="@id/space6"
                             android:fontFamily="@font/montserrat_semibold"
                             android:text="@string/hindi"
                             android:textAlignment="center"
@@ -336,17 +367,18 @@
             </LinearLayout>
 
             <LinearLayout
-                android:layout_weight="1"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginStart="10dp"
                 android:layout_marginEnd="10dp"
-                android:orientation="vertical">
+                android:layout_weight="1">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:layout_marginStart="70dp"
+                    android:orientation="horizontal"
+                    tools:ignore="UselessParent">
 
 
                     <RelativeLayout
@@ -354,29 +386,19 @@
                         android:layout_height="match_parent"
                         android:layout_marginTop="30dp"
                         android:layout_marginEnd="30dp"
-                        android:layout_weight="1">
+                        android:layout_weight="1"
+                        android:contentDescription="@string/todo">
 
                         <ImageView
                             android:id="@+id/img_xenia_logo"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_below="@+id/txt_powered_by"
                             android:layout_centerInParent="true"
                             android:layout_marginEnd="10dp"
-                            android:layout_marginBottom="40dp"
-                            android:src="@drawable/xenia_logo" />
+                            android:src="@drawable/ic_xenia"
+                            android:contentDescription="@string/todo"
+                            tools:ignore="ImageContrastCheck" />
 
-                        <TextView
-                            android:id="@+id/txt_powered_by"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/poppins_light"
-                            android:text="p o w e r e d   b y"
-                            android:layout_alignStart="@+id/img_xenia_logo"
-                            android:layout_marginStart="50dp"
-                            android:textAlignment="center"
-                            android:textColor="@color/secondaryColor"
-                            android:textSize="16sp" />
 
                     </RelativeLayout>
 
@@ -384,23 +406,10 @@
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_marginTop="26dp"
                         android:layout_marginStart="30dp"
+                        android:layout_marginTop="26dp"
                         android:layout_marginEnd="30dp"
                         android:layout_weight="1">
-
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/poppins_light"
-                            android:text="b a n k i n g p a r t n e r"
-                            android:layout_alignStart="@+id/img_southIndian_logo"
-                            android:layout_marginStart="55dp"
-                            android:layout_marginTop="23dp"
-                            android:textAlignment="center"
-                            android:textColor="@color/secondaryColor"
-                            android:textSize="12sp" />
 
                         <ImageView
                             android:id="@+id/img_southIndian_logo"
@@ -408,7 +417,8 @@
                             android:layout_height="wrap_content"
                             android:layout_centerInParent="true"
                             android:layout_marginEnd="20dp"
-                            android:src="@drawable/ic_si" />
+                            android:contentDescription="@string/todo"
+                            android:src="@drawable/ic_sib" />
 
 
                     </RelativeLayout>
@@ -419,6 +429,9 @@
 
 
         </LinearLayout>
+
+
+
     </LinearLayout>
 
 

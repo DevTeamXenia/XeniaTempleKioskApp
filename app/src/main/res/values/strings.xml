@@ -7,6 +7,27 @@
     <string name="kannada">ಕನ್ನಡ</string>
     <string name="telugu">తెలుగు</string>
     <string name="hindi">हिन्दी</string>
+    <string name="todo">TODO</string>
+    <string name="choose_your_language">Choose your language</string>
+    <string name="p_o_w_e_r_e_d_b_y">p o w e r e d b y</string>
+    <string name="b_a_n_k_i_n_g_p_a_r_t_n_e_r">b a n k i n g p a r t n e r</string>
+    <string name="eng_e_kanike">e Kanike</string>
+    <string name="home">Home</string>
+    <string name="melkavu_ndevi">MELKAVU\nDEVI</string>
+    <string name="keezhkavu_ndevi">KEEZHKAVU\nDEVI</string>
+    <string name="ayyappa_nswami">AYYAPPA\nSWAMI</string>
+    <string name="shiva_nbhagavan">SHIVA\nBHAGAVAN</string>
+    <string name="fill_out_your_details">Fill out your details</string>
+    <string name="donation_amount">Donation Amount</string>
+    <string name="_10_000">₹10,000</string>
+    <string name="pay">PAY</string>
+    <string name="phone_number">Phone Number</string>
+    <string name="_91">+91</string>
+    <string name="name">Name</string>
+    <string name="select_your_janma_nakshatra">Select Your Janma Nakshatra</string>
+    <string name="login_as_a_admin_user">Login as a Admin User</string>
+    <string name="user_id">User Id</string>
+    <string name="password">Password</string>
 
     <string-array name="vazhipaduCategory">
         <item>All</item>

@@ -5,7 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import com.xenia.templekiosk.R
-import com.xenia.templekiosk.data.common.Screen
+import com.xenia.templekiosk.common.Screen
 
 class PaymentActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

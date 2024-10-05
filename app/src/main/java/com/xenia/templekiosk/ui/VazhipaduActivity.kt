@@ -8,11 +8,11 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.xenia.templekiosk.R
-import com.xenia.templekiosk.data.adapter.CategoryAdapter
-import com.xenia.templekiosk.data.adapter.ItemAdapter
+import com.xenia.templekiosk.adapter.CategoryAdapter
+import com.xenia.templekiosk.adapter.ItemAdapter
 import com.xenia.templekiosk.data.callBack.ItemClickListener
-import com.xenia.templekiosk.data.common.DialogUtils
-import com.xenia.templekiosk.data.common.Screen
+import com.xenia.templekiosk.common.DialogUtils
+import com.xenia.templekiosk.common.Screen
 
 class VazhipaduActivity : AppCompatActivity(), ItemClickListener {
 
@@ -57,7 +57,7 @@ class VazhipaduActivity : AppCompatActivity(), ItemClickListener {
         }
 
         btnPay.setOnClickListener {
-            DialogUtils.showQRPayPopup(this,"maheshmohan7319@okaxis","100",Screen.VazhipaduAreaScreen )
+            DialogUtils.showQRPayPopup(this,"maheshmohan7319@okaxis","100", Screen.VazhipaduAreaScreen )
         }
     }
 

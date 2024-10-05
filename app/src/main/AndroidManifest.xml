@@ -2,16 +2,25 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <uses-permission android:name="android.permission.INTERNET"/>
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
+        android:name=".XeniaTempleKiosk"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.TempleKiosk"
         tools:targetApi="31">
+        <activity
+            android:name=".ui.LoginActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.HomeActivity"
+            android:exported="false" />
         <activity
             android:name=".ui.VazhipaduDetailActivity"
             android:exported="false" />
@@ -31,13 +40,11 @@
             android:name=".ui.DonationActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.HomeActivity"
+            android:name=".ui.SelectionActivity"
             android:exported="false" />
         <activity
             android:name=".ui.LanguageActivity"
-            android:exported="true"
-            android:screenOrientation="landscape"
-            android:label="@string/app_name">
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
