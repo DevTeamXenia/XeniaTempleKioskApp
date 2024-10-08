@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="home">ഹോം</string>
+    <string name="kanika">ഭണ്ഡാരം</string>
+    <string name="melkavu_devi">മേൽക്കാവ്\nഭഗവതി</string>
+    <string name="keezhkavu_devi">കീഴ്കാവ്\nദേവി</string>
+    <string name="ayyappa">ശിവൻ\n</string>
+    <string name="shiva">അയ്യപ്പൻ\n</string>
+</resources>

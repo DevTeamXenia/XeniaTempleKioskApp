@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="horizontal"
-    tools:context=".ui.LanguageActivity">
+    tools:context=".ui.screens.LanguageActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -37,7 +37,6 @@
                 android:layout_height="30dp"
                 android:layout_centerInParent="true"
                 android:fontFamily="@font/poppins_regular"
-                android:text="@string/home"
                 android:textColor="@color/white"
                 android:textSize="22sp"
                 tools:ignore="RelativeOverlap" />
@@ -64,13 +63,13 @@
         android:orientation="vertical">
 
         <TextView
+            android:id="@+id/txt_kanika"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="40dp"
             android:layout_marginTop="60dp"
             android:layout_marginBottom="100dp"
             android:fontFamily="@font/segoe_ui_bold"
-            android:text="@string/eng_e_kanike"
             android:textAlignment="center"
             android:textColor="@color/secondaryColor"
             android:textSize="90sp" />
@@ -110,12 +109,12 @@
                 </RelativeLayout>
 
                 <TextView
+                    android:id="@+id/txt_melkavu"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:fontFamily="@font/montserrat_semibold"
                     android:gravity="center"
-                    android:text="@string/melkavu_ndevi"
                     android:textColor="@color/secondaryColor"
                     android:textSize="30sp" />
 
@@ -149,12 +148,12 @@
                 </RelativeLayout>
 
                 <TextView
+                    android:id="@+id/txt_keezhkavu"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:fontFamily="@font/montserrat_semibold"
                     android:gravity="center"
-                    android:text="@string/keezhkavu_ndevi"
                     android:textColor="@color/secondaryColor"
                     android:textSize="30sp" />
 
@@ -188,12 +187,12 @@
                 </RelativeLayout>
 
                 <TextView
+                    android:id="@+id/txt_shiva"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:fontFamily="@font/montserrat_semibold"
                     android:gravity="center"
-                    android:text="@string/shiva_nbhagavan"
                     android:textColor="@color/secondaryColor"
                     android:textSize="30sp" />
 
@@ -227,12 +226,12 @@
                 </RelativeLayout>
 
                 <TextView
+                    android:id="@+id/txt_ayyappa"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:fontFamily="@font/montserrat_semibold"
                     android:gravity="center"
-                    android:text="@string/ayyappa_nswami"
                     android:textColor="@color/secondaryColor"
                     android:textSize="30sp" />
 

@@ -59,12 +59,11 @@
             android:src="@drawable/qrcode" />
 
         <TextView
-            android:id="@+id/textView2"
+            android:id="@+id/txt_timer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="10dp"
-            android:text="UPI ID : tempname001@oksbi"
             android:textColor="@color/black"
             android:textSize="16sp" />
 

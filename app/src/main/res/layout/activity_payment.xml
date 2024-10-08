@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:gravity="center_horizontal"
     android:background="@color/creamy_white"
-    tools:context=".ui.PaymentActivity">
+    tools:context=".ui.screens.PaymentActivity">
 
 
     <androidx.cardview.widget.CardView
@@ -15,7 +14,8 @@
         android:layout_height="match_parent"
         app:cardCornerRadius="20dp"
         app:cardElevation="8dp"
-        android:layout_margin="100dp">
+        android:layout_centerInParent="true"
+        android:layout_margin="20dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -26,7 +26,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/img_payment_sucess"
-                android:layout_marginTop="40dp"
+                android:layout_marginTop="30dp"
                 android:layout_gravity="center_horizontal"/>
 
             <TextView
@@ -37,7 +37,7 @@
                 android:text="Thank You!"
                 android:textColor="@color/primaryColor"
                 android:fontFamily="@font/montserrat_semibold"
-                android:textSize="28sp" />
+                android:textSize="32sp" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -45,8 +45,54 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="20dp"
                 android:fontFamily="@font/montserrat"
-                android:text="Your payment was successful!"
-                android:textSize="22sp" />
+                android:textColor="@color/black"
+                android:text="@string/your_payment_was_successful"
+                android:textSize="28sp" />
+
+            <TextView
+                android:id="@+id/txt_amount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="20dp"
+                android:textColor="@color/black"
+                android:fontFamily="@font/montserrat_semibold"
+                android:text="Amount : 2000/-"
+                android:textSize="38sp" />
+
+            <TextView
+                android:id="@+id/txt_trans_id"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="20dp"
+                android:fontFamily="@font/montserrat"
+                android:text="Transcation ID"
+                android:textColor="@color/black"
+                android:textSize="28sp" />
+
+            <TextView
+                android:id="@+id/txt_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="20dp"
+                android:fontFamily="@font/montserrat"
+                android:text="Tran"
+                android:textColor="@color/black"
+                android:textSize="28sp" />
+
+            <TextView
+                android:id="@+id/txt_star"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="20dp"
+                android:fontFamily="@font/montserrat"
+                android:text="Start"
+                android:textColor="@color/black"
+                android:textSize="28sp" />
+
 
         </LinearLayout>
 
@@ -58,4 +104,4 @@
 
 
 
-</LinearLayout>
+</RelativeLayout>

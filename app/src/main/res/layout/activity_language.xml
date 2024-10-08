@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="horizontal"
-    tools:context=".ui.LanguageActivity">
+    tools:context=".ui.screens.LanguageActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -106,7 +106,7 @@
 
 
                     <RelativeLayout
-                        android:id="@+id/card_en"
+                        android:id="@+id/card_english"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
@@ -118,7 +118,7 @@
                             android:layout_above="@+id/space1"
                             android:layout_centerInParent="true"
                             android:fontFamily="@font/segoe_ui_bold"
-                            android:text="@string/eng_e_kanike"
+                            android:text="@string/kanika"
                             android:textColor="@color/white"
                             android:textSize="40sp"
                             android:textStyle="bold" />
@@ -144,6 +144,7 @@
 
 
                     <RelativeLayout
+                        android:id="@+id/card_malayalam"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
@@ -200,6 +201,7 @@
 
 
                     <RelativeLayout
+                        android:id="@+id/card_kannada"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
@@ -238,6 +240,7 @@
 
 
                     <RelativeLayout
+                        android:id="@+id/card_tamil"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
@@ -292,6 +295,7 @@
 
 
                     <RelativeLayout
+                        android:id="@+id/card_telugu"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
@@ -328,6 +332,7 @@
 
 
                     <RelativeLayout
+                        android:id="@+id/card_hindi"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"

@@ -16,41 +16,48 @@
         android:theme="@style/Theme.TempleKiosk"
         tools:targetApi="31">
         <activity
-            android:name=".ui.LoginActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ui.HomeActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ui.VazhipaduDetailActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ui.SummaryActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ui.PrintPreviewActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ui.VazhipaduActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ui.PaymentActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ui.DonationActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ui.SelectionActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ui.LanguageActivity"
-            android:exported="true">
+            android:name=".ui.screens.LoginActivity"
+            android:configChanges="orientation|screenSize|screenLayout|keyboardHidden"
+            android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
         </activity>
+        <activity
+            android:name=".ui.screens.HomeActivity"
+            android:configChanges="orientation|screenSize|screenLayout|keyboardHidden"
+            android:exported="false" />
+        <activity
+            android:name=".ui.screens.VazhipaduDetailActivity"
+            android:configChanges="orientation|screenSize|screenLayout|keyboardHidden"
+            android:exported="false" />
+        <activity
+            android:name=".ui.screens.SummaryActivity"
+            android:configChanges="orientation|screenSize|screenLayout|keyboardHidden"
+            android:exported="false" />
+        <activity
+            android:name=".ui.screens.VazhipaduActivity"
+            android:configChanges="orientation|screenSize|screenLayout|keyboardHidden"
+            android:exported="false" />
+        <activity
+            android:name=".ui.screens.PaymentActivity"
+            android:configChanges="orientation|screenSize|screenLayout|keyboardHidden"
+            android:exported="false" />
+        <activity
+            android:name=".ui.screens.DonationActivity"
+            android:configChanges="orientation|screenSize|screenLayout|keyboardHidden"
+            android:exported="false" />
+        <activity
+            android:name=".ui.screens.SelectionActivity"
+            android:configChanges="orientation|screenSize|screenLayout|keyboardHidden"
+            android:exported="false" />
+        <activity
+            android:name=".ui.screens.LanguageActivity"
+            android:configChanges="orientation|screenSize|screenLayout|keyboardHidden"
+            android:exported="false"/>
 
         <meta-data
             android:name="preloaded_fonts"
