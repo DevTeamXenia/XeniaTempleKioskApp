@@ -1,6 +1,8 @@
 package com.xenia.templekiosk.data.network.service
 
 import com.xenia.templekiosk.data.network.model.LoginResponse
+import com.xenia.templekiosk.data.network.model.OrderRequest
+import com.xenia.templekiosk.data.network.model.OrderResponse
 import com.xenia.templekiosk.data.network.model.PaymentRequest
 import com.xenia.templekiosk.data.network.model.PaymentResponse
 import com.xenia.templekiosk.data.network.model.PaymentStatus
@@ -28,25 +30,8 @@ interface ApiService {
                               @Query("companyId") companyId: Int,
                               @Body request: PaymentStatus): PaymentResponse
 
-   /* @GET("auth/user")
-    suspend fun getUserDetails(@HeaderMap headers: Map<String, String>): UserResponse
-
-    @PUT("token/IsAnnounced/{companyId}/{departmentId}/{tokenValue}")
-    suspend fun updateToken(
-        @Path("companyId") companyId: String,
-        @Path("departmentId") departmentId: String,
-        @Path("tokenValue") tokenValue: String
-    ): Response<Unit>
-
-    @GET("/api/token/onTokenAudio/{tokenNumber}/{counterName}")
-    suspend fun getTokenAudio(
-        @Path("tokenNumber") tokenNumber: String,
-        @Path("counterName") counterName: String
-    ): ResponseBody
-
-    @GET("/api/advertisement/{companyId}/{depId}")
-    suspend fun getAdvertisement(
-        @Path("companyId") companyId: String,
-        @Path("depId") depId: String
-    ): AdvertisementResponse*/
+    @POST("orders")
+    suspend fun postOrder(@Query("userId") userId: Int,
+                              @Query("companyId") companyId: Int,
+                              @Body request: OrderRequest): OrderResponse
 }

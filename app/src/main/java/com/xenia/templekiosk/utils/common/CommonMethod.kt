@@ -1,19 +1,18 @@
+
+
 package com.xenia.templekiosk.utils.common
 
 import android.app.AlertDialog
 import android.content.Context
-import android.graphics.Bitmap
+import android.content.res.Configuration
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.snackbar.Snackbar
-import com.google.zxing.BarcodeFormat
-import com.google.zxing.MultiFormatWriter
-import com.google.zxing.WriterException
-import com.journeyapps.barcodescanner.BarcodeEncoder
 import com.xenia.templekiosk.R
 import java.security.SecureRandom
+import java.util.Locale
 
 object CommonMethod {
     private var loader: AlertDialog? = null
@@ -59,6 +58,19 @@ object CommonMethod {
         }
 
         return numberStringBuilder.toString()
+    }
+
+
+    @Suppress("DEPRECATION")
+    fun setLocale(context: Context, languageCode: String?) {
+        val locale = Locale(languageCode ?: "en")
+        Locale.setDefault(locale)
+
+        val config = Configuration(context.resources.configuration)
+        config.setLocale(locale)
+
+        context.createConfigurationContext(config)
+        context.resources.updateConfiguration(config, context.resources.displayMetrics)
     }
 
 }

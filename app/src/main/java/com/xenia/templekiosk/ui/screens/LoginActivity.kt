@@ -68,7 +68,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun performLogin(userId: String, password: String) {
-        showLoader(this, "Logging in...")
+        showLoader(this@LoginActivity, "Logging in...")
 
         CoroutineScope(Dispatchers.Main).launch {
             try {

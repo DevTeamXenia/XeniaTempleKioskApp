@@ -20,10 +20,12 @@ import com.google.zxing.MultiFormatWriter
 import com.google.zxing.WriterException
 import com.journeyapps.barcodescanner.BarcodeEncoder
 import com.xenia.templekiosk.R
+import com.xenia.templekiosk.data.network.model.OrderRequest
 import com.xenia.templekiosk.data.network.model.PaymentStatus
 import com.xenia.templekiosk.data.repository.PaymentRepository
 import com.xenia.templekiosk.ui.screens.LanguageActivity
 import com.xenia.templekiosk.ui.screens.PaymentActivity
+import com.xenia.templekiosk.utils.SessionManager
 import kotlinx.coroutines.*
 import org.koin.android.ext.android.inject
 
@@ -37,19 +39,42 @@ class CustomQRPopupDialogue : DialogFragment() {
     private var url: String = ""
     private var transactionReferenceID: String = ""
     private var token: String = ""
+    private var name: String = ""
+    private var star: String = ""
+    private var phno: String = ""
+    private var devatha: String = ""
+
     private var pollingTimer: CountDownTimer? = null
     private var paymentStatusJob: Job? = null
     private val paymentRepository: PaymentRepository by inject()
+    private val sessionManager: SessionManager by inject()
     private var isCheckingPaymentStatus = false
 
-    fun setData(amount: String, url: String, transactionReferenceID: String, token: String) {
+    fun setData(
+        amount: String,
+        url: String,
+        transactionReferenceID: String,
+        token: String,
+        name: String,
+        phno: String,
+        star: String,
+        devatha: String
+    ) {
         this.amount = amount
         this.url = url
         this.transactionReferenceID = transactionReferenceID
         this.token = token
+        this.name = name
+        this.phno = phno
+        this.star = star
+        this.devatha = devatha
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         return inflater.inflate(R.layout.custome_qr_dialogue, container, false)
     }
 
@@ -61,11 +86,12 @@ class CustomQRPopupDialogue : DialogFragment() {
         qrCodeImageView = view.findViewById(R.id.qrCodeImageView)
         timerTextView = view.findViewById(R.id.txt_timer)
 
-        amountTextView.text = "Amount ₹ $amount/-"
+        amountTextView.text = getString(R.string.amount) +"₹"+amount +"/-"
         val qrCodeBitmap = generateUPIQRCode(url)
         qrCodeImageView.setImageBitmap(qrCodeBitmap)
 
-        startTimer()
+        postPaymentHistory("Success")
+       // startTimer()
 
         view.findViewById<ImageView>(R.id.btnClose).setOnClickListener {
             dismiss()
@@ -118,19 +144,19 @@ class CustomQRPopupDialogue : DialogFragment() {
                         accessToken = "Bearer $token",
                     )
                     val response = withContext(Dispatchers.IO) {
-                        paymentRepository.paymentStatus(1,2, paymentRequest)
+                        paymentRepository.paymentStatus(1, 2, paymentRequest)
                     }
 
                     if (response.Status == "success") {
                         val status = response.Data?.status
                         val statusDesc = response.Data?.statusDesc
                         if (status != null && statusDesc != null) {
-                            if(status == "S" && statusDesc == "Transaction success"){
-                                handleTransactionStatus(status)
+                            if (status == "S" && statusDesc == "Transaction success") {
+                                postPaymentHistory("Success")
                                 return@launch
 
-                            }else if(status == "F" && statusDesc != "Invalid PsprefNo"){
-                                handleTransactionStatus(status)
+                            } else if (status == "F" && statusDesc != "Invalid PsprefNo") {
+                                postPaymentHistory("Failed")
                                 return@launch
 
                             }
@@ -139,22 +165,54 @@ class CustomQRPopupDialogue : DialogFragment() {
                     delay(2000)
                 }
             } catch (e: Exception) {
-                withContext(Dispatchers.Main) {
+                checkPaymentStatus()
 
-                }
             } finally {
                 isCheckingPaymentStatus = false
             }
         }
     }
 
+    private fun postPaymentHistory(status: String) {
+        val orderRequest = OrderRequest(
+            transactionId = transactionReferenceID,
+            devatha = devatha,
+            nakshatra = star,
+            name = name,
+            phoneNumber =phno,
+            orderAmount = amount.toDoubleOrNull()!!,
+            paymentStatus = status,
+            paymentMethod = "UPI"
+        )
+
+        CoroutineScope(Dispatchers.Main).launch {
+            try {
+                val response = withContext(Dispatchers.IO) {
+                    paymentRepository.postOrder(
+                        sessionManager.getUserId(),
+                        sessionManager.getCompanyId(),
+                        orderRequest
+                    )
+                }
+                if (response.status == "success") {
+                    handleTransactionStatus(status)
+                } else {
+                    postPaymentHistory(status)
+                }
+            } catch (e: Exception) {
+                postPaymentHistory(status)
+            }
+        }
+
+    }
+
     private fun handleTransactionStatus(status: String) {
         val intent = Intent(requireContext(), PaymentActivity::class.java).apply {
-            putExtra("status", status)
+            putExtra("status", "S")
             putExtra("amount", amount)
             putExtra("transID", transactionReferenceID)
-            putExtra("name", "Sample1")
-            putExtra("start", "Star")
+            putExtra("name", name)
+            putExtra("star", star)
         }
         startActivity(intent)
         dismiss()

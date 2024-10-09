@@ -1,9 +1,68 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
+
     <string name="home">ഹോം</string>
+
+    //home_screen
     <string name="kanika">ഭണ്ഡാരം</string>
-    <string name="melkavu_devi">മേൽക്കാവ്\nഭഗവതി</string>
-    <string name="keezhkavu_devi">കീഴ്കാവ്\nദേവി</string>
+    <string name="melkavu_devi">മേൽക്കാവിൽ\nഭഗവതി</string>
+    <string name="keezhkavu_devi">കീഴ്ക്കാവിൽ\nഭഗവതി</string>
     <string name="ayyappa">ശിവൻ\n</string>
     <string name="shiva">അയ്യപ്പൻ\n</string>
+
+    donation_screen
+    <string name="fill_out_your_details">നിങ്ങളുടെ വിശദാംശങ്ങൾ പൂരിപ്പിക്കുക</string>
+    <string name="donation_amount">സംഭാവന തുക</string>
+    <string name="_10_000">₹10,000</string>
+    <string name="pay">പേയ്</string>
+    <string name="phone_number">ഫോൺ നമ്പർ</string>
+    <string name="_91">+91</string>
+    <string name="name">പേര്</string>
+    <string name="select_your_janma_nakshatra">നിങ്ങളുടെ ജന്മ നക്ഷത്രം തിരഞ്ഞെടുക്കുക</string>
+
+    //Popup_Screen
+    <string name="amount_10_000"> തുക ₹ 10,000 /-</string>
+    <string name="scan_this_code_to_pay">ഈ കോഡ് സ്കാൻ ചെയ്ത് പണം നൽകുക</string>
+
+    //payment_Screen
+    <string name="thank_you">നന്ദി!</string>
+    <string name="your_payment_was_successful">നിങ്ങളുടെ പണമടക്കം വിജയകരമായിരിക്കുന്നു! </string>
+    <string name="amount">തുക :</string>
+    <string name="transcation_id">ഇടപാട് ഐഡി :</string>
+    <string name="star">താരം :</string>
+    <string name="pay_name">പേര് :</string>
+
+
+
+    <string-array name="nakshatras">
+        <item>ആശ്വിനി</item>
+        <item>ഭരണി</item>
+        <item>കൃതിക</item>
+        <item>രോഹിണി</item>
+        <item>മൃഗശീർഷ</item>
+        <item>ആർദ്ര</item>
+        <item>പുനർവസു</item>
+        <item>പുഷ്യ</item>
+        <item>ആശ്ലേഷ</item>
+        <item>മഘ</item>
+        <item>പൂർവ ഫലഗുനി</item>
+        <item>ഉത്തര ഫലഗുനി</item>
+        <item>ഹസ്ത</item>
+        <item>ചിത്ര</item>
+        <item>സ്വാതി</item>
+        <item>വിഷാഖ</item>
+        <item>അനുരാധ</item>
+        <item>ജ്യേഷ്ഠ</item>
+        <item>മൂല</item>
+        <item>പൂർവ ആഷാഢ</item>
+        <item>ഉത്തര ആഷാഢ</item>
+        <item>ശ്രവണ</item>
+        <item>ധനിഷ്ട</item>
+        <item>ശതഭിഷക്ക്</item>
+        <item>പൂർവ ഭദ്രപദ</item>
+        <item>ഉത്തര ഭദ്രപദ</item>
+        <item>രേവതി</item>
+    </string-array>
+
 </resources>

@@ -201,7 +201,7 @@
 
 
                     <RelativeLayout
-                        android:id="@+id/card_kannada"
+                        android:id="@+id/card_tamil"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
@@ -240,7 +240,7 @@
 
 
                     <RelativeLayout
-                        android:id="@+id/card_tamil"
+                        android:id="@+id/card_kannada"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"

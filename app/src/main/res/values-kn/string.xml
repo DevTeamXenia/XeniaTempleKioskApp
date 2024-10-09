@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="home">ಮುಖಪುಟ</string>
+
+
+    //home_screen
+    <string name="kanika">ಕಾಣಿಕೆ</string>
+    <string name="melkavu_devi">ಮೇಲ್ಕಾವು\nದೇವಿ</string>
+    <string name="keezhkavu_devi">ಕೀಳ್ಕಾವು\nದೇವಿ</string>
+    <string name="shiva">ಶಿವ\n</string>
+    <string name="ayyappa">ಅಯ್ಯಪ್ಪ\n</string>
+
+    donation_screen
+    <string name="fill_out_your_details">ನಿಮ್ಮ ವಿವರಗಳನ್ನು ತುಂಬಿ</string>
+    <string name="donation_amount">ದಾನದ ಮೊತ್ತ</string>
+    <string name="_10_000">₹10,000</string>
+    <string name="pay">ಪಾವತಿಸಲು</string>
+    <string name="phone_number">ಫೋನ್ ಸಂಖ್ಯೆ</string>
+    <string name="_91">+91</string>
+    <string name="name">ಹೆಸರು</string>
+    <string name="select_your_janma_nakshatra">ನಿಮ್ಮ ಜನ್ಮ ನಕ್ಷತ್ರವನ್ನು ಆಯ್ಕೆ ಮಾಡಿರಿ</string>
+
+    //Popup_Screen
+    <string name="amount_10_000">ಮೊತ್ತ   ₹ 10,000 /-</string>
+    <string name="scan_this_code_to_pay">ಈ ಕೋಡ್‌ ಅನ್ನು ಸ್ಕ್ಯಾನ್ ಮಾಡಿ ಪಾವತಿಸಿ</string>
+
+    //payment_Screen
+    <string name="thank_you">ಧನ್ಯವಾದಗಳು!</string>
+    <string name="your_payment_was_successful">ನಿಮ್ಮ ಪಾವತಿ ಯಶಸ್ವಿಯಾಗಿದೆ!</string>
+    <string name="amount">ಮೊತ್ತ</string>
+    <string name="transcation_id">ವ್ಯವಹಾರ ಸಂಖ್ಯೆ:</string>
+    <string name="star">ತಾರೆ:</string>
+    <string name="pay_name">ಹೆಸರು :</string>
+
+
+
+
+    <string-array name="nakshatras">
+        <item>ಆಶ್ವಿನಿ</item>
+        <item>ಭರಣಿ</item>
+        <item>ಕೃತಿಕಾ</item>
+        <item>ರೋಹಿಣಿ</item>
+        <item>ಮೃಗಶಿರ</item>
+        <item>ಆರ್‌ದ್ರಾ</item>
+        <item>ಪುನರ್ವಸು</item>
+        <item>ಪುಷ್ಯ</item>
+        <item>ಆಶ್ಲೇಷಾ</item>
+        <item>ಮಘಾ</item>
+        <item>ಪೂರ್ವ ಫಾಲ್ಗುಣೀ</item>
+        <item>ಉತ್ತರ ಫಾಲ್ಗುಣೀ</item>
+        <item>ಹಸ್ತ</item>
+        <item>ಚಿತ್ರ</item>
+        <item>ಸ್ವಾತಿ</item>
+        <item>ವಿಷಾಖಾ</item>
+        <item>ಅನುರಾಧಾ</item>
+        <item>ಜ್ಯೇಷ್ಠಾ</item>
+        <item>ಮೂಳ</item>
+        <item>ಪೂರ್ವ ಆಶಾಢ</item>
+        <item>ಉತ್ತರ ಆಶಾಢ</item>
+        <item>ಶ್ರವಣ</item>
+        <item>ಧನಿಷ್ಠಾ</item>
+        <item>ಶತಭಿಷಕ್</item>
+        <item>ಪೂರ್ವ ಭದ್ರಪದ</item>
+        <item>ಉತ್ತರ ಭದ್ರಪದ</item>
+        <item>ರೆವತೀ</item>
+    </string-array>
+
+
+</resources>

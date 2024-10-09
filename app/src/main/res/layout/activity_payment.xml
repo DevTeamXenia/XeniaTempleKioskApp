@@ -18,6 +18,7 @@
         android:layout_margin="20dp">
 
         <LinearLayout
+            android:id="@+id/lin_success"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
@@ -34,7 +35,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="50dp"
                 android:layout_gravity="center_horizontal"
-                android:text="Thank You!"
+                android:text="@string/thank_you"
                 android:textColor="@color/primaryColor"
                 android:fontFamily="@font/montserrat_semibold"
                 android:textSize="32sp" />
@@ -57,7 +58,6 @@
                 android:layout_marginTop="20dp"
                 android:textColor="@color/black"
                 android:fontFamily="@font/montserrat_semibold"
-                android:text="Amount : 2000/-"
                 android:textSize="38sp" />
 
             <TextView
@@ -67,18 +67,18 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="20dp"
                 android:fontFamily="@font/montserrat"
-                android:text="Transcation ID"
                 android:textColor="@color/black"
-                android:textSize="28sp" />
+                android:textSize="20sp" />
 
             <TextView
                 android:id="@+id/txt_name"
+                android:visibility="gone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="20dp"
                 android:fontFamily="@font/montserrat"
-                android:text="Tran"
+                android:textStyle="bold"
                 android:textColor="@color/black"
                 android:textSize="28sp" />
 
@@ -89,13 +89,48 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="20dp"
                 android:fontFamily="@font/montserrat"
-                android:text="Start"
                 android:textColor="@color/black"
-                android:textSize="28sp" />
+                android:textSize="24sp" />
 
 
         </LinearLayout>
 
+        <LinearLayout
+            android:id="@+id/lin_failed"
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/img_payment_sucess"
+                android:layout_marginTop="30dp"
+                android:layout_gravity="center_horizontal"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="50dp"
+                android:layout_gravity="center_horizontal"
+                android:text="@string/payment_failed"
+                android:textColor="@color/primaryColor"
+                android:fontFamily="@font/montserrat_semibold"
+                android:textSize="32sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="20dp"
+                android:fontFamily="@font/montserrat"
+                android:textColor="@color/black"
+                android:text="@string/it_seems_we_have_not_received_money"
+                android:textSize="28sp" />
+
+
+        </LinearLayout>
 
 
     </androidx.cardview.widget.CardView>

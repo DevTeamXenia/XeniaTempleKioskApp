@@ -11,19 +11,27 @@
     <string name="choose_your_language">Choose your language</string>
     <string name="p_o_w_e_r_e_d_b_y">p o w e r e d b y</string>
     <string name="b_a_n_k_i_n_g_p_a_r_t_n_e_r">b a n k i n g p a r t n e r</string>
+    <string name="login_as_a_admin_user">Login as a Admin User</string>
+    <string name="user_id">User Id</string>
+    <string name="password">Password</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="log_in">LOG IN</string>
+    <string name="payment_failed">Payment Failed</string>
+    <string name="it_seems_we_have_not_received_money">It seems we have not received money</string>
 
 
-
-
-
-    //HomeScreen
     <string name="home">Home</string>
+
+
+    //home_screen
     <string name="kanika">e Kanika</string>
     <string name="melkavu_devi">MELKAVU\nBHAGAVATI</string>
     <string name="keezhkavu_devi">KEEZHKAVU\nBHAGAVATI</string>
     <string name="ayyappa">AYYAPPA\n</string>
     <string name="shiva">SHIVA\n</string>
 
+
+    //donation_screen
     <string name="fill_out_your_details">Fill out your details</string>
     <string name="donation_amount">Donation Amount</string>
     <string name="_10_000">₹10,000</string>
@@ -32,9 +40,21 @@
     <string name="_91">+91</string>
     <string name="name">Name</string>
     <string name="select_your_janma_nakshatra">Select Your Janma Nakshatra</string>
-    <string name="login_as_a_admin_user">Login as a Admin User</string>
-    <string name="user_id">User Id</string>
-    <string name="password">Password</string>
+
+
+    //Popup_Screen
+    <string name="amount_10_000">Amount ₹ 10,000 /-</string>
+    <string name="scan_this_code_to_pay">Scan this code to Pay</string>
+
+
+    //payment_Screen
+    <string name="thank_you">Thank You!</string>
+    <string name="your_payment_was_successful">Your payment was successful!</string>
+    <string name="amount">Amount : </string>
+    <string name="transcation_id">Transcation ID : </string>
+    <string name="star">Star : </string>
+    <string name="pay_name">Name  :</string>
+
 
     <string-array name="vazhipaduCategory">
         <item>All</item>
@@ -48,6 +68,7 @@
         <item>Dhara</item>
         <item>Abhishekam</item>
     </string-array>
+
 
     <string-array name="vazhipaduItem">
         <item>Aayursooktha Pushpanjali</item>
@@ -63,9 +84,37 @@
         <item>Rudrabhishekam</item>
         <item>Vishnu Pooja</item>
     </string-array>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="your_payment_was_successful">Your payment was successful!</string>
-    <string name="log_in">LOG IN</string>
+
+
+    <string-array name="nakshatras">
+        <item>Ashwini</item>
+        <item>Bharani</item>
+        <item>Krittika</item>
+        <item>Rohini</item>
+        <item>Mrigashira</item>
+        <item>Ardra</item>
+        <item>Punarvasu</item>
+        <item>Pushya</item>
+        <item>Ashlesha</item>
+        <item>Magha</item>
+        <item>Purva Phalguni</item>
+        <item>Uttara Phalguni</item>
+        <item>Hasta</item>
+        <item>Chitra</item>
+        <item>Swati</item>
+        <item>Vishakha</item>
+        <item>Anuradha</item>
+        <item>Jyeshtha</item>
+        <item>Mula</item>
+        <item>Purva Ashadha</item>
+        <item>Uttara Ashadha</item>
+        <item>Shravana</item>
+        <item>Dhanishta</item>
+        <item>Shatabhisha</item>
+        <item>Purva Bhadrapada</item>
+        <item>Uttara Bhadrapada</item>
+        <item>Revati</item>
+    </string-array>
+
 
 </resources>

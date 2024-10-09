@@ -6,7 +6,6 @@ import com.xenia.templekiosk.data.repository.LoginRepository
 import com.xenia.templekiosk.data.repository.PaymentRepository
 import com.xenia.templekiosk.ui.dialogue.CustomQRPopupDialogue
 import com.xenia.templekiosk.ui.dialogue.CustomWarningPopupDialog
-import com.xenia.templekiosk.utils.PrinterHelper
 import com.xenia.templekiosk.utils.SessionManager
 import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.module
@@ -16,7 +15,6 @@ val roomModule = module {
     single { SessionManager(androidContext()) }
     single { LoginRepository() }
     single { PaymentRepository() }
-    single { PrinterHelper() }
 
     factory { CustomWarningPopupDialog() }
     factory { CustomQRPopupDialogue() }
