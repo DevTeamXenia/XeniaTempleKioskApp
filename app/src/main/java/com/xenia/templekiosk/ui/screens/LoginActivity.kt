@@ -76,6 +76,8 @@ class LoginActivity : AppCompatActivity() {
                 sessionManager.clearSession()
                 sessionManager.saveUserDetails(response.userId,response.userName,response.companyId)
                 startActivity(Intent(applicationContext,LanguageActivity::class.java))
+                finish()
+                dismissLoader()
             } catch (e: Exception) {
                 dismissLoader()
                 showSnackbar(binding.root, "Something went wrong! Please try again")

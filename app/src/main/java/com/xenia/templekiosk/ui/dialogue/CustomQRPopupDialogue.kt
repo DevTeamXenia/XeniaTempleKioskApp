@@ -90,8 +90,8 @@ class CustomQRPopupDialogue : DialogFragment() {
         val qrCodeBitmap = generateUPIQRCode(url)
         qrCodeImageView.setImageBitmap(qrCodeBitmap)
 
-        postPaymentHistory("Success")
-       // startTimer()
+
+        startTimer()
 
         view.findViewById<ImageView>(R.id.btnClose).setOnClickListener {
             dismiss()
@@ -195,7 +195,7 @@ class CustomQRPopupDialogue : DialogFragment() {
                     )
                 }
                 if (response.status == "success") {
-                    handleTransactionStatus(status)
+                    handleTransactionStatus(status,response.data.orderId)
                 } else {
                     postPaymentHistory(status)
                 }
@@ -206,13 +206,15 @@ class CustomQRPopupDialogue : DialogFragment() {
 
     }
 
-    private fun handleTransactionStatus(status: String) {
+    private fun handleTransactionStatus(status: String, orderId: Int) {
         val intent = Intent(requireContext(), PaymentActivity::class.java).apply {
-            putExtra("status", "S")
+            putExtra("status", status)
             putExtra("amount", amount)
             putExtra("transID", transactionReferenceID)
             putExtra("name", name)
             putExtra("star", star)
+            putExtra("orderID", orderId.toString())
+            putExtra("phno",phno)
         }
         startActivity(intent)
         dismiss()

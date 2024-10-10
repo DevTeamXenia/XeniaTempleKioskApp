@@ -7,7 +7,7 @@ import android.os.Bundle
 import com.xenia.templekiosk.R
 import com.xenia.templekiosk.databinding.ActivityHomeBinding
 import com.xenia.templekiosk.utils.common.CommonMethod.setLocale
-import com.xenia.templekiosk.utils.common.LanguageConstants
+import com.xenia.templekiosk.utils.common.Constants
 import org.koin.android.ext.android.inject
 
 
@@ -25,10 +25,15 @@ class HomeActivity : AppCompatActivity() {
         setLocale(this, selectedLanguage)
         initUI()
 
-        binding.cardMelkavu.setOnClickListener { selectDevatha(LanguageConstants.MELVAKUBHAGAVATI) }
-        binding.cardKeezhkavu.setOnClickListener { selectDevatha(LanguageConstants.KEEZHKAVUBHAGAVATI) }
-        binding.cardShiva.setOnClickListener { selectDevatha(LanguageConstants.SHIVA) }
-        binding.cardAyyappa.setOnClickListener { selectDevatha(LanguageConstants.AYYAPPA) }
+        binding.cardMelkavu.setOnClickListener { selectDevatha(Constants.MELVAKUBHAGAVATI) }
+        binding.cardKeezhkavu.setOnClickListener { selectDevatha(Constants.KEEZHKAVUBHAGAVATI) }
+        binding.cardShiva.setOnClickListener { selectDevatha(Constants.SHIVA) }
+        binding.cardAyyappa.setOnClickListener { selectDevatha(Constants.AYYAPPA) }
+
+        binding.leftHome.setOnClickListener {
+            startActivity(Intent(applicationContext,LanguageActivity::class.java))
+            finish()
+        }
     }
 
 

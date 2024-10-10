@@ -1,7 +1,6 @@
 package com.xenia.templekiosk.ui.screens
 
 
-import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
@@ -17,7 +16,8 @@ import com.xenia.templekiosk.ui.dialogue.CustomWarningPopupDialog
 import com.xenia.templekiosk.utils.SessionManager
 import com.xenia.templekiosk.utils.common.CommonMethod.dismissLoader
 import com.xenia.templekiosk.utils.common.CommonMethod.generateNumericTransactionReferenceID
-import com.xenia.templekiosk.utils.common.CommonMethod.setLocale
+import com.xenia.templekiosk.utils.common.CommonMethod.showLoader
+
 
 import com.xenia.templekiosk.utils.common.CommonMethod.showSnackbar
 import kotlinx.coroutines.CoroutineScope
@@ -30,7 +30,6 @@ import org.koin.android.ext.android.inject
 class DonationActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityDonationBinding
-    private val sharedPreferences: SharedPreferences by inject()
     private val sessionManager: SessionManager by inject()
     private val paymentRepository: PaymentRepository by inject()
     private val customPopupDialog: CustomWarningPopupDialog by inject()
@@ -51,7 +50,7 @@ class DonationActivity : AppCompatActivity() {
         initUI()
 
         binding.btnHome.setOnClickListener {
-            customPopupDialog.show(supportFragmentManager, "CustomPopup")
+            customPopupDialog.show(supportFragmentManager, "warning_dialog")
         }
 
         binding.btnPay.setOnClickListener {
@@ -64,11 +63,27 @@ class DonationActivity : AppCompatActivity() {
     private fun initUI() {
         val layoutManager = GridLayoutManager(applicationContext, 4)
         binding.listStar.layoutManager = layoutManager
-        val adapter = NakshatraAdapter(resources.getStringArray(R.array.nakshatras)) { nakshatra ->
-            selectedNakshatra = nakshatra
+
+        val translatedNakshatras = resources.getStringArray(R.array.nakshatras)
+
+        val englishNakshatras = arrayOf(
+            "Ashwini", "Bharani", "Krittika", "Rohini", "Mrigashira", "Ardra", "Punarvasu",
+            "Pushya", "Ashlesha", "Magha", "Purva Phalguni", "Uttara Phalguni", "Hasta",
+            "Chitra", "Swati", "Vishakha", "Anuradha", "Jyeshta", "Mula", "Purva Ashadha",
+            "Uttara Ashadha", "Shravana", "Dhanishta", "Shatabhisha", "Purva Bhadrapada",
+            "Uttara Bhadrapada", "Revati"
+        )
+
+        val adapter = NakshatraAdapter(translatedNakshatras) { selectedTranslatedNakshatra ->
+            val index = translatedNakshatras.indexOf(selectedTranslatedNakshatra)
+
+            selectedNakshatra = englishNakshatras[index]
         }
         binding.listStar.adapter = adapter
+        binding.editTxtDonation.requestFocus()
+
     }
+
 
     private fun genaratePayment() {
         val donationAmount = binding.editTxtDonation.text.toString().toDoubleOrNull()
@@ -82,22 +97,8 @@ class DonationActivity : AppCompatActivity() {
             }
 
             else -> {
-                customQRPopupDialog.setData(
-                    donationAmount.toString(),
-                    "url",
-                    "12fhf",
-                    "token",
-                    binding.editName.text.toString(),
-                    binding.editPhno.text.toString(),
-                    selectedNakshatra!!,
-                    selectDevatha!!
-
-                )
-
-                customQRPopupDialog.show(supportFragmentManager, "CustomPopup")
-
-                //showLoader(this@DonationActivity, "Loading your QR code... Please wait.")
-                //genaratePaymentToken(donationAmount)
+                showLoader(this@DonationActivity, "Loading your QR code... Please wait.")
+                genaratePaymentToken(donationAmount)
             }
         }
     }

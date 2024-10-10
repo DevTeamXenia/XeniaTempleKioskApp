@@ -9,17 +9,31 @@ import android.view.View
 import android.widget.Toast
 import com.xenia.templekiosk.R
 import com.xenia.templekiosk.databinding.ActivityPaymentBinding
+import com.xenia.templekiosk.utils.SessionManager
 import net.posprinter.IDeviceConnection
 import net.posprinter.IPOSListener
 import net.posprinter.POSConnect
 import net.posprinter.POSConst
 import net.posprinter.POSPrinter
+import org.koin.android.ext.android.inject
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 
 class PaymentActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityPaymentBinding
+    private val sessionManager: SessionManager by inject()
     private var curConnect: IDeviceConnection? = null
+
+    private var status: String? = null
+    private var amount: String? = null
+    private var transID: String? = null
+    private var name: String? = null
+    private var star: String? = null
+    private var orderID: String? = null
+    private var phoneNo: String? = null
 
 
     @SuppressLint("SetTextI18n")
@@ -28,11 +42,13 @@ class PaymentActivity : AppCompatActivity() {
         binding = ActivityPaymentBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val status = intent.getStringExtra("status")
-        val amount = intent.getStringExtra("amount")
-        val transID = intent.getStringExtra("transID")
-        val name = intent.getStringExtra("name")
-        val star = intent.getStringExtra("star")
+         status = intent.getStringExtra("status")
+         amount = intent.getStringExtra("amount")
+         transID = intent.getStringExtra("transID")
+         name = intent.getStringExtra("name")
+         star = intent.getStringExtra("star")
+         orderID = intent.getStringExtra("orderID")
+         phoneNo = intent.getStringExtra("phno")
 
 
         if(status.equals("S")){
@@ -44,15 +60,15 @@ class PaymentActivity : AppCompatActivity() {
                 binding.txtName.visibility = View.VISIBLE
                 binding.txtName.text = getString(R.string.pay_name) +" "+ name
             }
-
             binding.txtStar.text = getString(R.string.star) +" "+ star
+            configPrinter()
         }else{
             binding.linSuccess.visibility = View.GONE
             binding.linFailed.visibility = View.VISIBLE
         }
 
 
-        configPrinter()
+
 
 
     }
@@ -124,27 +140,31 @@ class PaymentActivity : AppCompatActivity() {
     }
 
     private fun initReceiptPrint() {
-        POSPrinter(curConnect)
-            .printText("DURGA TEMPLE\n", POSConst.ALIGNMENT_CENTER, POSConst.FNT_BOLD, POSConst.TXT_2WIDTH or POSConst.TXT_2HEIGHT)
-            .printText("8400 Durga Place, Fairfax Station, VA 22039\nPhone:(703) 690-9355;website:www.durgatemple.org\n", POSConst.ALIGNMENT_CENTER, POSConst.FNT_BOLD, POSConst.TXT_1WIDTH or POSConst.TXT_1HEIGHT)
-            .feedLine(1)
-            .printText("e Kanika Receipt\n", POSConst.ALIGNMENT_CENTER, POSConst.FNT_BOLD, POSConst.TXT_1WIDTH or POSConst.TXT_2HEIGHT)
-            .feedLine(1)
-            .printText("Receipt No : 27533365\n", POSConst.ALIGNMENT_LEFT, POSConst.STS_NORMAL, POSConst.TXT_1WIDTH or POSConst.TXT_1HEIGHT)
-            .printText("Date : 24 - Sep - 2024 07: 50 AM\n", POSConst.ALIGNMENT_LEFT, POSConst.STS_NORMAL, POSConst.TXT_1WIDTH or POSConst.TXT_1HEIGHT)
-            .feedLine(1)
-            .printText("Received From : Surya Narayana Pillai\n", POSConst.ALIGNMENT_LEFT, POSConst.STS_NORMAL , POSConst.TXT_1WIDTH or POSConst.TXT_1HEIGHT)
-            .printText("Contact No : +91 9037554466\n", POSConst.ALIGNMENT_LEFT, POSConst.STS_NORMAL , POSConst.TXT_1WIDTH or POSConst.TXT_1HEIGHT)
-            .printText("Birth Star : Ardra\n", POSConst.ALIGNMENT_LEFT, POSConst.STS_NORMAL , POSConst.TXT_1WIDTH or POSConst.TXT_1HEIGHT)
-            .feedLine(1)
-            .printText("Amount Paid : 10000.00\n", POSConst.ALIGNMENT_RIGHT, POSConst.FNT_BOLD , POSConst.TXT_1WIDTH or POSConst.TXT_2HEIGHT)
-            .printText("UPI Reference No: 5647784112\n", POSConst.ALIGNMENT_RIGHT, POSConst.STS_NORMAL, POSConst.TXT_1WIDTH or POSConst.TXT_1HEIGHT)
-            .feedLine(1)
-            .printText("Thank you for Your Generosity\n", POSConst.ALIGNMENT_CENTER, POSConst.STS_NORMAL, POSConst.TXT_1WIDTH or POSConst.TXT_2HEIGHT)
-            .printText("Powered by XeniaTechnologies\n", POSConst.ALIGNMENT_CENTER, POSConst.STS_NORMAL, POSConst.TXT_1WIDTH or POSConst.TXT_1HEIGHT)
-            .cutHalfAndFeed(1)
+        val cd = sessionManager.getCompanyDetails()
+        if (cd != null) {
+            val currentDate = SimpleDateFormat("dd-MMM-yyyy hh:mm a", Locale.getDefault()).format(Date())
+            POSPrinter(curConnect)
+                .printText(cd.companyName+"\n", POSConst.ALIGNMENT_CENTER, POSConst.FNT_BOLD, POSConst.TXT_1WIDTH or POSConst.TXT_2HEIGHT)
+                .printText(cd.companyAddress+"\n", POSConst.ALIGNMENT_CENTER, POSConst.FNT_BOLD, POSConst.TXT_1WIDTH or POSConst.TXT_1HEIGHT)
+                .feedLine(1)
+                .printText("e Kanika Receipt\n", POSConst.ALIGNMENT_CENTER, POSConst.FNT_BOLD, POSConst.TXT_1WIDTH or POSConst.TXT_2HEIGHT)
+                .feedLine(1)
+                .printText("Receipt No : $orderID\n", POSConst.ALIGNMENT_LEFT, POSConst.STS_NORMAL, POSConst.TXT_1WIDTH or POSConst.TXT_1HEIGHT)
+                .printText("Date : $currentDate\n", POSConst.ALIGNMENT_LEFT, POSConst.STS_NORMAL, POSConst.TXT_1WIDTH or POSConst.TXT_1HEIGHT)
+                .feedLine(1)
+                .printText("Received From : $name\n", POSConst.ALIGNMENT_LEFT, POSConst.STS_NORMAL , POSConst.TXT_1WIDTH or POSConst.TXT_1HEIGHT)
+                .printText("Contact No : $phoneNo\n", POSConst.ALIGNMENT_LEFT, POSConst.STS_NORMAL , POSConst.TXT_1WIDTH or POSConst.TXT_1HEIGHT)
+                .printText("Birth Star : $star\n", POSConst.ALIGNMENT_LEFT, POSConst.STS_NORMAL , POSConst.TXT_1WIDTH or POSConst.TXT_1HEIGHT)
+                .feedLine(1)
+                .printText("Amount Paid : $amount\n", POSConst.ALIGNMENT_RIGHT, POSConst.FNT_BOLD , POSConst.TXT_1WIDTH or POSConst.TXT_2HEIGHT)
+                .printText("UPI Reference No: $transID\n\n", POSConst.ALIGNMENT_RIGHT, POSConst.STS_NORMAL, POSConst.TXT_1WIDTH or POSConst.TXT_1HEIGHT)
+                .feedLine(1)
+                .printText("Thank you for Your Generosity\n", POSConst.ALIGNMENT_CENTER, POSConst.STS_NORMAL, POSConst.TXT_1WIDTH or POSConst.TXT_2HEIGHT)
+                .printText("Powered by XeniaTechnologies\n", POSConst.ALIGNMENT_CENTER, POSConst.STS_NORMAL, POSConst.TXT_1WIDTH or POSConst.TXT_1HEIGHT)
+                .cutHalfAndFeed(1)
+        }
 
-       // redirect()
+        redirect()
     }
 
     private fun redirect(){

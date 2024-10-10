@@ -18,6 +18,7 @@
         android:layout_margin="20dp">
 
         <LinearLayout
+            android:visibility="gone"
             android:id="@+id/lin_success"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -97,7 +98,6 @@
 
         <LinearLayout
             android:id="@+id/lin_failed"
-            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
@@ -105,8 +105,8 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/img_payment_sucess"
-                android:layout_marginTop="30dp"
+                android:src="@drawable/img_payment_failed"
+                android:layout_marginTop="50dp"
                 android:layout_gravity="center_horizontal"/>
 
             <TextView

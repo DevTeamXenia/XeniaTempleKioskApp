@@ -13,7 +13,7 @@
 
     donation_screen
     <string name="fill_out_your_details">உங்கள் விவரங்களை நிரப்பவும்</string>
-    <string name="donation_amount">நன்கொடை தொகை</string>
+    <string name="donation_amount">நன்கொடை தொகை*</string>
     <string name="_10_000">₹10,000</string>
     <string name="pay">பணம் செலுத்துங்கள்</string>
     <string name="phone_number">தொலைபேசி எண்</string>
@@ -32,6 +32,11 @@
     <string name="transcation_id">பரிவர்த்தனை ஐடி : </string>
     <string name="star">தாரா : </string>
     <string name="pay_name">பெயர் :</string>
+    <string name="payment_failed">பணம் செலுத்துதல் தோல்வியுற்றது</string>
+    <string name="it_seems_we_have_not_received_money">எங்களுக்கு பணம் கிடைக்கவில்லை போல தெரிகிறது</string>
+    <string name="do_you_want_to_do_close_this_page">இந்த பக்கத்தை மூட விரும்புகிறீர்களா?</string>
+    <string name="cancel">ரத்துசெய்</string>
+    <string name="yes">ஆம்</string>
 
 
 

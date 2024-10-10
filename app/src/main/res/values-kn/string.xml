@@ -12,7 +12,7 @@
 
     donation_screen
     <string name="fill_out_your_details">ನಿಮ್ಮ ವಿವರಗಳನ್ನು ತುಂಬಿ</string>
-    <string name="donation_amount">ದಾನದ ಮೊತ್ತ</string>
+    <string name="donation_amount">ದಾನದ ಮೊತ್ತ*</string>
     <string name="_10_000">₹10,000</string>
     <string name="pay">ಪಾವತಿಸಲು</string>
     <string name="phone_number">ಫೋನ್ ಸಂಖ್ಯೆ</string>
@@ -31,7 +31,11 @@
     <string name="transcation_id">ವ್ಯವಹಾರ ಸಂಖ್ಯೆ:</string>
     <string name="star">ತಾರೆ:</string>
     <string name="pay_name">ಹೆಸರು :</string>
-
+    <string name="payment_failed">ಪಾವತಿ ವಿಫಲವಾಗಿದೆ</string>
+    <string name="it_seems_we_have_not_received_money">ನಾವು ಹಣವನ್ನು ಸ್ವೀಕರಿಸಿಲ್ಲ ಎಂದು ತೋರುತ್ತದೆ</string>
+    <string name="do_you_want_to_do_close_this_page">ನೀವು ಈ ಪುಟವನ್ನು ಮುಚ್ಚಲು ಬಯಸುತ್ತೀರಾ?</string>
+    <string name="cancel">ರದ್ದುಗೊಳಿಸು</string>
+    <string name="yes">ಹೌದು</string>
 
 
 

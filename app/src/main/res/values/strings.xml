@@ -1,23 +1,21 @@
 <resources>
-    <string name="app_name">TempleKiosk</string>
-    <string name="make_a_donation">MAKE A DONATION</string>
-    <string name="english">English</string>
-    <string name="malayalam">മലയാളം</string>
-    <string name="tamil">தமிழ்</string>
-    <string name="kannada">ಕನ್ನಡ</string>
-    <string name="telugu">తెలుగు</string>
-    <string name="hindi">हिन्दी</string>
-    <string name="todo">TODO</string>
-    <string name="choose_your_language">Choose your language</string>
-    <string name="p_o_w_e_r_e_d_b_y">p o w e r e d b y</string>
-    <string name="b_a_n_k_i_n_g_p_a_r_t_n_e_r">b a n k i n g p a r t n e r</string>
-    <string name="login_as_a_admin_user">Login as a Admin User</string>
-    <string name="user_id">User Id</string>
-    <string name="password">Password</string>
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="log_in">LOG IN</string>
-    <string name="payment_failed">Payment Failed</string>
-    <string name="it_seems_we_have_not_received_money">It seems we have not received money</string>
+    <string name="app_name" translatable="false">TempleKiosk</string>
+    <string name="make_a_donation" translatable="false">MAKE A DONATION</string>
+    <string name="english" translatable="false">English</string>
+    <string name="malayalam" translatable="false">മലയാളം</string>
+    <string name="tamil" translatable="false">தமிழ்</string>
+    <string name="kannada" translatable="false">ಕನ್ನಡ</string>
+    <string name="telugu" translatable="false">తెలుగు</string>
+    <string name="hindi" translatable="false">हिन्दी</string>
+    <string name="todo" translatable="false">TODO</string>
+    <string name="choose_your_language" translatable="false">Choose your language</string>
+    <string name="p_o_w_e_r_e_d_b_y" translatable="false">p o w e r e d b y</string>
+    <string name="b_a_n_k_i_n_g_p_a_r_t_n_e_r" translatable="false">b a n k i n g p a r t n e r</string>
+    <string name="login_as_a_admin_user" translatable="false">Login as a Admin User</string>
+    <string name="user_id" translatable="false">User Id</string>
+    <string name="password" translatable="false">Password</string>
+    <string name="log_in" translatable="false">LOG IN</string>
+
 
 
     <string name="home">Home</string>
@@ -33,7 +31,7 @@
 
     //donation_screen
     <string name="fill_out_your_details">Fill out your details</string>
-    <string name="donation_amount">Donation Amount</string>
+    <string name="donation_amount">Donation Amount*</string>
     <string name="_10_000">₹10,000</string>
     <string name="pay">PAY</string>
     <string name="phone_number">Phone Number</string>
@@ -54,6 +52,11 @@
     <string name="transcation_id">Transcation ID : </string>
     <string name="star">Star : </string>
     <string name="pay_name">Name  :</string>
+    <string name="payment_failed">Payment Failed</string>
+    <string name="it_seems_we_have_not_received_money">It seems we have not received money</string>
+    <string name="do_you_want_to_do_close_this_page">Do you want to do close this page?</string>
+    <string name="cancel">Cancel</string>
+    <string name="yes">Yes</string>
 
 
     <string-array name="vazhipaduCategory">

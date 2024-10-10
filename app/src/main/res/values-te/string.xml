@@ -14,7 +14,7 @@
 
         donation_screen
         <string name="fill_out_your_details">మీ వివరాలను పూరించండి</string>
-        <string name="donation_amount">దానం మొత్తం</string>
+        <string name="donation_amount">దానం మొత్తం*</string>
         <string name="_10_000">₹10,000</string>
         <string name="pay">చెల్లించండి</string>
         <string name="phone_number">ఫోన్ సంఖ్య</string>
@@ -33,6 +33,11 @@
         <string name="transcation_id">లావాదేవీ సంఖ్య : </string>
         <string name="star">తార:</string>
         <string name="pay_name">పేరు :</string>
+        <string name="payment_failed">చెల్లింపు విఫలం అయింది</string>
+        <string name="it_seems_we_have_not_received_money">మేము డబ్బు పొందలేదని కనిపిస్తున్నది</string>
+        <string name="do_you_want_to_do_close_this_page">మీరు ఈ పేజీని మూసివేయాలనుకుంటున్నారా?</string>
+        <string name="cancel">రద్దు</string>
+        <string name="yes">అవును</string>
 
 
 

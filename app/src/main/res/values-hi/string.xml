@@ -14,7 +14,7 @@
 
     //donation_screen
     <string name="fill_out_your_details">अपने विवरण भरें</string>
-    <string name="donation_amount">दान राशि</string>
+    <string name="donation_amount">दान राशि*</string>
     <string name="_10_000">₹10,000</string>
     <string name="pay">भुगतान करें</string>
     <string name="phone_number"> फोन नंबर</string>
@@ -33,7 +33,11 @@
     <string name="transcation_id">लेनदेन आईडी : </string>
     <string name="star">सितारा : </string>
     <string name="pay_name">नाम :</string>
-
+    <string name="payment_failed">भुगतान विफल</string>
+    <string name="it_seems_we_have_not_received_money">ऐसा लगता है कि हमें पैसे प्राप्त नहीं हुए हैं</string>
+    <string name="do_you_want_to_do_close_this_page">क्या आप इस पृष्ठ को बंद करना चाहते हैं?</string>
+    <string name="cancel">रद्द करें</string>
+    <string name="yes">हाँ</string>
 
 
 

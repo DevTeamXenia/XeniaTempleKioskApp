@@ -1,19 +1,29 @@
 package com.xenia.templekiosk.ui.dialogue
 
+import android.app.Dialog
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.Window
 import android.widget.Button
 import androidx.fragment.app.DialogFragment
 import com.xenia.templekiosk.R
 import com.xenia.templekiosk.ui.screens.LanguageActivity
 
-
 class CustomWarningPopupDialog : DialogFragment() {
 
-
+    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
+        val dialog = super.onCreateDialog(savedInstanceState)
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        dialog.setCanceledOnTouchOutside(false)
+        dialog.setCancelable(false)
+        return dialog
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.custom_warning_popup_dialog, container, false)
@@ -42,5 +52,4 @@ class CustomWarningPopupDialog : DialogFragment() {
             ViewGroup.LayoutParams.WRAP_CONTENT
         )
     }
-
 }

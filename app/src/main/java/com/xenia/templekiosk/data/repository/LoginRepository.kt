@@ -8,4 +8,8 @@ class LoginRepository {
     suspend fun login(userId:String,password:String) = withContext(Dispatchers.IO) {
         ApiClient.apiService.login(userId,password)
     }
+
+    suspend fun getCompany(companyId:Int) = withContext(Dispatchers.IO) {
+        ApiClient.apiService.getCompany(companyId)
+    }
 }

@@ -1,5 +1,6 @@
 package com.xenia.templekiosk.data.network.service
 
+import com.xenia.templekiosk.data.network.model.CompanyResponse
 import com.xenia.templekiosk.data.network.model.LoginResponse
 import com.xenia.templekiosk.data.network.model.OrderRequest
 import com.xenia.templekiosk.data.network.model.OrderResponse
@@ -7,6 +8,7 @@ import com.xenia.templekiosk.data.network.model.PaymentRequest
 import com.xenia.templekiosk.data.network.model.PaymentResponse
 import com.xenia.templekiosk.data.network.model.PaymentStatus
 import retrofit2.http.Body
+import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.Query
 
@@ -15,6 +17,9 @@ interface ApiService {
     @POST("auth/login")
     suspend fun login(@Query("username") userName: String,
                       @Query("password") password: String): LoginResponse
+
+    @GET("auth/company")
+    suspend fun getCompany(@Query("companyId") companyId: Int): CompanyResponse
 
     @POST("payment/generateToken")
     suspend fun generateToken(@Query("userId") userId: Int,
