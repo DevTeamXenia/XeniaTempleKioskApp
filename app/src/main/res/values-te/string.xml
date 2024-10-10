@@ -25,6 +25,7 @@
         //Popup_Screen
         <string name="amount_10_000">మొత్తం   ₹ 10,000 /-</string>
         <string name="scan_this_code_to_pay">ఈ కోడ్‌ను స్కాన్ చేసి చెల్లించండి</string>
+        <string name="expire">QR కాలం ముగుస్తుంది :</string>
 
         //payment_Screen
         <string name="thank_you">ధన్యవాదాలు!</string>

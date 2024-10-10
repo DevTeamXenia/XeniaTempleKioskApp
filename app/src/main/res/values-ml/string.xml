@@ -24,6 +24,7 @@
     //Popup_Screen
     <string name="amount_10_000"> തുക ₹ 10,000 /-</string>
     <string name="scan_this_code_to_pay">ഈ കോഡ് സ്കാൻ ചെയ്ത് പണം നൽകുക</string>
+    <string name="expire">QR അവസാനിക്കും :</string>
 
     //payment_Screen
     <string name="thank_you">നന്ദി!</string>

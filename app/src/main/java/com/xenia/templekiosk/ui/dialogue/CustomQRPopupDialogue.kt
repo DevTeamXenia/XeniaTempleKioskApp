@@ -112,6 +112,7 @@ class CustomQRPopupDialogue : DialogFragment() {
         val pollInterval = 3000L
 
         pollingTimer = object : CountDownTimer(totalTime, 1000) {
+            @SuppressLint("SetTextI18n", "DefaultLocale")
             override fun onTick(millisUntilFinished: Long) {
                 elapsedTime += 1000
                 val minutes = millisUntilFinished / 60000
@@ -152,11 +153,11 @@ class CustomQRPopupDialogue : DialogFragment() {
                         val statusDesc = response.Data?.statusDesc
                         if (status != null && statusDesc != null) {
                             if (status == "S" && statusDesc == "Transaction success") {
-                                postPaymentHistory("Success")
+                                postPaymentHistory(status)
                                 return@launch
 
                             } else if (status == "F" && statusDesc != "Invalid PsprefNo") {
-                                postPaymentHistory("Failed")
+                                postPaymentHistory(status)
                                 return@launch
 
                             }

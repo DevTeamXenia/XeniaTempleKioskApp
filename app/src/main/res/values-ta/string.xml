@@ -24,6 +24,7 @@
     //Popup_Screen
     <string name="amount_10_000">தொகை  ₹ 10,000 /-</string>
     <string name="scan_this_code_to_pay">இந்த குறியீட்டை ஸ்கேன் செய்து பணம் செலுத்தவும்</string>
+    <string name="expire">QR காலாவதி ஆகும் :</string>
 
     //payment_Screen
     <string name="thank_you">நன்றி!</string>

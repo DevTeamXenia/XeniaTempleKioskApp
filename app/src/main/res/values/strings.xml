@@ -43,6 +43,7 @@
     //Popup_Screen
     <string name="amount_10_000">Amount ₹ 10,000 /-</string>
     <string name="scan_this_code_to_pay">Scan this code to Pay</string>
+    <string name="expire">Scan this code to Pay</string>
 
 
     //payment_Screen

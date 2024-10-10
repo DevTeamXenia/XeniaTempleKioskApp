@@ -25,6 +25,7 @@
     //Popup_Screen
     <string name="amount_10_000">राशि  ₹ 10,000 /-</string>
     <string name="scan_this_code_to_pay">इस कोड को स्कैन करें और भुगतान करें</string>
+    <string name="expire">क्यूआर समाप्त होगा :</string>
 
     //payment_Screen
     <string name="thank_you">धन्यवाद!</string>
