@@ -87,9 +87,11 @@ class PaymentActivity : AppCompatActivity() {
 
                 }
             } else {
+                redirect()
                 Toast.makeText(this, "No USB printer devices found", Toast.LENGTH_LONG).show()
             }
         } catch (_: Exception) {
+            redirect()
 
         }
     }
