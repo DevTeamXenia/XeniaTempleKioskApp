@@ -37,6 +37,11 @@
     <string name="do_you_want_to_do_close_this_page">ನೀವು ಈ ಪುಟವನ್ನು ಮುಚ್ಚಲು ಬಯಸುತ್ತೀರಾ?</string>
     <string name="cancel">ರದ್ದುಗೊಳಿಸು</string>
     <string name="yes">ಹೌದು</string>
+    <string name="no">ಇಲ್ಲ</string>
+    <string name="no_internet_connection">ಇಂಟರ್ನೆಟ್ ಸಂಪರ್ಕವಿಲ್ಲ</string>
+    <string name="retry"> ಪುನಃ ಪ್ರಯತ್ನಿಸಿ</string>
+    <string name="you_have_been_inactive_for_a_while_please_touch_the_screen_to_continue">ನೀವು ಕೆಲಕಾಲದಿಂದ ಅಕ್ರಿಯರಾಗಿದ್ದೀರಿ. ಮುಂದುವರಿಸಲು ಬಯಸುತ್ತೀರಾ?</string>
+    <string name="qr_expire"> ಕ್ಯೂಆರ್ ಅವಧಿ ಮುಗಿಯಲು :</string>
 
 
 

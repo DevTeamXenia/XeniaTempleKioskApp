@@ -1,10 +1,14 @@
-
+@file:Suppress("DEPRECATION")
 
 package com.xenia.templekiosk.utils.common
 
+import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.Context
 import android.content.res.Configuration
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
+import android.os.Build
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.TextView
@@ -45,8 +49,6 @@ object CommonMethod {
     }
 
 
-
-
     fun generateNumericTransactionReferenceID(): String {
         val secureRandom = SecureRandom()
         val numberStringBuilder = StringBuilder(10)
@@ -72,5 +74,29 @@ object CommonMethod {
         context.createConfigurationContext(config)
         context.resources.updateConfiguration(config, context.resources.displayMetrics)
     }
+
+    @SuppressLint("ObsoleteSdkInt")
+    fun isInternetAvailable(context: Context): Boolean {
+        val connectivityManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            val network = connectivityManager.activeNetwork ?: return false
+            val activeNetwork = connectivityManager.getNetworkCapabilities(network) ?: return false
+
+            return when {
+                activeNetwork.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) -> true
+                activeNetwork.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) -> true
+                activeNetwork.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET) -> true
+                else -> false
+            }
+        } else {
+            val networkInfo = connectivityManager.activeNetworkInfo
+            return networkInfo?.isConnected ?: false
+        }
+    }
+
+
+
+
 
 }

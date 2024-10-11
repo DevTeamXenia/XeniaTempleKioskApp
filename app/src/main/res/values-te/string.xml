@@ -39,6 +39,12 @@
         <string name="do_you_want_to_do_close_this_page">మీరు ఈ పేజీని మూసివేయాలనుకుంటున్నారా?</string>
         <string name="cancel">రద్దు</string>
         <string name="yes">అవును</string>
+        <string name="no">లేదు</string>
+        <string name="no_internet_connection">ఇంటర్నెట్ కనెక్షన్ లేదు</string>
+        <string name="retry">మళ్లీ ప్రయత్నించండి</string>
+        <string name="you_have_been_inactive_for_a_while_please_touch_the_screen_to_continue">మీరు కొంతకాలంగా క్రియాశీలంగా లేరు. మీరు కొనసాగించాలనుకుంటున్నారా?</string>
+        <string name="qr_expire">క్యూఆర్ గడువు ముగియడానికి :</string>
+
 
 
 

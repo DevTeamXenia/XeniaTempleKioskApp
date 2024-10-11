@@ -38,7 +38,11 @@
     <string name="do_you_want_to_do_close_this_page">இந்த பக்கத்தை மூட விரும்புகிறீர்களா?</string>
     <string name="cancel">ரத்துசெய்</string>
     <string name="yes">ஆம்</string>
-
+    <string name="no">இல்லை</string>
+    <string name="no_internet_connection">இணையத் தொடர்பு இல்லை</string>
+    <string name="retry">மீண்டும் முயற்சிக்கவும்</string>
+    <string name="you_have_been_inactive_for_a_while_please_touch_the_screen_to_continue">நீங்கள் ஒரு குறிப்பிட்ட நேரமாக செயலற்றிருந்தீர்கள். நீங்களே தொடர விரும்புகிறீர்களா?</string>
+    <string name="qr_expire">QR முடிவடையும் நேரம் :</string>
 
 
     <string-array name="nakshatras">

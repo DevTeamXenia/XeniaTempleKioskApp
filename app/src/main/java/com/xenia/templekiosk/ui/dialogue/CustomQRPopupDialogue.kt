@@ -1,6 +1,7 @@
 package com.xenia.templekiosk.ui.dialogue
 
 import android.annotation.SuppressLint
+import android.app.Dialog
 import android.content.DialogInterface
 import android.content.Intent
 import android.graphics.Bitmap
@@ -8,10 +9,13 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.os.CountDownTimer
+import android.os.Handler
+import android.os.Looper
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.Window
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.DialogFragment
@@ -50,6 +54,7 @@ class CustomQRPopupDialogue : DialogFragment() {
     private val sessionManager: SessionManager by inject()
     private var isCheckingPaymentStatus = false
 
+
     fun setData(
         amount: String,
         url: String,
@@ -70,6 +75,20 @@ class CustomQRPopupDialogue : DialogFragment() {
         this.devatha = devatha
     }
 
+    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
+        return object : Dialog(requireActivity(), theme) {
+            @Deprecated("Deprecated in Java")
+            override fun onBackPressed() {
+                // Do nothing here to block the back press
+            }
+        }.apply {
+            requestWindowFeature(Window.FEATURE_NO_TITLE)
+            window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+            setCanceledOnTouchOutside(false)
+            setCancelable(false)
+        }
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -86,7 +105,7 @@ class CustomQRPopupDialogue : DialogFragment() {
         qrCodeImageView = view.findViewById(R.id.qrCodeImageView)
         timerTextView = view.findViewById(R.id.txt_timer)
 
-        amountTextView.text = getString(R.string.amount) +"₹"+amount +"/-"
+        amountTextView.text = getString(R.string.amount) +"₹ "+amount +"/-"
         val qrCodeBitmap = generateUPIQRCode(url)
         qrCodeImageView.setImageBitmap(qrCodeBitmap)
 
@@ -118,15 +137,20 @@ class CustomQRPopupDialogue : DialogFragment() {
                 val minutes = millisUntilFinished / 60000
                 val seconds = (millisUntilFinished % 60000) / 1000
                 val timeFormatted = String.format("%02d:%02d", minutes, seconds)
-                timerTextView.text = "QR expires in: $timeFormatted"
+                timerTextView.text = getString(R.string.qr_expire) + " " + timeFormatted
                 if (elapsedTime % pollInterval == 0L) {
-                    checkPaymentStatus()
+                        checkPaymentStatus()
+
+
                 }
             }
 
+            @SuppressLint("SetTextI18n")
             override fun onFinish() {
-                timerTextView.text = "QR expired!"
                 stopCheckingPaymentStatus()
+                val intent = Intent(requireContext(), LanguageActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                startActivity(intent)
                 dismiss()
             }
         }.start()
@@ -253,5 +277,8 @@ class CustomQRPopupDialogue : DialogFragment() {
     private fun stopCheckingPaymentStatus() {
         isCheckingPaymentStatus = false
         paymentStatusJob?.cancel()
+    }
+    fun isDialogShowing(): Boolean {
+        return dialog?.isShowing == true
     }
 }

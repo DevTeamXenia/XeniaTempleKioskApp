@@ -68,21 +68,22 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun performLogin(userId: String, password: String) {
-        showLoader(this@LoginActivity, "Logging in...")
+            showLoader(this@LoginActivity, "Logging in...")
 
-        CoroutineScope(Dispatchers.Main).launch {
-            try {
-                val response = loginRepository.login(userId,password)
-                sessionManager.clearSession()
-                sessionManager.saveUserDetails(response.userId,response.userName,response.companyId)
-                startActivity(Intent(applicationContext,LanguageActivity::class.java))
-                finish()
-                dismissLoader()
-            } catch (e: Exception) {
-                dismissLoader()
-                showSnackbar(binding.root, "Something went wrong! Please try again")
+            CoroutineScope(Dispatchers.Main).launch {
+                try {
+                    val response = loginRepository.login(userId,password)
+                    sessionManager.clearSession()
+                    sessionManager.saveUserDetails(response.userId,response.userName,response.companyId)
+                    startActivity(Intent(applicationContext,LanguageActivity::class.java))
+                    finish()
+                    dismissLoader()
+                } catch (e: Exception) {
+                    dismissLoader()
+                    showSnackbar(binding.root, "Something went wrong! Please try again")
+                }
             }
-        }
+
     }
 
 
