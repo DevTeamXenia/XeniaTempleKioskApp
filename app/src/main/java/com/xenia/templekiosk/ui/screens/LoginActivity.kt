@@ -1,7 +1,10 @@
 package com.xenia.templekiosk.ui.screens
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
+import android.provider.Settings
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import com.xenia.templekiosk.data.repository.LoginRepository
 import com.xenia.templekiosk.databinding.ActivityLoginBinding
@@ -26,6 +29,8 @@ class LoginActivity : AppCompatActivity() {
         if (!ScreenOrientationHelper.checkScreenOnAppOpen(this)) {
             return
         }
+
+        requestOverlayPermission()
 
         if (sessionManager.isLoggedIn()) {
             startActivity(Intent(applicationContext, LanguageActivity::class.java))
@@ -85,6 +90,21 @@ class LoginActivity : AppCompatActivity() {
             }
 
     }
+
+    private fun requestOverlayPermission() {
+        if (!Settings.canDrawOverlays(this)) {
+            val intent = Intent(
+                Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
+                Uri.parse("package:$packageName")
+            )
+            overlayPermissionLauncher.launch(intent)
+        }
+
+    }
+
+    private val overlayPermissionLauncher = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()
+    ) { /* No action needed after permission request */ }
 
 
 }

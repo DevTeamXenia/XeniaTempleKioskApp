@@ -2,8 +2,11 @@ package com.xenia.templekiosk.ui.screens
 
 import android.content.Intent
 import android.content.SharedPreferences
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.provider.Settings
+import androidx.activity.result.contract.ActivityResultContracts
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
@@ -12,7 +15,7 @@ import com.xenia.templekiosk.data.repository.LoginRepository
 import com.xenia.templekiosk.databinding.ActivityLanguageBinding
 import com.xenia.templekiosk.ui.dialogue.CustomInternetAvailabilityDialog
 
-import com.xenia.templekiosk.utils.InactivityHandler
+
 import com.xenia.templekiosk.utils.SessionManager
 import com.xenia.templekiosk.utils.common.CommonMethod.dismissLoader
 import com.xenia.templekiosk.utils.common.CommonMethod.isInternetAvailable
@@ -37,7 +40,7 @@ class LanguageActivity : AppCompatActivity(),
         super.onCreate(savedInstanceState)
         binding = ActivityLanguageBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
+        requestOverlayPermission()
         setupBackgroundImage()
         setupLanguageButtons()
     }
@@ -104,5 +107,20 @@ class LanguageActivity : AppCompatActivity(),
         super.onResume()
         loadCompanyDetails()
     }
+
+    private fun requestOverlayPermission() {
+        if (!Settings.canDrawOverlays(this)) {
+            val intent = Intent(
+                Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
+                Uri.parse("package:$packageName")
+            )
+            overlayPermissionLauncher.launch(intent)
+        }
+
+    }
+
+    private val overlayPermissionLauncher = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()
+    ) { /* No action needed after permission request */ }
 
 }
