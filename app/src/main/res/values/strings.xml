@@ -15,6 +15,7 @@
     <string name="user_id" translatable="false">User Id</string>
     <string name="password" translatable="false">Password</string>
     <string name="log_in" translatable="false">LOG IN</string>
+    <string name="ekannikka" translatable="false">ഇ-കാണിക്ക</string>
 
 
     <string name="home">Home</string>
@@ -62,6 +63,7 @@
     <string name="retry">Retry</string>
     <string name="you_have_been_inactive_for_a_while_please_touch_the_screen_to_continue">You have been inactive for a while. Do you want to continue?</string>
     <string name="qr_expire">QR expires in :</string>
+
 
 
     <string-array name="vazhipaduCategory">
