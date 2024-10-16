@@ -2,9 +2,12 @@ package com.xenia.templekiosk.ui.screens
 
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.MotionEvent
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.GridLayoutManager
 import com.xenia.templekiosk.R
 import com.xenia.templekiosk.data.listeners.InactivityHandlerActivity
@@ -24,6 +27,7 @@ import com.xenia.templekiosk.utils.common.CommonMethod.isInternetAvailable
 import com.xenia.templekiosk.utils.common.CommonMethod.setLocale
 import com.xenia.templekiosk.utils.common.CommonMethod.showLoader
 import com.xenia.templekiosk.utils.common.CommonMethod.showSnackbar
+import com.xenia.templekiosk.utils.common.Constants
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -57,6 +61,7 @@ class DonationActivity : AppCompatActivity(), CustomInactivityDialog.InactivityC
         selectDevatha = intent.getStringExtra("SD")
 
         initUI()
+        updateButtonState()
 
         inactivityDialog = CustomInactivityDialog(this)
         inactivityHandler = InactivityHandler(this, supportFragmentManager, inactivityDialog,customQRPopupDialog)
@@ -64,6 +69,16 @@ class DonationActivity : AppCompatActivity(), CustomInactivityDialog.InactivityC
         binding.btnHome.setOnClickListener {
             customPopupDialog.show(supportFragmentManager, "warning_dialog")
         }
+
+        binding.editTxtDonation.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                updateButtonState()
+            }
+
+            override fun afterTextChanged(s: Editable?) {}
+        })
 
         binding.btnPay.setOnClickListener {
             generatePayment()
@@ -79,8 +94,27 @@ class DonationActivity : AppCompatActivity(), CustomInactivityDialog.InactivityC
         binding.txtPhno.text = getString(R.string.phone_number)
         binding.txtName.text = getString(R.string.name)
         binding.txtStar.text = getString(R.string.select_your_janma_nakshatra)
+        when (selectDevatha) {
+            Constants.MELVAKUBHAGAVATI -> {
+                binding.txtDevadha?.text = getString(R.string.melkavu_devi)
+                binding.imgDevadha?.setImageResource(R.drawable.ic_melkavu)
+            }
+            Constants.KEEZHKAVUBHAGAVATI -> {
+                binding.txtDevadha?.text = getString(R.string.keezhkavu_devi)
+                binding.imgDevadha?.setImageResource(R.drawable.ic_kizhkavu)
+            }
+            Constants.SHIVA -> {
+                binding.txtDevadha?.text = getString(R.string.shiva)
+                binding.imgDevadha?.setImageResource(R.drawable.ic_shiva)
+            }
+            else -> {
+                binding.txtDevadha?.text = getString(R.string.ayyappa)
+                binding.imgDevadha?.setImageResource(R.drawable.ic_ayyappan)
+            }
+        }
 
-        val layoutManager = GridLayoutManager(applicationContext, 4)
+
+        val layoutManager = GridLayoutManager(this, 4)
         binding.listStar.layoutManager = layoutManager
 
         val translatedNakshatras = resources.getStringArray(R.array.nakshatras)
@@ -96,16 +130,34 @@ class DonationActivity : AppCompatActivity(), CustomInactivityDialog.InactivityC
         val adapter = NakshatraAdapter(translatedNakshatras) { selectedTranslatedNakshatra ->
             val index = translatedNakshatras.indexOf(selectedTranslatedNakshatra)
             selectedNakshatra = englishNakshatras[index]
+            updateButtonState()
         }
         binding.listStar.adapter = adapter
         binding.editTxtDonation.requestFocus()
     }
 
+    private fun updateButtonState() {
+        val inputText = binding.editTxtDonation.text.toString().trim()
+
+        if (inputText.isNotEmpty() && selectedNakshatra?.isNotEmpty() == true) {
+            binding.btnPay.isEnabled = true
+            binding.btnPay.setBackgroundColor(
+                ContextCompat.getColor(this, R.color.primaryColor)
+            )
+        } else {
+            binding.btnPay.isEnabled = false
+            binding.btnPay.setBackgroundColor(
+                ContextCompat.getColor(this, R.color.light_grey)
+            )
+        }
+    }
+
+
     private fun generatePayment() {
          donationAmount = binding.editTxtDonation.text.toString().toDoubleOrNull()
         when {
             donationAmount == null || donationAmount!! <= 0 -> {
-                showSnackbar(binding.root, "Please enter a valid amount greater than 0!")
+                showSnackbar(binding.root, "Please enter a valid amount")
             }
             selectedNakshatra == null -> {
                 showSnackbar(binding.root, "Please select a nakshatra!")

@@ -1,6 +1,7 @@
 package com.xenia.templekiosk.ui.screens
 
 import android.content.Intent
+import android.content.pm.ActivityInfo
 import android.net.Uri
 import android.os.Bundle
 import android.provider.Settings
@@ -12,7 +13,6 @@ import com.xenia.templekiosk.utils.SessionManager
 import com.xenia.templekiosk.utils.common.CommonMethod.dismissLoader
 import com.xenia.templekiosk.utils.common.CommonMethod.showLoader
 import com.xenia.templekiosk.utils.common.CommonMethod.showSnackbar
-import com.xenia.templekiosk.utils.common.ScreenOrientationHelper
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -26,12 +26,9 @@ class LoginActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        if (!ScreenOrientationHelper.checkScreenOnAppOpen(this)) {
-            return
-        }
 
         requestOverlayPermission()
-
+        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED
         if (sessionManager.isLoggedIn()) {
             startActivity(Intent(applicationContext, LanguageActivity::class.java))
             finish()
@@ -39,7 +36,6 @@ class LoginActivity : AppCompatActivity() {
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        ScreenOrientationHelper.setScreenOrientation(applicationContext)
 
         binding.btnLogin.setOnClickListener {
             val userId = binding.edtUserId.text.toString()

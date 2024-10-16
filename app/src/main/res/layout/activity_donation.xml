@@ -1,281 +1,265 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:baselineAligned="false"
-    android:orientation="horizontal"
+    android:orientation="vertical"
     tools:context=".ui.screens.DonationActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="3"
-        android:background="@drawable/home_side_background">
+        android:layout_height="200dp"
+        android:background="@drawable/bg_home_above">
+
+        <ImageView
+            android:id="@+id/background_image"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="10dp"
+            android:alpha="0.3"
+            android:scaleType="fitEnd"
+            android:src="@drawable/home_side_bottom_img" />
 
         <RelativeLayout
             android:id="@+id/btn_home"
-            android:layout_width="300dp"
-            android:layout_height="100dp"
-            android:layout_above="@+id/space_left"
-            android:layout_centerInParent="true"
-            android:background="@drawable/language_card_backgorund">
+            android:layout_width="150dp"
+            android:layout_height="70dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/home_card_background"
+            android:gravity="center">
 
             <ImageView
-                android:layout_width="20dp"
-                android:layout_height="18dp"
+                android:id="@+id/home_icon"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
                 android:layout_centerVertical="true"
                 android:layout_marginEnd="15dp"
-                android:layout_toStartOf="@+id/txt_home"
-                android:scaleType="fitEnd"
                 android:contentDescription="@string/todo"
-                android:src="@drawable/ic_home"
-                app:tint="@color/primaryColor" />
+                android:scaleType="fitEnd"
+                android:src="@drawable/ic_home" />
 
             <TextView
                 android:id="@+id/txt_home"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
+                android:layout_width="70dp"
+                android:layout_height="30dp"
+                android:layout_centerVertical="true"
+                android:layout_toEndOf="@+id/home_icon"
                 android:fontFamily="@font/poppins_regular"
-                android:text="@string/home"
-                android:textColor="@color/primaryColor"
-                android:textSize="16sp"
+                android:textColor="@color/secondaryColor"
+                android:textSize="18sp"
                 tools:ignore="RelativeOverlap" />
-
         </RelativeLayout>
 
-        <Space
-            android:id="@+id/space_left"
-            android:layout_width="wrap_content"
-            android:layout_height="1dp"
-            android:layout_centerInParent="true"
-            tools:ignore="DuplicateIds" />
-
-
         <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:alpha="0.1"
-            android:scaleType="fitEnd"
-            android:src="@drawable/home_side_bottom_img" />
+            android:id="@+id/img_devadha"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="30dp"
+            android:contentDescription="@string/todo"
+            android:scaleType="fitEnd" />
+
+        <TextView
+            android:id="@+id/txt_devadha"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_below="@+id/img_devadha"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="30dp"
+            android:fontFamily="@font/segoe_ui_bold"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textSize="20sp" />
+
 
     </RelativeLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginStart="22dp"
-        android:layout_marginEnd="22dp"
-        android:layout_weight="1"
+        android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <LinearLayout
+
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1.3"
-            android:orientation="vertical">
-
+            android:layout_marginStart="22dp"
+            android:layout_marginEnd="22dp"
+            android:layout_marginBottom="10dp">
 
             <TextView
                 android:id="@+id/txt_fill"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
+                android:layout_centerHorizontal="true"
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="10dp"
-                android:text="@string/fill_out_your_details"
                 android:fontFamily="@font/poppins_medium"
                 android:gravity="center_horizontal"
+                android:text="@string/fill_out_your_details"
                 android:textColor="@color/secondaryColor"
                 android:textSize="28sp" />
+
 
             <TextView
                 android:id="@+id/txt_donate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="22dp"
+                android:layout_below="@+id/txt_fill"
                 android:layout_marginTop="10dp"
                 android:fontFamily="@font/poppins_regular"
                 android:text="@string/donation_amount"
                 android:textColor="@color/black"
                 android:textSize="20sp" />
 
-            <LinearLayout
+
+            <EditText
+                android:id="@+id/edit_txt_donation"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
+                android:layout_height="80dp"
+                android:layout_below="@+id/txt_donate"
+                android:layout_marginEnd="30dp"
                 android:layout_marginBottom="10dp"
-                android:orientation="horizontal">
+                android:background="@drawable/textview_board"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:hint="@string/_10_000"
+                android:inputType="number"
+                android:maxLength="7"
+                android:paddingEnd="7dp"
+                android:textAlignment="textEnd"
+                android:textColor="@color/black"
+                android:textSize="30sp"
+                tools:ignore="RtlSymmetry" />
 
-                <EditText
-                    android:id="@+id/edit_txt_donation"
-                    android:layout_width="match_parent"
-                    android:layout_height="80dp"
-                    android:layout_marginStart="22dp"
-                    android:layout_marginEnd="30dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/textview_board"
-                    android:hint="@string/_10_000"
-                    android:inputType="number"
-                    android:maxLength="7"
-                    android:paddingEnd="7dp"
-                    android:focusable="true"
-                    android:focusableInTouchMode="true"
-                    android:textAlignment="textEnd"
-                    android:textColor="@color/black"
-                    android:textSize="30sp"
-                    tools:ignore="RtlSymmetry" />
-
-                <Button
-                    android:id="@+id/btn_pay"
-                    android:layout_width="match_parent"
-                    android:layout_height="120dp"
-                    android:layout_marginStart="22dp"
-                    android:layout_marginEnd="30dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/textview_board"
-                    android:maxLength="7"
-                    android:paddingEnd="7dp"
-                    android:text="@string/pay"
-                    android:textColor="@color/white"
-                    android:textSize="30sp"
-                    tools:ignore="RtlSymmetry" />
-
-            </LinearLayout>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1.7"
-            android:orientation="vertical">
 
             <LinearLayout
+                android:id="@+id/lin_user"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:layout_below="@+id/edit_txt_donation"
+                android:orientation="vertical">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1.3"
-                    android:orientation="vertical">
+                    android:orientation="horizontal">
 
-                    <TextView
-                        android:id="@+id/txt_phno"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="22dp"
-                        android:fontFamily="@font/poppins_regular"
-                        android:text="@string/phone_number"
-                        android:textColor="@color/black"
-                        android:textSize="18sp" />
-
-                    <RelativeLayout
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="20dp"
-                        android:layout_marginTop="5dp"
-                        android:layout_marginEnd="10dp"
-                        android:layout_marginBottom="5dp"
-                        android:background="@drawable/editext_boarder">
+                        android:layout_weight="1.3"
+                        android:orientation="vertical">
 
-                        <RelativeLayout
-                            android:id="@+id/phone_area"
+                        <TextView
+                            android:id="@+id/txt_phno"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="2dp"
-                            android:background="@drawable/bg_phone_no">
+                            android:fontFamily="@font/poppins_regular"
+                            android:text="@string/phone_number"
+                            android:textColor="@color/black"
+                            android:textSize="18sp" />
 
-                            <ImageView
-                                android:id="@+id/img_india"
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginEnd="10dp"
+                            android:layout_marginBottom="5dp"
+                            android:background="@drawable/editext_boarder">
+
+                            <RelativeLayout
+                                android:id="@+id/phone_area"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_centerVertical="true"
-                                android:layout_marginStart="15dp"
-                                android:src="@drawable/ic_india" />
+                                android:layout_marginTop="2dp"
+                                android:background="@drawable/bg_phone_no">
 
-                            <TextView
-                                android:layout_width="wrap_content"
+                                <ImageView
+                                    android:id="@+id/img_india"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_centerVertical="true"
+                                    android:layout_marginStart="15dp"
+                                    android:src="@drawable/ic_india" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_centerVertical="true"
+                                    android:layout_marginStart="10dp"
+                                    android:layout_toRightOf="@+id/img_india"
+                                    android:fontFamily="@font/poppins_regular"
+                                    android:text="@string/_91"
+                                    android:textColor="@color/black"
+                                    android:textSize="18sp" />
+
+                            </RelativeLayout>
+
+
+                            <EditText
+                                android:id="@+id/edit_phno"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_centerVertical="true"
-                                android:layout_marginStart="10dp"
-                                android:layout_toRightOf="@+id/img_india"
-                                android:fontFamily="@font/poppins_regular"
-                                android:text="@string/_91"
-                                android:textColor="@color/black"
-                                android:textSize="18sp" />
+                                android:layout_marginTop="2dp"
+                                android:layout_marginEnd="1dp"
+                                android:layout_marginBottom="2dp"
+                                android:layout_toEndOf="@+id/phone_area"
+                                android:background="@drawable/edit_text_dummy_bg"
+                                android:inputType="phone"
+                                android:maxLength="10"
+                                android:paddingStart="7dp" />
 
                         </RelativeLayout>
 
 
-                        <EditText
-                            android:id="@+id/edit_phno"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="2dp"
-                            android:layout_marginEnd="1dp"
-                            android:layout_marginBottom="2dp"
-                            android:layout_toEndOf="@+id/phone_area"
-                            android:background="@drawable/edit_text_dummy_bg"
-                            android:inputType="phone"
-                            android:maxLength="10"
-                            android:paddingStart="7dp" />
+                    </LinearLayout>
 
-                    </RelativeLayout>
-
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/txt_name"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="22dp"
-                        android:fontFamily="@font/poppins_regular"
-                        android:text="@string/name"
-                        android:textColor="@color/black"
-                        android:textSize="18sp" />
-
-                    <EditText
-                        android:id="@+id/edit_name"
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="20dp"
-                        android:layout_marginTop="5dp"
-                        android:layout_marginEnd="10dp"
-                        android:layout_marginBottom="5dp"
-                        android:background="@drawable/editext_boarder"
-                        android:paddingStart="7dp" />
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/txt_name"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="22dp"
+                            android:fontFamily="@font/poppins_regular"
+                            android:text="@string/name"
+                            android:textColor="@color/black"
+                            android:textSize="18sp" />
+
+                        <EditText
+                            android:id="@+id/edit_name"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="20dp"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginEnd="10dp"
+                            android:layout_marginBottom="5dp"
+                            android:background="@drawable/editext_boarder"
+                            android:paddingStart="7dp" />
+
+                    </LinearLayout>
+
 
                 </LinearLayout>
-
 
             </LinearLayout>
 
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1.1"
-            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/txt_star"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="22dp"
+                android:layout_below="@+id/lin_user"
                 android:fontFamily="@font/poppins_regular"
                 android:text="@string/select_your_janma_nakshatra"
                 android:textColor="@color/black"
@@ -285,12 +269,32 @@
                 android:id="@+id/list_star"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_above="@+id/btn_pay"
+                android:layout_below="@+id/txt_star"
                 android:layout_marginBottom="10dp"
                 android:scrollbars="vertical" />
 
-        </LinearLayout>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_pay"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_gravity="bottom"
+                android:backgroundTint="@color/light_grey"
+                app:cornerRadius="10dp"
+                android:enabled="false"
+                android:text="@string/pay"
+                android:textColor="@color/white"
+                android:textSize="30sp"
+                tools:ignore="RtlSymmetry" />
+
+
+        </RelativeLayout>
 
 
     </LinearLayout>
 
 </LinearLayout>
+
+

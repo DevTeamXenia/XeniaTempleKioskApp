@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name" translatable="false">TempleKiosk</string>
+    <string name="app_name" translatable="false">Temple Kiosk</string>
     <string name="make_a_donation" translatable="false">MAKE A DONATION</string>
     <string name="english" translatable="false">English</string>
     <string name="malayalam" translatable="false">മലയാളം</string>
@@ -15,7 +15,7 @@
     <string name="user_id" translatable="false">User Id</string>
     <string name="password" translatable="false">Password</string>
     <string name="log_in" translatable="false">LOG IN</string>
-    <string name="ekannikka" translatable="false">ഇ-കാണിക്ക</string>
+
 
 
     <string name="home">Home</string>

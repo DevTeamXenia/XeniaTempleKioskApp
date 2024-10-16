@@ -29,7 +29,6 @@ class CustomInactivityDialog(private val callback: InactivityCallback) : DialogF
         return object : Dialog(requireActivity(), theme) {
             @Deprecated("Deprecated in Java")
             override fun onBackPressed() {
-                // Prevent the back button from closing the dialog
             }
         }.apply {
             requestWindowFeature(Window.FEATURE_NO_TITLE)

@@ -2,6 +2,7 @@ package com.xenia.templekiosk.ui.screens
 
 import android.content.Intent
 import android.content.SharedPreferences
+import android.content.res.Configuration
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -46,14 +47,23 @@ class LanguageActivity : AppCompatActivity(),
     }
 
     private fun setupBackgroundImage() {
+        val backgroundImage = if (resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            R.drawable.bg_home_landscape
+        } else {
+            R.drawable.bg_home
+        }
+
         Glide.with(this)
             .asGif()
-            .load(R.drawable.bg_home)
+            .load(backgroundImage)
             .apply(RequestOptions()
                 .fitCenter()
-                .diskCacheStrategy(DiskCacheStrategy.ALL))
+                .skipMemoryCache(true)
+                .diskCacheStrategy(DiskCacheStrategy.NONE))
             .into(binding.imgBackground)
     }
+
+
 
     private fun setupLanguageButtons() {
         binding.cardEnglish.setOnClickListener { selectLanguage(Constants.LANGUAGE_ENGLISH) }

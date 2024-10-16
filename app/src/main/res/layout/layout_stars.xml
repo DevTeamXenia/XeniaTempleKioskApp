@@ -6,14 +6,14 @@
 
     <TextView
         android:id="@+id/nakshatra_name"
-        android:layout_width="200dp"
+        android:layout_width="160dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="5dp"
         android:layout_height="wrap_content"
         android:textSize="18sp"
         android:textColor="@color/black"
         android:background="@drawable/textview_board"
         android:gravity="center"
-        android:layout_marginStart="22dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="22dp"/>
+        android:layout_marginTop="10dp" />
 
 </LinearLayout>
