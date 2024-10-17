@@ -63,7 +63,8 @@
     <string name="retry">Retry</string>
     <string name="you_have_been_inactive_for_a_while_please_touch_the_screen_to_continue">You have been inactive for a while. Do you want to continue?</string>
     <string name="qr_expire">QR expires in :</string>
-
+    <string name="do_you_want_to_logout">Do you want to Logout</string>
+    <string name="please_enter_password">Please Enter Password</string>
 
 
     <string-array name="vazhipaduCategory">

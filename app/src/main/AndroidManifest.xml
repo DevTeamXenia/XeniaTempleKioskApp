@@ -51,6 +51,7 @@
             android:exported="false" />
         <activity
             android:name=".ui.screens.LanguageActivity"
+            android:lockTaskMode="if_whitelisted"
             android:exported="false"/>
 
         <meta-data

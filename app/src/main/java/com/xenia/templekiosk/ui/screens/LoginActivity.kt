@@ -28,7 +28,7 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         requestOverlayPermission()
-        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED
+
         if (sessionManager.isLoggedIn()) {
             startActivity(Intent(applicationContext, LanguageActivity::class.java))
             finish()

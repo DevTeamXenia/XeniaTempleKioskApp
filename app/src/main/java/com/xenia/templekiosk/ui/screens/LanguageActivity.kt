@@ -1,5 +1,6 @@
 package com.xenia.templekiosk.ui.screens
 
+
 import android.content.Intent
 import android.content.SharedPreferences
 import android.content.res.Configuration
@@ -15,8 +16,6 @@ import com.xenia.templekiosk.R
 import com.xenia.templekiosk.data.repository.LoginRepository
 import com.xenia.templekiosk.databinding.ActivityLanguageBinding
 import com.xenia.templekiosk.ui.dialogue.CustomInternetAvailabilityDialog
-
-
 import com.xenia.templekiosk.utils.SessionManager
 import com.xenia.templekiosk.utils.common.CommonMethod.dismissLoader
 import com.xenia.templekiosk.utils.common.CommonMethod.isInternetAvailable
@@ -44,7 +43,10 @@ class LanguageActivity : AppCompatActivity(),
         requestOverlayPermission()
         setupBackgroundImage()
         setupLanguageButtons()
+
+
     }
+
 
     private fun setupBackgroundImage() {
         val backgroundImage = if (resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
