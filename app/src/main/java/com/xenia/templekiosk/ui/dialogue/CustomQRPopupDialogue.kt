@@ -87,6 +87,7 @@ class CustomQRPopupDialogue : DialogFragment() {
         }
     }
 
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -260,7 +261,7 @@ class CustomQRPopupDialogue : DialogFragment() {
     override fun onStart() {
         super.onStart()
         dialog?.window?.setLayout(
-            (resources.displayMetrics.widthPixels * 0.55).toInt(),
+            (resources.displayMetrics.widthPixels * 0.75).toInt(),
             ViewGroup.LayoutParams.WRAP_CONTENT
         )
         dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
