@@ -26,6 +26,7 @@
                 android:contentDescription="@string/todo"
                 android:scaleType="fitXY" />
 
+
         </RelativeLayout>
 
     <LinearLayout
@@ -407,11 +408,7 @@
         </LinearLayout>
 
 
-
     </LinearLayout>
-
-
-
 
 
     </LinearLayout>

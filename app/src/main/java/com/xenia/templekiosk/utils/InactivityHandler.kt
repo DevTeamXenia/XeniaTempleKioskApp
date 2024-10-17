@@ -19,7 +19,7 @@ class InactivityHandler(
         }
     }
 
-    private val inactivityTimeout = 30000L
+    private val inactivityTimeout = 300000L
     private val timer: Handler = Handler(Looper.getMainLooper())
     private var isInactivityCheckPaused = false
 

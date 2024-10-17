@@ -122,7 +122,7 @@ class DonationActivity : AppCompatActivity(), CustomInactivityDialog.InactivityC
         val englishNakshatras = arrayOf(
             "Ashwini", "Bharani", "Krittika", "Rohini", "Mrigashira", "Ardra", "Punarvasu",
             "Pushya", "Ashlesha", "Magha", "Purva Phalguni", "Uttara Phalguni", "Hasta",
-            "Chitra", "Swati", "Vishakha", "Anuradha", "Jyeshta", "Mula", "Purva Ashadha",
+            "Chitra", "Svati", "Vishakha", "Anuradha", "Jyeshta", "Mula", "Purva Ashadha",
             "Uttara Ashadha", "Shravana", "Dhanishta", "Shatabhisha", "Purva Bhadrapada",
             "Uttara Bhadrapada", "Revati"
         )

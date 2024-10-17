@@ -32,6 +32,7 @@ class PaymentActivity : AppCompatActivity() {
     private var transID: String? = null
     private var name: String? = null
     private var star: String? = null
+    private var devatha: String? = null
     private var orderID: String? = null
     private var phoneNo: String? = null
 
@@ -47,6 +48,7 @@ class PaymentActivity : AppCompatActivity() {
          transID = intent.getStringExtra("transID")
          name = intent.getStringExtra("name")
          star = intent.getStringExtra("star")
+         devatha = intent.getStringExtra("devatha")
          orderID = intent.getStringExtra("orderID")
          phoneNo = intent.getStringExtra("phno")
 
@@ -156,6 +158,7 @@ class PaymentActivity : AppCompatActivity() {
                 .feedLine(1)
                 .printText("Received From : $name\n", POSConst.ALIGNMENT_LEFT, POSConst.STS_NORMAL , POSConst.TXT_1WIDTH or POSConst.TXT_1HEIGHT)
                 .printText("Contact No : $phoneNo\n", POSConst.ALIGNMENT_LEFT, POSConst.STS_NORMAL , POSConst.TXT_1WIDTH or POSConst.TXT_1HEIGHT)
+                .printText("Devatha : $devatha\n", POSConst.ALIGNMENT_LEFT, POSConst.STS_NORMAL , POSConst.TXT_1WIDTH or POSConst.TXT_1HEIGHT)
                 .printText("Birth Star : $star\n", POSConst.ALIGNMENT_LEFT, POSConst.STS_NORMAL , POSConst.TXT_1WIDTH or POSConst.TXT_1HEIGHT)
                 .feedLine(1)
                 .printText("Amount Paid : $amount\n", POSConst.ALIGNMENT_RIGHT, POSConst.FNT_BOLD , POSConst.TXT_1WIDTH or POSConst.TXT_2HEIGHT)

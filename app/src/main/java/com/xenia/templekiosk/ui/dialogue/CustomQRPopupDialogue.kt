@@ -9,8 +9,6 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.os.CountDownTimer
-import android.os.Handler
-import android.os.Looper
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -238,6 +236,7 @@ class CustomQRPopupDialogue : DialogFragment() {
             putExtra("transID", transactionReferenceID)
             putExtra("name", name)
             putExtra("star", star)
+            putExtra("devatha", devatha)
             putExtra("orderID", orderId.toString())
             putExtra("phno",phno)
         }

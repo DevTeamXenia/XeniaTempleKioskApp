@@ -17,9 +17,7 @@
     <string name="log_in" translatable="false">LOG IN</string>
 
 
-
     <string name="home">Home</string>
-
 
     //home_screen
     <string name="kanika">e Kanika</string>
@@ -31,7 +29,7 @@
 
     //donation_screen
     <string name="fill_out_your_details">Fill out your details</string>
-    <string name="donation_amount">Donation Amount*</string>
+    <string name="donation_amount">Kannika Amount*</string>
     <string name="_10_000">₹10,000</string>
     <string name="pay">PAY</string>
     <string name="phone_number">Phone Number</string>
@@ -63,8 +61,7 @@
     <string name="retry">Retry</string>
     <string name="you_have_been_inactive_for_a_while_please_touch_the_screen_to_continue">You have been inactive for a while. Do you want to continue?</string>
     <string name="qr_expire">QR expires in :</string>
-    <string name="do_you_want_to_logout">Do you want to Logout</string>
-    <string name="please_enter_password">Please Enter Password</string>
+
 
 
     <string-array name="vazhipaduCategory">
@@ -112,7 +109,7 @@
         <item>Uttara Phalguni</item>
         <item>Hasta</item>
         <item>Chitra</item>
-        <item>Swati</item>
+        <item>Svati</item>
         <item>Vishakha</item>
         <item>Anuradha</item>
         <item>Jyeshtha</item>

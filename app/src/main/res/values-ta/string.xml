@@ -4,7 +4,7 @@
 
 
     //home_screen
-    <string name="kanika">பண்டாரம்</string>
+    <string name="kanika">ஏ கனிகா</string>
     <string name="melkavu_devi">மேல்காவில்\nபகவதி</string>
     <string name="keezhkavu_devi">கீழ்காவில்\nபகவதி</string>
     <string name="ayyappa">அய்யப்பன்\n</string>
@@ -13,7 +13,7 @@
 
     donation_screen
     <string name="fill_out_your_details">உங்கள் விவரங்களை நிரப்பவும்</string>
-    <string name="donation_amount">நன்கொடை தொகை*</string>
+    <string name="donation_amount">கண்ணிகா தொகை*</string>
     <string name="_10_000">₹10,000</string>
     <string name="pay">பணம் செலுத்துங்கள்</string>
     <string name="phone_number">தொலைபேசி எண்</string>
@@ -46,32 +46,32 @@
 
 
     <string-array name="nakshatras">
-        <item>ஆஸ்வினி</item>
+        <item>அஸ்வினி</item>
         <item>பரணி</item>
-        <item>கிருதிகை</item>
-        <item>ரோஹிணி</item>
-        <item>மிருகசிராஷி</item>
-        <item>ஆர்த்ரா</item>
-        <item>புனர்வசு</item>
-        <item>புஷ்யம்</item>
-        <item>ஆஷ்லேஷா</item>
-        <item>மகா</item>
-        <item>முதல்வன் பால்</item>
-        <item>உத்தரா பால்</item>
-        <item>ஹஸ்தா</item>
-        <item>சித்ரா</item>
-        <item>ஸ்வாத்தி</item>
-        <item>விஷாகா</item>
-        <item>அனுராதா</item>
-        <item>ஜெயேஷ்டா</item>
-        <item>மூலம்</item>
-        <item>முதல்வன் ஆஷாடா</item>
-        <item>உத்தரா ஆஷாடா</item>
-        <item>சிரவணம்</item>
-        <item>தனிஷ்டா</item>
-        <item>சதபிஷக்</item>
-        <item>முதல்வன் பத்திரம்</item>
-        <item>உத்தரா பத்திரம்</item>
+        <item>கார்த்திகா</item>
+        <item>நோயாளிணி</item>
+        <item>மிருகசீனிடம்</item>
+        <item>திருவாதிரை</item>
+        <item>புனர்பூசம்</item>
+        <item>பூசம்</item>
+        <item>ஆயில்யம்</item>
+        <item>ஆயில்யம்</item>
+        <item>மகம்</item>
+        <item>உத்ரம்</item>
+        <item>அஸ்தம்</item>
+        <item>சித்தி</item>
+        <item>சுவாதி</item>
+        <item>விசாகம்</item>
+        <item>அனுஷம்</item>
+        <item>கேட்டை</item>
+        <item>முகேன</item>
+        <item>பூராடம்</item>
+        <item>உத்ராடம்</item>
+        <item>திருவோணம்</item>
+        <item>அவிட்டம்</item>
+        <item>சதயம்</item>
+        <item>பூரட்டாதி</item>
+        <item>உத்ரட்டாதி</item>
         <item>ரேவதி</item>
     </string-array>
 

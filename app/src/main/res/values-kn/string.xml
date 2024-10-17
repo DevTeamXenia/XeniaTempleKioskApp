@@ -4,7 +4,7 @@
 
 
     //home_screen
-    <string name="kanika">ಕಾಣಿಕೆ</string>
+    <string name="kanika">ಎ ಕನಿಕಾ</string>
     <string name="melkavu_devi">ಮೇಲ್ಕಾವು\nದೇವಿ</string>
     <string name="keezhkavu_devi">ಕೀಳ್ಕಾವು\nದೇವಿ</string>
     <string name="shiva">ಶಿವ\n</string>
@@ -12,7 +12,7 @@
 
     donation_screen
     <string name="fill_out_your_details">ನಿಮ್ಮ ವಿವರಗಳನ್ನು ತುಂಬಿ</string>
-    <string name="donation_amount">ದಾನದ ಮೊತ್ತ*</string>
+    <string name="donation_amount">ಕನ್ನಿಕಾ ಮೊತ್ತ*</string>
     <string name="_10_000">₹10,000</string>
     <string name="pay">ಪಾವತಿಸಲು</string>
     <string name="phone_number">ಫೋನ್ ಸಂಖ್ಯೆ</string>

@@ -10,6 +10,7 @@ import android.os.Bundle
 import android.provider.Settings
 import androidx.activity.result.contract.ActivityResultContracts
 import com.bumptech.glide.Glide
+import com.bumptech.glide.Priority
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
 import com.xenia.templekiosk.R
@@ -26,6 +27,8 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
+import com.bumptech.glide.request.target.Target
+
 
 class LanguageActivity : AppCompatActivity(),
     CustomInternetAvailabilityDialog.InternetAvailabilityListener{
@@ -59,9 +62,11 @@ class LanguageActivity : AppCompatActivity(),
             .asGif()
             .load(backgroundImage)
             .apply(RequestOptions()
+                .override(Target.SIZE_ORIGINAL)
                 .fitCenter()
                 .skipMemoryCache(true)
-                .diskCacheStrategy(DiskCacheStrategy.NONE))
+                .diskCacheStrategy(DiskCacheStrategy.NONE)
+                .priority(Priority.HIGH))
             .into(binding.imgBackground)
     }
 
