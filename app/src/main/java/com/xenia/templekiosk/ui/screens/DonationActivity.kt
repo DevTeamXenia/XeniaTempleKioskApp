@@ -50,6 +50,7 @@ class DonationActivity : AppCompatActivity(), CustomInactivityDialog.InactivityC
     private var selectDevatha: String? = null
     private var donationAmount: Double? = null
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityDonationBinding.inflate(layoutInflater)

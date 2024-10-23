@@ -39,6 +39,8 @@ class LanguageActivity : AppCompatActivity(),
     private val sessionManager: SessionManager by inject()
     private val customInternetAvailabilityDialog: CustomInternetAvailabilityDialog by inject()
 
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityLanguageBinding.inflate(layoutInflater)
@@ -46,7 +48,6 @@ class LanguageActivity : AppCompatActivity(),
         requestOverlayPermission()
         setupBackgroundImage()
         setupLanguageButtons()
-
 
     }
 

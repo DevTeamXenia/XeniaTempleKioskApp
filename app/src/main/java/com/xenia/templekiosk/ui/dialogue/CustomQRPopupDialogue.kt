@@ -77,7 +77,6 @@ class CustomQRPopupDialogue : DialogFragment() {
         return object : Dialog(requireActivity(), theme) {
             @Deprecated("Deprecated in Java")
             override fun onBackPressed() {
-                // Do nothing here to block the back press
             }
         }.apply {
             requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -96,7 +95,7 @@ class CustomQRPopupDialogue : DialogFragment() {
         return inflater.inflate(R.layout.custome_qr_dialogue, container, false)
     }
 
-    @SuppressLint("SetTextI18n")
+    @SuppressLint("SetTextI18n", "DefaultLocale")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -104,7 +103,9 @@ class CustomQRPopupDialogue : DialogFragment() {
         qrCodeImageView = view.findViewById(R.id.qrCodeImageView)
         timerTextView = view.findViewById(R.id.txt_timer)
 
-        amountTextView.text = getString(R.string.amount) +"₹ "+amount +"/-"
+        val amountValue: Float = amount.toFloat()
+        val formattedAmount = String.format("%.2f", amountValue)
+        amountTextView.text = getString(R.string.amount) + " ₹ $formattedAmount /-"
         val qrCodeBitmap = generateUPIQRCode(url)
         qrCodeImageView.setImageBitmap(qrCodeBitmap)
 

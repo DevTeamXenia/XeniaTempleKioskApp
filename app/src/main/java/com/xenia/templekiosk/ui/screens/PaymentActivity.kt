@@ -2,11 +2,14 @@ package com.xenia.templekiosk.ui.screens
 
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.drawable.BitmapDrawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.view.View
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import com.xenia.templekiosk.R
 import com.xenia.templekiosk.databinding.ActivityPaymentBinding
 import com.xenia.templekiosk.utils.SessionManager
@@ -67,11 +70,8 @@ class PaymentActivity : AppCompatActivity() {
         }else{
             binding.linSuccess.visibility = View.GONE
             binding.linFailed.visibility = View.VISIBLE
+            redirect()
         }
-
-
-
-
 
     }
 
@@ -143,29 +143,36 @@ class PaymentActivity : AppCompatActivity() {
         curConnect!!.connect(pathName, connectListener)
     }
 
+    @SuppressLint("DefaultLocale")
     private fun initReceiptPrint() {
         val cd = sessionManager.getCompanyDetails()
         if (cd != null) {
             val currentDate = SimpleDateFormat("dd-MMM-yyyy hh:mm a", Locale.getDefault()).format(Date())
+            val drawableDevasam = ContextCompat.getDrawable(this, R.drawable.print_header_logo)
+            val bitmapDevasam = (drawableDevasam as BitmapDrawable).bitmap.copy(Bitmap.Config.ARGB_8888, true)
+
+            val drawableDevi = ContextCompat.getDrawable(this, R.drawable.print_bottom_logo)
+            val bitmapDevi = (drawableDevi as BitmapDrawable).bitmap.copy(Bitmap.Config.ARGB_8888, true)
+
+            val amountValue: Float = amount!!.toFloat()
+
             POSPrinter(curConnect)
-                .printText(cd.companyName+"\n", POSConst.ALIGNMENT_CENTER, POSConst.FNT_BOLD, POSConst.TXT_1WIDTH or POSConst.TXT_2HEIGHT)
-                .printText(cd.companyAddress+"\n", POSConst.ALIGNMENT_CENTER, POSConst.FNT_BOLD, POSConst.TXT_1WIDTH or POSConst.TXT_1HEIGHT)
-                .feedLine(1)
-                .printText("e Kanika Receipt\n", POSConst.ALIGNMENT_CENTER, POSConst.FNT_BOLD, POSConst.TXT_1WIDTH or POSConst.TXT_2HEIGHT)
-                .feedLine(1)
+                .printBitmap(bitmapDevasam, POSConst.ALIGNMENT_CENTER, 590)
                 .printText("Receipt No : $orderID\n", POSConst.ALIGNMENT_LEFT, POSConst.STS_NORMAL, POSConst.TXT_1WIDTH or POSConst.TXT_1HEIGHT)
                 .printText("Date : $currentDate\n", POSConst.ALIGNMENT_LEFT, POSConst.STS_NORMAL, POSConst.TXT_1WIDTH or POSConst.TXT_1HEIGHT)
                 .feedLine(1)
                 .printText("Received From : $name\n", POSConst.ALIGNMENT_LEFT, POSConst.STS_NORMAL , POSConst.TXT_1WIDTH or POSConst.TXT_1HEIGHT)
                 .printText("Contact No : $phoneNo\n", POSConst.ALIGNMENT_LEFT, POSConst.STS_NORMAL , POSConst.TXT_1WIDTH or POSConst.TXT_1HEIGHT)
-                .printText("Devatha : $devatha\n", POSConst.ALIGNMENT_LEFT, POSConst.STS_NORMAL , POSConst.TXT_1WIDTH or POSConst.TXT_1HEIGHT)
                 .printText("Birth Star : $star\n", POSConst.ALIGNMENT_LEFT, POSConst.STS_NORMAL , POSConst.TXT_1WIDTH or POSConst.TXT_1HEIGHT)
                 .feedLine(1)
-                .printText("Amount Paid : $amount\n", POSConst.ALIGNMENT_RIGHT, POSConst.FNT_BOLD , POSConst.TXT_1WIDTH or POSConst.TXT_2HEIGHT)
+                .printText("E-Kanikka for : $devatha\n\n", POSConst.ALIGNMENT_RIGHT, POSConst.STS_NORMAL , POSConst.TXT_1WIDTH or POSConst.TXT_1HEIGHT)
+                .printText("Amount Paid : ${String.format("%.2f", amountValue)}\n", POSConst.ALIGNMENT_RIGHT, POSConst.FNT_BOLD, POSConst.TXT_1WIDTH or POSConst.TXT_2HEIGHT)
                 .printText("UPI Reference No: $transID\n\n", POSConst.ALIGNMENT_RIGHT, POSConst.STS_NORMAL, POSConst.TXT_1WIDTH or POSConst.TXT_1HEIGHT)
                 .feedLine(1)
                 .printText("Thank you for Your Generosity\n", POSConst.ALIGNMENT_CENTER, POSConst.STS_NORMAL, POSConst.TXT_1WIDTH or POSConst.TXT_2HEIGHT)
                 .printText("Powered by XeniaTechnologies\n", POSConst.ALIGNMENT_CENTER, POSConst.STS_NORMAL, POSConst.TXT_1WIDTH or POSConst.TXT_1HEIGHT)
+                .feedLine(1)
+                .printBitmap(bitmapDevi, POSConst.ALIGNMENT_CENTER, 500)
                 .cutHalfAndFeed(1)
         }
 
