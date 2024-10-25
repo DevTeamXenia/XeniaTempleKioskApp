@@ -1,5 +1,7 @@
 package com.xenia.templekiosk.ui.screens
 
+
+import android.annotation.SuppressLint
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.text.Editable
@@ -51,6 +53,7 @@ class DonationActivity : AppCompatActivity(), CustomInactivityDialog.InactivityC
     private var donationAmount: Double? = null
 
 
+    @SuppressLint("ServiceCast")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityDonationBinding.inflate(layoutInflater)
@@ -80,6 +83,8 @@ class DonationActivity : AppCompatActivity(), CustomInactivityDialog.InactivityC
 
             override fun afterTextChanged(s: Editable?) {}
         })
+
+
 
         binding.btnPay.setOnClickListener {
             generatePayment()

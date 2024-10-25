@@ -16,8 +16,8 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="200dp"
-            android:layout_marginStart="40dp"
-            android:layout_marginEnd="35dp"
+            android:layout_marginStart="25dp"
+            android:layout_marginEnd="25dp"
             tools:ignore="UselessParent">
 
 
@@ -60,7 +60,7 @@
 
             <ImageView
                 android:id="@+id/img_devadha"
-                android:layout_width="120dp"
+                android:layout_width="125dp"
                 android:layout_height="120dp"
                 android:layout_alignParentEnd="true"
                 android:layout_marginTop="10dp"
@@ -70,8 +70,8 @@
 
             <TextView
                 android:id="@+id/txt_devadha"
-                android:layout_width="120dp"
-                android:layout_height="120dp"
+                android:layout_width="125dp"
+                android:layout_height="125dp"
                 android:layout_below="@+id/img_devadha"
                 android:layout_alignParentEnd="true"
                 android:layout_marginEnd="30dp"
@@ -141,6 +141,7 @@
                 android:textAlignment="textEnd"
                 android:textColor="@color/black"
                 android:textSize="30sp"
+                android:imeOptions="actionNext"
                 tools:ignore="RtlSymmetry" />
 
 
@@ -218,6 +219,7 @@
                                 android:background="@drawable/edit_text_dummy_bg"
                                 android:inputType="phone"
                                 android:maxLength="10"
+                                android:imeOptions="actionDone"
                                 android:paddingStart="7dp" />
 
                         </RelativeLayout>
@@ -259,6 +261,7 @@
                                 android:background="@drawable/edit_text_dummy_bg"
                                 android:inputType="text"
                                 android:maxLength="10"
+                                android:imeOptions="actionDone"
                                 android:paddingStart="7dp" />
 
                         </RelativeLayout>

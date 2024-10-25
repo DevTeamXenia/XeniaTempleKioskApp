@@ -41,7 +41,7 @@
     <string name="no">இல்லை</string>
     <string name="no_internet_connection">இணையத் தொடர்பு இல்லை</string>
     <string name="retry">மீண்டும் முயற்சிக்கவும்</string>
-    <string name="you_have_been_inactive_for_a_while_please_touch_the_screen_to_continue">நீங்கள் ஒரு குறிப்பிட்ட நேரமாக செயலற்றிருந்தீர்கள். நீங்களே தொடர விரும்புகிறீர்களா?</string>
+    <string name="you_have_been_inactive_for_a_while_please_touch_the_screen_to_continue">நீங்கள் ஒரு காலமாக செயலற்றுள்ளீர்கள். தொடரவேண்டுமானால், திரையை தொடவும்.</string>
     <string name="qr_expire">QR முடிவடையும் நேரம் :</string>
 
 

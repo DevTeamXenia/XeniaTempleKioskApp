@@ -35,7 +35,7 @@
     <string name="pay_name">പേര് :</string>
     <string name="payment_failed">പെയ്മെന്റ് പരാജയപ്പെട്ടു</string>
     <string name="it_seems_we_have_not_received_money">ഞങ്ങൾ പണം ലഭിച്ചിട്ടില്ല എന്നു തോന്നുന്നു</string>
-    <string name="do_you_want_to_do_close_this_page">നിങ്ങൾ ഈ പേജ് അടയ്ക്കാൻ ആഗ്രഹിക്കുകയുണ്ടോ?</string>
+    <string name="do_you_want_to_do_close_this_page">നിങ്ങൾ ഈ പേജ് അടയ്ക്കാൻ ആഗ്രഹിക്കുന്നുണ്ടോ?</string>
     <string name="cancel">റദ്ദാക്കുക</string>
     <string name="yes">അതെ</string>
     <string name="no">ഇല്ല</string>
