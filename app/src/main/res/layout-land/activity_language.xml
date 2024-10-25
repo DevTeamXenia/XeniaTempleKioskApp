@@ -118,7 +118,7 @@
                             android:layout_above="@+id/space1"
                             android:layout_centerInParent="true"
                             android:fontFamily="@font/segoe_ui_bold"
-                            android:text="e Kannika"
+                            android:text="@string/kanika"
                             android:textColor="@color/white"
                             android:textSize="40sp"
                             android:textStyle="bold" />
