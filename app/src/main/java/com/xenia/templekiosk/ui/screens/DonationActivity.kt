@@ -140,7 +140,7 @@ class DonationActivity : AppCompatActivity(), CustomInactivityDialog.InactivityC
     private fun updateButtonState() {
         val inputText = binding.editTxtDonation.text.toString().trim()
 
-        if (inputText.isNotEmpty() && selectedNakshatra?.isNotEmpty() == true) {
+        if (inputText.isNotEmpty()) {
             binding.btnPay.isEnabled = true
             binding.btnPay.setBackgroundColor(
                 ContextCompat.getColor(this, R.color.primaryColor)
@@ -159,9 +159,6 @@ class DonationActivity : AppCompatActivity(), CustomInactivityDialog.InactivityC
         when {
             donationAmount == null || donationAmount!! <= 0 -> {
                 showSnackbar(binding.root, "Please enter a valid amount")
-            }
-            selectedNakshatra == null -> {
-                showSnackbar(binding.root, "Please select a nakshatra!")
             }
             else -> {
                 if (isInternetAvailable(this)) {
@@ -222,7 +219,7 @@ class DonationActivity : AppCompatActivity(), CustomInactivityDialog.InactivityC
                                 token,
                                 binding.editName.text.toString(),
                                 binding.editPhno.text.toString(),
-                                selectedNakshatra!!,
+                                selectedNakshatra ?: "",
                                 selectDevatha!!
 
                             )

@@ -13,9 +13,9 @@
 
     donation_screen
     <string name="fill_out_your_details">നിങ്ങളുടെ വിശദാംശങ്ങൾ പൂരിപ്പിക്കുക</string>
-    <string name="donation_amount">കണ്ണികാ തുക*</string>
+    <string name="donation_amount">കാണിക്ക തുക*</string>
     <string name="_10_000">₹10,000</string>
-    <string name="pay">തുക അടിക്കുക</string>
+    <string name="pay">തുക അടയ്ക്കുക</string>
     <string name="phone_number">ഫോൺ നമ്പർ</string>
     <string name="_91">+91</string>
     <string name="name">പേര്</string>
@@ -41,7 +41,7 @@
     <string name="no">ഇല്ല</string>
     <string name="no_internet_connection"> ഇന്റര്‍നെറ്റ് ബന്ധം ഇല്ല</string>
     <string name="retry">വീണ്ടും ശ്രമിക്കുക</string>
-    <string name="you_have_been_inactive_for_a_while_please_touch_the_screen_to_continue">നിങ്ങൾ ചില സമയമായി പ്രവർത്തനരഹിതനാണ്. തുടരാൻ ആഗ്രഹിക്കുന്നുണ്ടോ?</string>
+    <string name="you_have_been_inactive_for_a_while_please_touch_the_screen_to_continue">തുടരാൻ ആഗ്രഹിക്കുന്നുണ്ടോ?</string>
     <string name="qr_expire">ക്യുആർ കാലാവധി അവസാനിക്കും :</string>
 
 
@@ -65,14 +65,14 @@
         <item>അനിഴം</item>
         <item>തൃക്കേട്ട</item>
         <item>മൂലം</item>
-        <item>പപൂരാടം</item>
+        <item>പൂരാടം</item>
         <item>ഉത്രാടം</item>
         <item>തിരുവോണം</item>
         <item>അവിട്ടം</item>
         <item>ചതയം</item>
         <item>പൂരുരുട്ടാതി</item>
         <item>ഉത്രട്ടാതി</item>
-        <item>രരേവതി</item>
+        <item>രേവതി</item>
     </string-array>
 
 </resources>

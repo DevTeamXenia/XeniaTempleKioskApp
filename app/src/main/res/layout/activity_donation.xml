@@ -17,7 +17,7 @@
             android:layout_width="match_parent"
             android:layout_height="200dp"
             android:layout_marginStart="40dp"
-            android:layout_marginEnd="40dp"
+            android:layout_marginEnd="35dp"
             tools:ignore="UselessParent">
 
 
@@ -257,7 +257,7 @@
                                 android:layout_marginEnd="1dp"
                                 android:hint="@string/name"
                                 android:background="@drawable/edit_text_dummy_bg"
-                                android:inputType="phone"
+                                android:inputType="text"
                                 android:maxLength="10"
                                 android:paddingStart="7dp" />
 
