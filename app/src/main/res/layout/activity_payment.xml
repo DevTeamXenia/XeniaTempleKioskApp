@@ -48,7 +48,7 @@
                 android:fontFamily="@font/montserrat"
                 android:textColor="@color/black"
                 android:text="@string/your_payment_was_successful"
-                android:textSize="28sp" />
+                android:textSize="20sp" />
 
             <TextView
                 android:id="@+id/txt_amount"
