@@ -10,8 +10,8 @@ object Constants {
 
     const val MELVAKUBHAGAVATI = "melvaku bhagavati"
     const val KEEZHKAVUBHAGAVATI = "keezhkavu bhagavati"
-    const val SHIVA = "shiva"
-    const val AYYAPPA = "ayyappa"
+    const val SHIVA = "shivan"
+    const val AYYAPPA = "ayyappan"
 
     const val INACTIVITY_TIMEOUT = 10000
 }
