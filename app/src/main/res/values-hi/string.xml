@@ -48,31 +48,31 @@
 
     <string-array name="nakshatras">
         <item>अश्विनी</item>
-        <item>भारणी</item>
-        <item>कृतिका</item>
+        <item>भरणी</item>
+        <item>कृत्तिका</item>
         <item>रोहिणी</item>
-        <item>मृगशीर्षा</item>
+        <item>म्रृगशीर्षा</item>
         <item>आर्द्रा</item>
         <item>पुनर्वसु</item>
-        <item>पुष्य</item>
+        <item>पुनर्वसु</item>
         <item>आश्लेषा</item>
         <item>मघा</item>
         <item>पूर्व फाल्गुनी</item>
         <item>उत्तर फाल्गुनी</item>
         <item>हस्त</item>
         <item>चित्रा</item>
-        <item>स्वाति</item>
+        <item>स्वाती</item>
         <item>विशाखा</item>
         <item>अनुराधा</item>
         <item>ज्येष्ठा</item>
-        <item>मूला</item>
-        <item>पूर्व अशाढ़ा</item>
-        <item>उत्तर अशाढ़ा</item>
+        <item>मूल</item>
+        <item>पूर्वाषाढा</item>
+        <item>उत्तराषाढा</item>
         <item>श्रवण</item>
         <item>धनिष्ठा</item>
-        <item>शतभिषा</item>
-        <item>पूर्व भद्रपदा</item>
-        <item>उत्तर भद्रपदा</item>
+        <item>शतभिषक्</item>
+        <item>पूर्वभाद्रपदा</item>
+        <item>उत्तरभाद्रपदा</item>
         <item>रेवती</item>
     </string-array>
 
