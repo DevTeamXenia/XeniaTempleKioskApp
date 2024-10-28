@@ -46,33 +46,33 @@
 
 
     <string-array name="nakshatras">
-        <item>ಆಶ್ವಿನಿ</item>
+        <item>ಅಶ್ವಿನಿ</item>
         <item>ಭರಣಿ</item>
-        <item>ಕೃತಿಕಾ</item>
+        <item>ಕೃತ್ತಿಕಾ</item>
         <item>ರೋಹಿಣಿ</item>
-        <item>ಮೃಗಶಿರ</item>
-        <item>ಆರ್‌ದ್ರಾ</item>
+        <item>ಮೃಗಶಿರಾ</item>
+        <item>ಆರ್ದ್ರಾ</item>
         <item>ಪುನರ್ವಸು</item>
         <item>ಪುಷ್ಯ</item>
         <item>ಆಶ್ಲೇಷಾ</item>
-        <item>ಮಘಾ</item>
-        <item>ಪೂರ್ವ ಫಾಲ್ಗುಣೀ</item>
-        <item>ಉತ್ತರ ಫಾಲ್ಗುಣೀ</item>
-        <item>ಹಸ್ತ</item>
-        <item>ಚಿತ್ರ</item>
+        <item>ಮಘಾ/ಮಖ</item>
+        <item>ಪುಬ್ಬಾ\n(ಪೂರ್ವ ಫಲ್ಗುಣಿ</item>
+        <item>ಉತ್ತರಾ\n(ಉತ್ತರ ಫಲ್ಗುಣಿ)</item>
+        <item>ಹಸ್ತಾ</item>
+        <item>ಚಿತ್ತಾ</item>
         <item>ಸ್ವಾತಿ</item>
-        <item>ವಿಷಾಖಾ</item>
-        <item>ಅನುರಾಧಾ</item>
-        <item>ಜ್ಯೇಷ್ಠಾ</item>
-        <item>ಮೂಳ</item>
-        <item>ಪೂರ್ವ ಆಶಾಢ</item>
-        <item>ಉತ್ತರ ಆಶಾಢ</item>
+        <item>ವಿಶಾಖ</item>
+        <item>ಅನೂರಾಧ</item>
+        <item>ಜ್ಯೇಷ್ಠ</item>
+        <item>ಮೂಲ</item>
+        <item>ಪೂರ್ವಾಷಾಢಾ</item>
+        <item>ಉತ್ತರಾಷಾಢಾ</item>
         <item>ಶ್ರವಣ</item>
-        <item>ಧನಿಷ್ಠಾ</item>
-        <item>ಶತಭಿಷಕ್</item>
-        <item>ಪೂರ್ವ ಭದ್ರಪದ</item>
-        <item>ಉತ್ತರ ಭದ್ರಪದ</item>
-        <item>ರೆವತೀ</item>
+        <item>ಧನಿಷ್ಠ</item>
+        <item>ಶತಭಿಷ</item>
+        <item>ಪೂರ್ವಾಭಾದ್ರಾ</item>
+        <item>ಉತ್ತರಾಭಾದ್ರಾ</item>
+        <item>ರೇವತಿ</item>
     </string-array>
 
 
