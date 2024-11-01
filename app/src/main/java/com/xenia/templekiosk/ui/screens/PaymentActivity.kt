@@ -168,10 +168,6 @@ class PaymentActivity : AppCompatActivity() {
                 .printText("E-Kanikka for : $devatha\n\n", POSConst.ALIGNMENT_RIGHT, POSConst.STS_NORMAL , POSConst.TXT_1WIDTH or POSConst.TXT_1HEIGHT)
                 .printText("Amount Paid : ${String.format("%.2f", amountValue)}\n", POSConst.ALIGNMENT_RIGHT, POSConst.FNT_BOLD, POSConst.TXT_1WIDTH or POSConst.TXT_2HEIGHT)
                 .printText("UPI Reference No: $transID\n\n", POSConst.ALIGNMENT_RIGHT, POSConst.STS_NORMAL, POSConst.TXT_1WIDTH or POSConst.TXT_1HEIGHT)
-                .feedLine(1)
-                .printText("Thank you for Your Generosity\n", POSConst.ALIGNMENT_CENTER, POSConst.STS_NORMAL, POSConst.TXT_1WIDTH or POSConst.TXT_2HEIGHT)
-                .printText("Powered by XeniaTechnologies\n", POSConst.ALIGNMENT_CENTER, POSConst.STS_NORMAL, POSConst.TXT_1WIDTH or POSConst.TXT_1HEIGHT)
-                .feedLine(1)
                 .printBitmap(bitmapDevi, POSConst.ALIGNMENT_CENTER, 500)
                 .cutHalfAndFeed(1)
         }
