@@ -169,7 +169,7 @@ class CustomQRPopupDialogue : DialogFragment() {
                         accessToken = "Bearer $token",
                     )
                     val response = withContext(Dispatchers.IO) {
-                        paymentRepository.paymentStatus(1, 2, paymentRequest)
+                        paymentRepository.paymentStatus(sessionManager.getUserId(), sessionManager.getCompanyId(), paymentRequest)
                     }
 
                     if (response.Status == "success") {
