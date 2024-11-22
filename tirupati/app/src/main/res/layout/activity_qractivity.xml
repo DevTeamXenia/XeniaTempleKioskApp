@@ -32,6 +32,18 @@
         android:scaleType="fitXY" />
 
     <TextView
+        android:id="@+id/txtTimer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="425dp"
+        android:layout_marginEnd="129dp"
+        android:fontFamily="@font/arial_bold"
+        android:layout_alignParentEnd="true"
+        android:textColor="@color/white"
+        android:textSize="25sp" />
+
+
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/img_background"
@@ -74,6 +86,7 @@
     </LinearLayout>
 
     <RelativeLayout
+        android:id="@+id/relQr"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
@@ -136,6 +149,7 @@
 
 
     <RelativeLayout
+        android:id="@+id/relExpireQr"
         android:visibility="gone"
         android:layout_width="500dp"
         android:layout_height="300dp"
@@ -208,6 +222,7 @@
     </RelativeLayout>
 
     <RelativeLayout
+        android:id="@+id/relStatus"
         android:visibility="gone"
         android:layout_width="500dp"
         android:layout_height="300dp"

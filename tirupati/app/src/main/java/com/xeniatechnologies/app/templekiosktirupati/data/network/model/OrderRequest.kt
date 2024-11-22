@@ -6,15 +6,6 @@ data class OrderRequest(
     @SerializedName("TransactionId")
     val transactionId: String,
 
-    @SerializedName("Devatha")
-    val devatha: String,
-
-    @SerializedName("Nakshatra")
-    val nakshatra: String,
-
-    @SerializedName("Name")
-    val name: String,
-
     @SerializedName("PhoneNumber")
     val phoneNumber: String,
 
