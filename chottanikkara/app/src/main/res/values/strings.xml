@@ -1,0 +1,129 @@
+<resources>
+    <string name="app_name" translatable="false">Temple Kiosk</string>
+    <string name="make_a_donation" translatable="false">MAKE A DONATION</string>
+    <string name="english" translatable="false">English</string>
+    <string name="malayalam" translatable="false">മലയാളം</string>
+    <string name="tamil" translatable="false">தமிழ்</string>
+    <string name="kannada" translatable="false">ಕನ್ನಡ</string>
+    <string name="telugu" translatable="false">తెలుగు</string>
+    <string name="hindi" translatable="false">हिन्दी</string>
+    <string name="todo" translatable="false">TODO</string>
+    <string name="choose_your_language" translatable="false">Choose your language</string>
+    <string name="p_o_w_e_r_e_d_b_y" translatable="false">p o w e r e d b y</string>
+    <string name="b_a_n_k_i_n_g_p_a_r_t_n_e_r" translatable="false">b a n k i n g p a r t n e r</string>
+    <string name="login_as_a_admin_user" translatable="false">Login as a Admin User</string>
+    <string name="user_id" translatable="false">User Id</string>
+    <string name="password" translatable="false">Password</string>
+    <string name="log_in" translatable="false">LOG IN</string>
+
+
+    <string name="home">Home</string>
+
+    //home_screen
+    <string name="kanika">E-Kanikka</string>
+    <string name="melkavu_devi">MELKAVU\nBHAGAVATI</string>
+    <string name="keezhkavu_devi">KEEZHKAVU\nBHAGAVATI</string>
+    <string name="ayyappa">AYYAPPAN\n</string>
+    <string name="shiva">SHIVAN\n</string>
+
+
+    //donation_screen
+    <string name="fill_out_your_details">Fill out your details</string>
+    <string name="donation_amount">E-Kanikka Amount*</string>
+    <string name="_10_000">₹10,000</string>
+    <string name="pay">PAY</string>
+    <string name="phone_number">Phone Number</string>
+    <string name="_91">+91</string>
+    <string name="name">Name</string>
+    <string name="select_your_janma_nakshatra">Select Your Janma Nakshatra</string>
+
+
+    //Popup_Screen
+    <string name="amount_10_000">Amount ₹ 10,000 /-</string>
+    <string name="scan_this_code_to_pay">Scan this code to Pay</string>
+    <string name="expire">Scan this code to Pay</string>
+
+
+    //payment_Screen
+    <string name="thank_you">Thank You!</string>
+    <string name="your_payment_was_successful">Your payment was successful!</string>
+    <string name="amount">Amount : </string>
+    <string name="transcation_id">Transcation ID : </string>
+    <string name="star">Star : </string>
+    <string name="pay_name">Name  :</string>
+    <string name="payment_failed">Payment Failed</string>
+    <string name="it_seems_we_have_not_received_money">It seems we have not received money</string>
+    <string name="do_you_want_to_do_close_this_page">Do you want to do close this page?</string>
+    <string name="cancel">Cancel</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="no_internet_connection">No Internet Connection</string>
+    <string name="retry">Retry</string>
+    <string name="you_have_been_inactive_for_a_while_please_touch_the_screen_to_continue">Do you want to continue?</string>
+    <string name="qr_expire">QR expires in :</string>
+
+
+
+    <string-array name="vazhipaduCategory">
+        <item>All</item>
+        <item>Kanika</item>
+        <item>Pushpanjali</item>
+        <item>Nivedyam</item>
+        <item>Archana</item>
+        <item>Seva</item>
+        <item>Pooja</item>
+        <item>Charthu</item>
+        <item>Dhara</item>
+        <item>Abhishekam</item>
+    </string-array>
+
+
+    <string-array name="vazhipaduItem">
+        <item>Aayursooktha Pushpanjali</item>
+        <item>Abhishekam</item>
+        <item>Ada Nivedhyam</item>
+        <item>Appa Nivedhyam</item>
+        <item>Bhagavath Seva</item>
+        <item>Chandhanam Charthal</item>
+        <item>Dhara</item>
+        <item>Noorum Paalum</item>
+        <item>Para</item>
+        <item>Pushpanjali</item>
+        <item>Rudrabhishekam</item>
+        <item>Vishnu Pooja</item>
+    </string-array>
+
+
+    <string-array name="nakshatras">
+        <item>Ashwini</item>
+        <item>Bharani</item>
+        <item>Krittika</item>
+        <item>Rohini</item>
+        <item>Mrigashirsha</item>
+        <item>Ardra</item>
+        <item>Punarvasu</item>
+        <item>Pushya</item>
+        <item>Ashlesha</item>
+        <item>Magha</item>
+        <item>Purva Phalguni</item>
+        <item>Uttara Phalguni</item>
+        <item>Hasta</item>
+        <item>Chitra</item>
+        <item>Swati</item>
+        <item>Vishaka</item>
+        <item>Anuradha</item>
+        <item>Jyeshta</item>
+        <item>Moola</item>
+        <item>Purva Ashadha</item>
+        <item>Uttara Ashada</item>
+        <item>Shravana</item>
+        <item>Dhanistha</item>
+        <item>Shatabhisaa</item>
+        <item>Purva Bhadrapada</item>
+        <item>Uttara Bhadrapada</item>
+        <item>Revati</item>
+    </string-array>
+
+
+
+</resources>

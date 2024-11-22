@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="home">होम</string>
+
+
+    //home_screen
+    <string name="kanika">ए कनिका</string>
+    <string name="melkavu_devi">मेल्काविल\nभगवती</string>
+    <string name="keezhkavu_devi">कीझ्काविल\nभगवती</string>
+    <string name="ayyappa">अय्यप्पन\n</string>
+    <string name="shiva">शिवन\n</string>
+
+
+
+    //donation_screen
+    <string name="fill_out_your_details">अपने विवरण भरें</string>
+    <string name="donation_amount">कन्निका राशि*</string>
+    <string name="_10_000">₹10,000</string>
+    <string name="pay">राशि चुकाना</string>
+    <string name="phone_number"> फोन नंबर</string>
+    <string name="_91">+91</string>
+    <string name="name">नाम</string>
+    <string name="select_your_janma_nakshatra">अपना जन्म नक्षत्र चुनें</string>
+
+    //Popup_Screen
+    <string name="amount_10_000">राशि  ₹ 10,000 /-</string>
+    <string name="scan_this_code_to_pay">इस कोड को स्कैन करें और भुगतान करें</string>
+    <string name="expire">क्यूआर समाप्त होगा :</string>
+
+    //payment_Screen
+    <string name="thank_you">धन्यवाद!</string>
+    <string name="your_payment_was_successful">आपका भुगतान सफल रहा!</string>
+    <string name="amount">राशि : </string>
+    <string name="transcation_id">लेनदेन आईडी : </string>
+    <string name="star">सितारा : </string>
+    <string name="pay_name">नाम :</string>
+    <string name="payment_failed">भुगतान विफल</string>
+    <string name="it_seems_we_have_not_received_money">ऐसा लगता है कि हमें पैसे प्राप्त नहीं हुए हैं</string>
+    <string name="do_you_want_to_do_close_this_page">क्या आप इस पृष्ठ को बंद करना चाहते हैं?</string>
+    <string name="cancel">रद्द करें</string>
+    <string name="yes">हाँ</string>
+    <string name="no">नहीं</string>
+    <string name="no_internet_connection">इंटरनेट कनेक्शन नहीं है</string>
+    <string name="retry">पुनः प्रयास करें</string>
+    <string name="you_have_been_inactive_for_a_while_please_touch_the_screen_to_continue">आप कुछ समय से निष्क्रिय हैं। कृपया जारी रखने के लिए स्क्रीन को स्पर्श करें।</string>
+    <string name="qr_expire">क्यूआर समाप्त होने में :</string>
+
+
+    <string-array name="nakshatras">
+        <item>अश्विनी</item>
+        <item>भरणी</item>
+        <item>कृत्तिका</item>
+        <item>रोहिणी</item>
+        <item>म्रृगशीर्षा</item>
+        <item>आर्द्रा</item>
+        <item>पुनर्वसु</item>
+        <item>पुनर्वसु</item>
+        <item>आश्लेषा</item>
+        <item>मघा</item>
+        <item>पूर्व फाल्गुनी</item>
+        <item>उत्तर फाल्गुनी</item>
+        <item>हस्त</item>
+        <item>चित्रा</item>
+        <item>स्वाती</item>
+        <item>विशाखा</item>
+        <item>अनुराधा</item>
+        <item>ज्येष्ठा</item>
+        <item>मूल</item>
+        <item>पूर्वाषाढा</item>
+        <item>उत्तराषाढा</item>
+        <item>श्रवण</item>
+        <item>धनिष्ठा</item>
+        <item>शतभिषक्</item>
+        <item>पूर्वभाद्रपदा</item>
+        <item>उत्तरभाद्रपदा</item>
+        <item>रेवती</item>
+    </string-array>
+
+</resources>
