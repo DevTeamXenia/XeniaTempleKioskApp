@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/bk1"
-    tools:context=".HomeActivity">
+    tools:context=".ui.HomeActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -61,6 +61,7 @@
             android:textSize="25sp" />
 
         <EditText
+            android:id="@+id/edtPhNo"
             android:layout_width="match_parent"
             android:layout_height="70dp"
             android:layout_marginStart="10dp"

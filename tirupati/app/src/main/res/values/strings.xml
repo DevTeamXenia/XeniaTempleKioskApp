@@ -13,4 +13,18 @@
     <string name="your_payment_was_successful">Your Payment was successful!</string>
     <string name="thank_you">Thank You!</string>
     <string name="close">Close</string>
+    <string name="title_activity_login">LoginActivity</string>
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password</string>
+    <string name="action_sign_in">Sign in or register</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="welcome">"Welcome !"</string>
+    <string name="invalid_username">Not a valid username</string>
+    <string name="invalid_password">Password must be >5 characters</string>
+    <string name="login_failed">"Login failed"</string>
+    <string name="user_id">UserId</string>
+    <string name="password">Password</string>
+    <string name="log_in">LOG IN</string>
+    <string name="login_as_a_admin_user">Login as a Admin User</string>
+    <string name="amount">Amount : </string>
 </resources>

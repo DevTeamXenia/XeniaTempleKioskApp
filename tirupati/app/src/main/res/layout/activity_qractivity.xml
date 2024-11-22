@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/bk1"
     android:orientation="vertical"
-    tools:context=".QRActivity">
+    tools:context=".ui.QRActivity">
 
     <TextView
         android:id="@+id/txtAmount"
@@ -59,6 +59,7 @@
             android:textSize="20sp" />
 
         <TextView
+            android:id="@+id/txtWords"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
@@ -76,7 +77,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:visibility="gone"
         android:orientation="vertical">
 
         <ImageView
@@ -118,7 +118,7 @@
             android:textSize="20sp" />
 
         <Button
-            android:id="@+id/btn_pay"
+            android:id="@+id/btn_cancel"
             android:layout_below="@+id/txtScan"
             android:layout_width="200dp"
             android:layout_height="50dp"
@@ -208,6 +208,7 @@
     </RelativeLayout>
 
     <RelativeLayout
+        android:visibility="gone"
         android:layout_width="500dp"
         android:layout_height="300dp"
         android:layout_centerHorizontal="true"
