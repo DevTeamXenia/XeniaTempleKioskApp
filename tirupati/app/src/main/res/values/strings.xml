@@ -1,3 +1,16 @@
 <resources>
     <string name="app_name">TempleKioskTirupati</string>
+    <string name="your_amount">Your amount</string>
+    <string name="pay">PAY NOW</string>
+    <string name="enter_amount">Enter Amount</string>
+    <string name="mobile_number">Mobile Number</string>
+    <string name="your_mobile_number">Your mobile Number</string>
+    <string name="amount_10_000">Amount : ₹10,000/-</string>
+    <string name="todo">TODO</string>
+    <string name="time_left">Time Left</string>
+    <string name="cancel">Cancel</string>
+    <string name="session_expired">Session Expired</string>
+    <string name="your_payment_was_successful">Your Payment was successful!</string>
+    <string name="thank_you">Thank You!</string>
+    <string name="close">Close</string>
 </resources>

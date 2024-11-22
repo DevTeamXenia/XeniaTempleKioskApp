@@ -1,0 +1,301 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bk1"
+    android:orientation="vertical"
+    tools:context=".QRActivity">
+
+    <TextView
+        android:id="@+id/txtAmount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="90dp"
+        android:layout_marginTop="400dp"
+        android:fontFamily="@font/arial_bold"
+        android:text="@string/amount_10_000"
+        android:textColor="@color/black"
+        android:textSize="30sp" />
+
+
+    <ImageView
+        android:id="@+id/img_background"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_marginTop="380dp"
+        android:layout_marginEnd="100dp"
+        android:layout_alignParentEnd="true"
+        android:adjustViewBounds="true"
+        android:contentDescription="@string/todo"
+        android:scaleType="fitXY" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/img_background"
+        android:layout_marginEnd="125dp"
+        android:fontFamily="@font/poppins_regular"
+        android:layout_alignParentEnd="true"
+        android:text="@string/time_left"
+        android:textColor="@color/black"
+        android:textSize="16sp" />
+
+    <LinearLayout
+        android:layout_below="@+id/txtAmount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="90dp"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/arial_bold"
+            android:text="Inwords :"
+            android:textColor="@color/black"
+            android:textSize="20sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/poppins_regular"
+            android:text="Ten Thousand Rupees Only"
+            android:textColor="@color/black"
+            android:textSize="20sp" />
+
+
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:visibility="gone"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/img_pay"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="500dp"
+            android:layout_marginEnd="100dp"
+            android:layout_centerHorizontal="true"
+            android:adjustViewBounds="true"
+            android:src="@drawable/ic_pay"
+            android:contentDescription="@string/todo"
+            android:scaleType="fitXY" />
+
+        <ImageView
+            android:id="@+id/imgQRCode"
+            android:layout_below="@+id/img_pay"
+            android:layout_width="300dp"
+            android:layout_height="300dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="100dp"
+            android:layout_centerHorizontal="true"
+            android:adjustViewBounds="true"
+            android:src="@drawable/qrcode"
+            android:contentDescription="@string/todo"
+            android:scaleType="fitXY" />
+
+        <TextView
+            android:id="@+id/txtScan"
+            android:layout_below="@+id/imgQRCode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="90dp"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/arial_bold"
+            android:layout_centerHorizontal="true"
+            android:text="Scan this code to Pay Amount"
+            android:textColor="@color/black"
+            android:textSize="20sp" />
+
+        <Button
+            android:id="@+id/btn_pay"
+            android:layout_below="@+id/txtScan"
+            android:layout_width="200dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="10dp"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/edit_text_background"
+            android:maxLength="7"
+            android:paddingEnd="7dp"
+            android:text="@string/cancel"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            tools:ignore="RtlSymmetry" />
+
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:visibility="gone"
+        android:layout_width="500dp"
+        android:layout_height="300dp"
+        android:layout_centerHorizontal="true"
+        android:background="@color/white"
+        android:layout_marginTop="600dp"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:background="@color/primaryColor"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="20dp"
+                android:adjustViewBounds="true"
+                android:src="@drawable/ic_timer"
+                android:contentDescription="@string/todo"
+                android:scaleType="fitXY" />
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="90dp"
+                android:fontFamily="@font/arial_bold"
+                android:layout_gravity="center_vertical"
+                android:text="@string/session_expired"
+                android:textColor="@color/white"
+                android:textSize="26sp" />
+
+
+
+        </LinearLayout>
+
+
+        <TextView
+            android:id="@+id/txtExpire"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="90dp"
+            android:layout_marginTop="100dp"
+            android:fontFamily="@font/arial_bold"
+            android:text="Your Payment Session \n has Expired"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textSize="24sp"
+            tools:ignore="RtlCompat" />
+
+
+        <Button
+            android:id="@+id/btnSessionCancel"
+            android:layout_below="@+id/txtExpire"
+            android:layout_width="200dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="30dp"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/edit_text_background"
+            android:maxLength="7"
+            android:paddingEnd="7dp"
+            android:text="@string/cancel"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            tools:ignore="RtlSymmetry" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="500dp"
+        android:layout_height="300dp"
+        android:layout_centerHorizontal="true"
+        android:background="@color/white"
+        android:layout_marginTop="600dp"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="130dp"
+            android:layout_height="100dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="20dp"
+            android:adjustViewBounds="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:src="@drawable/ic_sucess"
+            android:contentDescription="@string/todo"
+            android:scaleType="fitXY" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="90dp"
+            android:layout_marginTop="130dp"
+            android:fontFamily="@font/arial_bold"
+            android:text="@string/thank_you"
+            android:layout_centerHorizontal="true"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textSize="26sp"
+            tools:ignore="RtlCompat" />
+
+        <TextView
+            android:id="@+id/txt_sucess"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="90dp"
+            android:layout_marginTop="170dp"
+            android:fontFamily="@font/poppins_regular"
+            android:text="@string/your_payment_was_successful"
+            android:layout_centerHorizontal="true"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            tools:ignore="RtlCompat" />
+
+
+        <Button
+            android:layout_below="@+id/txt_sucess"
+            android:layout_width="200dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="30dp"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/edit_text_background"
+            android:maxLength="7"
+            android:paddingEnd="7dp"
+            android:text="@string/close"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            tools:ignore="RtlSymmetry" />
+
+    </RelativeLayout>
+
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="250dp"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="40dp"
+            android:layout_marginEnd="30dp"
+            android:layout_marginTop="20dp"
+            android:src="@drawable/ic_xenia"/>
+
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="40dp"
+            android:layout_marginTop="20dp"
+            android:src="@drawable/ic_sib"/>
+
+    </LinearLayout>
+
+
+</RelativeLayout>
