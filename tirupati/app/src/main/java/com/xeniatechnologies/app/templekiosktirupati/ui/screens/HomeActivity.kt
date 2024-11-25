@@ -279,14 +279,9 @@ class HomeActivity : AppCompatActivity() {
     }
 
     private fun clearFocusedEditText() {
-        when {
-            binding.editTxtDonation.isFocused -> {
-                binding.editTxtDonation.text.clear()
-            }
-            binding.edtPhNo.isFocused -> {
-                binding.edtPhNo.text.clear()
-            }
-        }
+        binding.editTxtDonation.text.clear()
+        binding.edtPhNo.text.clear()
+        binding.editTxtDonation.requestFocus()
     }
 
     private fun removeLastCharacterFromFocusedEditText() {

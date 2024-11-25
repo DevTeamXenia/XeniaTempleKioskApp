@@ -158,13 +158,15 @@ class QRActivity : AppCompatActivity() {
             override fun onTick(millisUntilFinished: Long) {
                 elapsedTime += 1000
                 val secondsRemaining = millisUntilFinished / 1000
-                binding.txtTimer.text = secondsRemaining.toString()
+
+                val formattedTime = String.format("%02d", secondsRemaining)
+
+                binding.txtTimer.text = formattedTime
 
                 if (elapsedTime % pollInterval == 0L) {
                     checkPaymentStatus()
                 }
             }
-
 
             @SuppressLint("SetTextI18n")
             override fun onFinish() {
