@@ -67,4 +67,6 @@ dependencies {
     //di
     implementation ("io.insert-koin:koin-android:3.2.2")
 
+    implementation(files("libs/printer-lib-2.2.4.aar"))
+
 }

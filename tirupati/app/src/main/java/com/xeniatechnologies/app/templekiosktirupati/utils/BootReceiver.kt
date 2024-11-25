@@ -3,7 +3,7 @@ package com.xeniatechnologies.app.templekiosktirupati.utils;
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import com.xeniatechnologies.app.templekiosktirupati.ui.LoginActivity
+import com.xeniatechnologies.app.templekiosktirupati.ui.screens.LoginActivity
 
 class BootReceiver : BroadcastReceiver() {
 

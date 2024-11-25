@@ -19,7 +19,7 @@
         android:theme="@style/Theme.TempleKioskTirupati"
         tools:targetApi="31" >
         <activity
-            android:name=".ui.LoginActivity"
+            android:name=".ui.screens.LoginActivity"
             android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -28,19 +28,11 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.QRActivity"
-            android:exported="true" >
-
-        </activity>
+            android:name=".ui.screens.QRActivity"
+            android:exported="true"/>
         <activity
-            android:name=".ui.HomeActivity"
-            android:exported="true" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            android:name=".ui.screens.HomeActivity"
+            android:exported="true"/>
 
 
         <receiver

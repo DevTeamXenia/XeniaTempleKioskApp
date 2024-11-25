@@ -2,7 +2,7 @@
     <string name="app_name">TempleKioskTirupati</string>
     <string name="your_amount">Your amount</string>
     <string name="pay">PAY NOW</string>
-    <string name="enter_amount">Enter Amount</string>
+    <string name="enter_amount">Enter Amount*</string>
     <string name="mobile_number">Mobile Number</string>
     <string name="your_mobile_number">Your mobile Number</string>
     <string name="amount_10_000">Amount : ₹10,000/-</string>
@@ -27,4 +27,12 @@
     <string name="log_in">LOG IN</string>
     <string name="login_as_a_admin_user">Login as a Admin User</string>
     <string name="amount">Amount : </string>
+    <string name="optional">(Optional)</string>
+    <string name="reset">Reset</string>
+    <string name="_0">0</string>
+    <string name="scan_and_pay_using_any_upi_mobile_app">SCAN AND PAY USING ANY UPI MOBILE APP</string>
+    <string name="inwords">Inwords :</string>
+    <string name="ten_thousand_rupees_only">Ten Thousand Rupees Only</string>
+    <string name="payment_failed">Payment Failed</string>
+    <string name="it_seems_we_have_not_received_money">It seems we have not received money</string>
 </resources>

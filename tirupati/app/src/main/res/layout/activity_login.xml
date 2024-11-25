@@ -8,7 +8,7 @@
     android:orientation="horizontal"
     android:weightSum="100"
     android:background="@drawable/bk1"
-    tools:context=".ui.LoginActivity">
+    tools:context=".ui.screens.LoginActivity">
 
 
     <LinearLayout
