@@ -27,6 +27,7 @@ import com.xenia.templekiosk.utils.SessionManager
 import com.xenia.templekiosk.utils.common.CommonMethod.convertNumberToWords
 import com.xeniatechnologies.app.templekiosktirupati.R
 import com.xeniatechnologies.app.templekiosktirupati.databinding.ActivityQractivityBinding
+import com.xeniatechnologies.app.templekiosktirupati.utils.PrinterConnectionManager
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -172,7 +173,6 @@ class QRActivity : AppCompatActivity() {
             override fun onFinish() {
                 stopCheckingPaymentStatus()
 
-
                 binding.relQr.visibility = View.GONE
                 binding.relSuccessStatus.visibility = View.GONE
                 binding.relFailedStatus.visibility = View.GONE
@@ -285,7 +285,6 @@ class QRActivity : AppCompatActivity() {
 
     @SuppressLint("SetTextI18n")
     private fun handleTransactionStatus(status: String) {
-
         if(status == "S"){
             configPrinter()
             binding.relQr.visibility = View.GONE
@@ -294,7 +293,7 @@ class QRActivity : AppCompatActivity() {
             binding.relExpireQr.visibility = View.GONE
 
             val initialTime = 5
-            binding.btnSessionCancel.text = "Cancel($initialTime)"
+            binding.btnSuccess.text = "Cancel($initialTime)"
 
             object : CountDownTimer((initialTime * 1000).toLong(), 1000) {
                 @SuppressLint("SetTextI18n")
@@ -304,6 +303,7 @@ class QRActivity : AppCompatActivity() {
                 }
 
                 override fun onFinish() {
+                    stopCheckingPaymentStatus()
                     navigateToHomeScreen()
                 }
             }.start()
@@ -312,42 +312,36 @@ class QRActivity : AppCompatActivity() {
             binding.relSuccessStatus.visibility = View.GONE
             binding.relFailedStatus.visibility = View.VISIBLE
             binding.relExpireQr.visibility = View.GONE
+            val initialTime = 5
+            binding.btnCancel.text = "Cancel($initialTime)"
+
+            object : CountDownTimer((initialTime * 1000).toLong(), 1000) {
+                @SuppressLint("SetTextI18n")
+                override fun onTick(millisUntilFinished: Long) {
+                    val secondsLeft = (millisUntilFinished / 1000).toInt()
+                    binding.btnCancel.text = "Cancel($secondsLeft)"
+                }
+
+                override fun onFinish() {
+                    stopCheckingPaymentStatus()
+                    navigateToHomeScreen()
+                }
+            }.start()
         }
 
     }
 
 
     private fun configPrinter() {
-        try {
-            POSConnect.init(applicationContext)
-            val entries = POSConnect.getUsbDevices(applicationContext)
-
-            if (entries.isNotEmpty()) {
-                try {
-                    printReceipt(entries[0])
-                } catch (e: Exception) {
-                    Toast.makeText(this, "Error printing receipt: ${e.message}", Toast.LENGTH_LONG)
-                        .show()
-
-                }
+        PrinterConnectionManager.getPrinterConnection(this) { success ->
+            if (success) {
+                curConnect = PrinterConnectionManager.getPrinterConnection(this) { }
+                initReceiptPrint()
             } else {
-                navigateToHomeScreen()
                 Toast.makeText(this, "No USB printer devices found", Toast.LENGTH_LONG).show()
+                navigateToHomeScreen()
             }
-        } catch (_: Exception) {
-            navigateToHomeScreen()
-
         }
-    }
-
-    private fun printReceipt(pathName: String) {
-        connectUSB(pathName)
-    }
-
-    private fun connectUSB(pathName: String) {
-        curConnect?.close()
-        curConnect = POSConnect.createDevice(POSConnect.DEVICE_TYPE_USB)
-        curConnect!!.connect(pathName, connectListener)
     }
 
 
@@ -357,40 +351,6 @@ class QRActivity : AppCompatActivity() {
         startActivity(intent)
         finish()
     }
-
-
-    private val connectListener = IPOSListener { code, _ ->
-        when (code) {
-            POSConnect.CONNECT_SUCCESS -> {
-                initReceiptPrint()
-            }
-
-            POSConnect.CONNECT_FAIL -> {
-                navigateToHomeScreen()
-            }
-
-            POSConnect.CONNECT_INTERRUPT -> {
-                navigateToHomeScreen()
-
-            }
-
-            POSConnect.SEND_FAIL -> {
-                navigateToHomeScreen()
-
-            }
-
-            POSConnect.USB_DETACHED -> {
-                navigateToHomeScreen()
-
-            }
-
-            POSConnect.USB_ATTACHED -> {
-                navigateToHomeScreen()
-
-            }
-        }
-    }
-
 
     @SuppressLint("DefaultLocale")
     private fun initReceiptPrint() {

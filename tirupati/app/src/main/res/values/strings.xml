@@ -2,7 +2,7 @@
     <string name="app_name">TempleKioskTirupati</string>
     <string name="your_amount">Your amount</string>
     <string name="pay">PAY NOW</string>
-    <string name="enter_amount">Enter Amount*</string>
+    <string name="enter_amount">Enter Amount</string>
     <string name="mobile_number">Mobile Number</string>
     <string name="your_mobile_number">Your mobile Number</string>
     <string name="amount_10_000">Amount : ₹10,000/-</string>
@@ -35,4 +35,5 @@
     <string name="ten_thousand_rupees_only">Ten Thousand Rupees Only</string>
     <string name="payment_failed">Payment Failed</string>
     <string name="it_seems_we_have_not_received_money">It seems we have not received money</string>
+    <string name="star">*</string>
 </resources>

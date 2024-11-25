@@ -21,10 +21,12 @@ import com.xenia.templekiosk.utils.common.CommonMethod.showLoader
 import com.xenia.templekiosk.utils.common.CommonMethod.showSnackbar
 import com.xeniatechnologies.app.templekiosktirupati.R
 import com.xeniatechnologies.app.templekiosktirupati.databinding.ActivityHomeBinding
+import com.xeniatechnologies.app.templekiosktirupati.utils.PrinterConnectionManager
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import net.posprinter.IDeviceConnection
 import org.koin.android.ext.android.inject
 
 
@@ -37,6 +39,8 @@ class HomeActivity : AppCompatActivity() {
     private val paymentRepository: PaymentRepository by inject()
     private val loginRepository: LoginRepository by inject()
     private var donationAmount: Double? = null
+    private var curConnect: IDeviceConnection? = null
+
 
     @SuppressLint("ClickableViewAccessibility")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -45,7 +49,8 @@ class HomeActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         updateButtonState()
-
+        PrinterConnectionManager.initialize(applicationContext)
+        configPrinter()
         binding.editTxtDonation.requestFocus()
         val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
         imm.hideSoftInputFromWindow(binding.editTxtDonation.windowToken, 0)
@@ -118,7 +123,15 @@ class HomeActivity : AppCompatActivity() {
     }
 
 
-
+    private fun configPrinter() {
+        PrinterConnectionManager.getPrinterConnection(this) { success ->
+            if (success) {
+                curConnect = PrinterConnectionManager.getPrinterConnection(this) { }
+            } else {
+                Toast.makeText(this, "No USB printer devices found", Toast.LENGTH_LONG).show()
+            }
+        }
+    }
 
     private fun loadCompanyDetails() {
         if (isInternetAvailable(this)) {
