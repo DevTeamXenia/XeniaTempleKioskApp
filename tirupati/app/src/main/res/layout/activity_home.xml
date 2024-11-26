@@ -59,7 +59,7 @@
             android:imeOptions="actionNext"
             android:inputType="number"
             android:fontFamily="@font/arial_bold"
-            android:maxLength="10"
+            android:maxLength="7"
             android:paddingStart="12dp"
             android:paddingEnd="12dp"
             android:textAlignment="textStart"

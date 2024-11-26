@@ -18,7 +18,6 @@ import com.xeniatechnologies.app.templekiosktirupati.utils.common.CommonMethod.d
 import com.xeniatechnologies.app.templekiosktirupati.utils.common.CommonMethod.generateNumericTransactionReferenceID
 import com.xeniatechnologies.app.templekiosktirupati.utils.common.CommonMethod.isInternetAvailable
 import com.xeniatechnologies.app.templekiosktirupati.utils.common.CommonMethod.showLoader
-//import com.xeniatechnologies.app.templekiosktirupati.utils.common.CommonMethod.showSnackbar
 import com.xeniatechnologies.app.templekiosktirupati.R
 import com.xeniatechnologies.app.templekiosktirupati.databinding.ActivityHomeBinding
 import com.xeniatechnologies.app.templekiosktirupati.utils.PrinterConnectionManager
@@ -115,6 +114,31 @@ class HomeActivity : AppCompatActivity() {
             true
         }
 
+
+        binding.editTxtDonation.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(charSequence: CharSequence?, start: Int, before: Int, count: Int) {
+            }
+
+            override fun onTextChanged(charSequence: CharSequence?, start: Int, before: Int, count: Int) {
+            }
+
+            override fun afterTextChanged(editable: Editable?) {
+                val input = editable.toString()
+                val amount = input.toDoubleOrNull()
+
+                if (amount != null) {
+                    if (amount > 100000) {
+                        editable?.replace(0, editable.length, "100000")
+                        Toast.makeText(
+                            applicationContext,
+                            "Donation amount cannot exceed ₹1,00,00", Toast.LENGTH_LONG
+                        ).show()
+
+                    }
+                }
+            }
+        })
+
     }
 
     override fun onResume() {
@@ -177,12 +201,10 @@ class HomeActivity : AppCompatActivity() {
         donationAmount = binding.editTxtDonation.text.toString().toDoubleOrNull()
         when {
             donationAmount == null || donationAmount!! <= 0 -> {
-                binding.editTxtDonation.setError("Please enter a valid amount")
-                //showSnackbar(binding.root, "Please enter a valid amount")
+                binding.editTxtDonation.error = "Please enter a valid amount"
             }
             donationAmount!! > 100000 -> {
-                binding.editTxtDonation.setError("Donation amount cannot exceed ₹1,00,000")
-               // showSnackbar(binding.root, "Donation amount cannot exceed ₹1,00,000")
+                binding.editTxtDonation.error = "Donation amount cannot exceed ₹1,00,000"
             }
             else -> {
                 if (isInternetAvailable(this)) {

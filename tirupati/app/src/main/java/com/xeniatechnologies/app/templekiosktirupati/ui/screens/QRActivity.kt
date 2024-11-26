@@ -1,5 +1,6 @@
 package com.xeniatechnologies.app.templekiosktirupati.ui.screens
 
+import android.animation.ObjectAnimator
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.graphics.Bitmap
@@ -54,6 +55,7 @@ class QRActivity : AppCompatActivity() {
     private var isCheckingPaymentStatus = false
 
     private var curConnect: IDeviceConnection? = null
+    private var blinkAnimator: ObjectAnimator? = null
 
     private var amount: Double = 0.0
     private var url: String = ""
@@ -62,7 +64,6 @@ class QRActivity : AppCompatActivity() {
     private var phno: String = ""
     private var formattedAmount = ""
     private var orderID: String? = null
-
 
     @SuppressLint("DefaultLocale", "SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -83,7 +84,6 @@ class QRActivity : AppCompatActivity() {
         val donationInWords = convertNumberToWords(amount)
         binding.txtWords.text = donationInWords
 
-
         val qrCodeBitmap = generateUPIQRCode(url)
         binding.imgQRCode.setImageBitmap(qrCodeBitmap)
 
@@ -95,8 +95,8 @@ class QRActivity : AppCompatActivity() {
 
         startTimer()
 
-
         binding.btnCancel.setOnClickListener {
+            stopCheckingPaymentStatus()
             startActivity(Intent(applicationContext, HomeActivity::class.java))
             finish()
         }
@@ -105,7 +105,6 @@ class QRActivity : AppCompatActivity() {
             startActivity(Intent(applicationContext, HomeActivity::class.java))
             finish()
         }
-
 
         Glide.with(this)
             .asGif()
@@ -132,25 +131,10 @@ class QRActivity : AppCompatActivity() {
                     .priority(Priority.HIGH)
             )
             .into(binding.imgPay)
-
-    }
-
-
-    private fun generateUPIQRCode(url: String): Bitmap? {
-        return try {
-            val bitMatrix = MultiFormatWriter().encode(
-                url, BarcodeFormat.QR_CODE, 400, 400
-            )
-            val barcodeEncoder = BarcodeEncoder()
-            barcodeEncoder.createBitmap(bitMatrix)
-        } catch (e: WriterException) {
-            e.printStackTrace()
-            null
-        }
     }
 
     private fun startTimer() {
-        val totalTime = 90000L
+        val totalTime = 60000L
         val pollInterval = 3000L
         var elapsedTime = 0L
 
@@ -161,6 +145,14 @@ class QRActivity : AppCompatActivity() {
                 val secondsRemaining = millisUntilFinished / 1000
                 val formattedTime = String.format("%02d", secondsRemaining)
                 binding.txtTimer.text = formattedTime
+
+                if (secondsRemaining < 10) {
+                    binding.txtTimer.setTextColor(Color.RED)
+                    startBlinkingText()
+                } else {
+                    binding.txtTimer.setTextColor(Color.WHITE)
+                    stopBlinkingText()
+                }
 
                 if (elapsedTime % pollInterval == 0L) {
                     checkPaymentStatus()
@@ -181,30 +173,22 @@ class QRActivity : AppCompatActivity() {
         }.start()
     }
 
-    private fun startCancelButtonCountdown() {
-        val initialTime = 6
-        binding.btnSessionCancel.text = "Cancel($initialTime)"
 
-        object : CountDownTimer((initialTime * 1000).toLong(), 1000) {
-            @SuppressLint("SetTextI18n")
-            override fun onTick(millisUntilFinished: Long) {
-                val secondsLeft = (millisUntilFinished / 1000).toInt()
-                binding.btnSessionCancel.text = "Cancel($secondsLeft)"
+    private fun startBlinkingText() {
+        if (blinkAnimator == null) {
+            blinkAnimator = ObjectAnimator.ofFloat(binding.txtTimer, View.ALPHA, 1f, 0f).apply {
+                duration = 300
+                repeatMode = ObjectAnimator.REVERSE
+                repeatCount = ObjectAnimator.INFINITE
+                start()
             }
-
-            override fun onFinish() {
-                navigateToHomeScreen()
-            }
-        }.start()
+        }
     }
 
-
-
-    private fun stopCheckingPaymentStatus() {
-        isCheckingPaymentStatus = false
-        paymentStatusJob?.cancel()
-        pollingTimer?.cancel()
-        pollingTimer = null
+    private fun stopBlinkingText() {
+        blinkAnimator?.cancel()
+        blinkAnimator = null
+        binding.txtTimer.alpha = 1f
     }
 
 
@@ -235,11 +219,9 @@ class QRActivity : AppCompatActivity() {
                             if (status == "S" && statusDesc == "Transaction success") {
                                 postPaymentHistory(status)
                                 return@launch
-
                             } else if (status == "F" && statusDesc != "Invalid PsprefNo") {
                                 postPaymentHistory(status)
                                 return@launch
-
                             }
                         }
                     }
@@ -247,12 +229,38 @@ class QRActivity : AppCompatActivity() {
                 }
             } catch (e: Exception) {
                 checkPaymentStatus()
-
             } finally {
                 isCheckingPaymentStatus = false
             }
         }
     }
+
+    @SuppressLint("SetTextI18n")
+    private fun startCancelButtonCountdown() {
+        val initialTime = 6
+        binding.btnSessionCancel.text = "Cancel($initialTime)"
+
+        object : CountDownTimer((initialTime * 1000).toLong(), 1000) {
+            @SuppressLint("SetTextI18n")
+            override fun onTick(millisUntilFinished: Long) {
+                val secondsLeft = (millisUntilFinished / 1000).toInt()
+                binding.btnSessionCancel.text = "Cancel($secondsLeft)"
+            }
+
+            override fun onFinish() {
+                navigateToHomeScreen()
+            }
+        }.start()
+    }
+
+
+    private fun stopCheckingPaymentStatus() {
+        isCheckingPaymentStatus = false
+        paymentStatusJob?.cancel()
+        pollingTimer?.cancel()
+        pollingTimer = null
+    }
+
 
     private fun postPaymentHistory(status: String) {
         val orderRequest = OrderRequest(
@@ -294,7 +302,7 @@ class QRActivity : AppCompatActivity() {
             binding.relFailedStatus.visibility = View.GONE
             binding.relExpireQr.visibility = View.GONE
 
-            val initialTime = 5
+            val initialTime = 6
             binding.btnSuccess.text = "Cancel($initialTime)"
 
             object : CountDownTimer((initialTime * 1000).toLong(), 1000) {
@@ -309,12 +317,12 @@ class QRActivity : AppCompatActivity() {
                     navigateToHomeScreen()
                 }
             }.start()
-        } else {
+        } else if(status == "F"){
             binding.relQr.visibility = View.GONE
             binding.relSuccessStatus.visibility = View.GONE
             binding.relFailedStatus.visibility = View.VISIBLE
             binding.relExpireQr.visibility = View.GONE
-            val initialTime = 5
+            val initialTime = 6
             binding.btnCancel.text = "Cancel($initialTime)"
 
             object : CountDownTimer((initialTime * 1000).toLong(), 1000) {
@@ -326,7 +334,7 @@ class QRActivity : AppCompatActivity() {
 
                 override fun onFinish() {
                     stopCheckingPaymentStatus()
-                    navigateToHomeScreen()
+                    //navigateToHomeScreen()
                 }
             }.start()
         }
@@ -373,11 +381,13 @@ class QRActivity : AppCompatActivity() {
             val qrBitmap = generateQRCode(qrContent, 200, 200)
 
             val headerImg = ContextCompat.getDrawable(this, R.drawable.print_header_logo)
-            val bitmapHeader = (headerImg as BitmapDrawable).bitmap.copy(Bitmap.Config.ARGB_8888, true)
+            val bitmapHeader =
+                (headerImg as BitmapDrawable).bitmap.copy(Bitmap.Config.ARGB_8888, true)
 
 
             val footerImg = ContextCompat.getDrawable(this, R.drawable.print_bottom_logo)
-            val bitmapFooter = (footerImg as BitmapDrawable).bitmap.copy(Bitmap.Config.ARGB_8888, true)
+            val bitmapFooter =
+                (footerImg as BitmapDrawable).bitmap.copy(Bitmap.Config.ARGB_8888, true)
 
             POSPrinter(curConnect)
                 .printBitmap(bitmapHeader, POSConst.ALIGNMENT_CENTER, 580)
@@ -419,7 +429,8 @@ class QRActivity : AppCompatActivity() {
     }
 
     private fun generateQRCode(content: String, width: Int, height: Int): Bitmap {
-        val bitMatrix: BitMatrix = MultiFormatWriter().encode(content, BarcodeFormat.QR_CODE, width, height)
+        val bitMatrix: BitMatrix =
+            MultiFormatWriter().encode(content, BarcodeFormat.QR_CODE, width, height)
         val startX = bitMatrix.enclosingRectangle[0]
         val startY = bitMatrix.enclosingRectangle[1]
         val qrWidth = bitMatrix.enclosingRectangle[2]
@@ -428,12 +439,26 @@ class QRActivity : AppCompatActivity() {
         val bitmap = Bitmap.createBitmap(qrWidth, qrHeight, Bitmap.Config.RGB_565)
         for (x in 0 until qrWidth) {
             for (y in 0 until qrHeight) {
-                bitmap.setPixel(x, y, if (bitMatrix[x + startX, y + startY]) Color.BLACK else Color.WHITE)
+                bitmap.setPixel(
+                    x,
+                    y,
+                    if (bitMatrix[x + startX, y + startY]) Color.BLACK else Color.WHITE
+                )
             }
         }
         return bitmap
     }
 
-
-
+    private fun generateUPIQRCode(url: String): Bitmap? {
+        return try {
+            val bitMatrix = MultiFormatWriter().encode(
+                url, BarcodeFormat.QR_CODE, 400, 400
+            )
+            val barcodeEncoder = BarcodeEncoder()
+            barcodeEncoder.createBitmap(bitMatrix)
+        } catch (e: WriterException) {
+            e.printStackTrace()
+            null
+        }
+    }
 }

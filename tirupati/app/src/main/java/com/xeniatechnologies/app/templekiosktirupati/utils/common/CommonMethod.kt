@@ -5,23 +5,16 @@ package com.xeniatechnologies.app.templekiosktirupati.utils.common
 import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.Context
-import android.content.res.Configuration
-import android.graphics.Typeface
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Build
-import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.snackbar.Snackbar
 import com.xeniatechnologies.app.templekiosktirupati.R
-
 import java.security.SecureRandom
-import java.util.Locale
 
 object CommonMethod {
     private var loader: AlertDialog? = null
@@ -69,17 +62,6 @@ object CommonMethod {
     }
 
 
-    @Suppress("DEPRECATION")
-    fun setLocale(context: Context, languageCode: String?) {
-        val locale = Locale(languageCode ?: "en")
-        Locale.setDefault(locale)
-
-        val config = Configuration(context.resources.configuration)
-        config.setLocale(locale)
-
-        context.createConfigurationContext(config)
-        context.resources.updateConfiguration(config, context.resources.displayMetrics)
-    }
 
     @SuppressLint("ObsoleteSdkInt")
     fun isInternetAvailable(context: Context): Boolean {
@@ -107,15 +89,13 @@ object CommonMethod {
         val fraction = (number - wholeNumber) * 100
 
         return if (fraction == 0.0) {
-            // If the fraction part is zero, only convert the whole number
             convertWholeNumberToWords(wholeNumber) + " Rupees Only"
         } else {
-            // If there's a fraction, include it in words as Paise
             "${convertWholeNumberToWords(wholeNumber)} and ${fraction.toInt()} Paise"
         }
     }
 
-    fun convertWholeNumberToWords(number: Long): String {
+    private fun convertWholeNumberToWords(number: Long): String {
         val units = arrayOf(
             "", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine",
             "Ten", "Eleven", "Twelve", "Thirteen", "Fourteen", "Fifteen", "Sixteen", "Seventeen",
@@ -130,8 +110,6 @@ object CommonMethod {
 
         var num = number
         var words = ""
-
-        // Handle thousands and higher
         if (num >= 1000) {
             words += convertWholeNumberToWords(num / 1000) + " Thousand "
             num %= 1000
