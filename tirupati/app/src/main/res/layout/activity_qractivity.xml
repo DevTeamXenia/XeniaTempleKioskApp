@@ -12,8 +12,8 @@
         android:id="@+id/txtAmount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="90dp"
-        android:layout_marginTop="370dp"
+        android:layout_marginStart="80dp"
+        android:layout_marginTop="340dp"
         android:fontFamily="@font/arial_bold"
         android:text="@string/amount_10_000"
         android:textColor="@color/black"
@@ -22,10 +22,10 @@
 
     <ImageView
         android:id="@+id/img_background"
-        android:layout_width="120dp"
-        android:layout_height="120dp"
-        android:layout_marginTop="380dp"
-        android:layout_marginEnd="100dp"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="360dp"
+        android:layout_marginEnd="80dp"
         android:layout_alignParentEnd="true"
         android:adjustViewBounds="true"
         android:contentDescription="@string/todo"
@@ -35,8 +35,8 @@
         android:id="@+id/txtTimer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="417dp"
-        android:layout_marginEnd="140dp"
+        android:layout_marginTop="385dp"
+        android:layout_marginEnd="110dp"
         android:fontFamily="@font/arial_bold"
         android:layout_alignParentEnd="true"
         android:textColor="@color/white"
@@ -48,7 +48,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/img_background"
-        android:layout_marginEnd="125dp"
+        android:layout_marginEnd="95dp"
         android:fontFamily="@font/poppins_regular"
         android:layout_alignParentEnd="true"
         android:text="@string/time_left"
@@ -64,23 +64,20 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="90dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginStart="80dp"
             android:fontFamily="@font/arial_bold"
             android:text="@string/inwords"
             android:textColor="@color/black"
-            android:textSize="20sp" />
+            android:textSize="18sp" />
 
         <TextView
             android:id="@+id/txtWords"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp"
-            android:fontFamily="@font/poppins_regular"
+            android:layout_marginStart="2dp"
             android:text="@string/ten_thousand_rupees_only"
             android:textColor="@color/black"
-            android:textSize="20sp" />
+            android:textSize="18sp" />
 
 
 
@@ -95,9 +92,9 @@
 
         <ImageView
             android:id="@+id/img_pay"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:layout_marginTop="460dp"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginTop="410dp"
             android:layout_marginEnd="100dp"
             android:layout_centerHorizontal="true"
             android:adjustViewBounds="true"
@@ -108,9 +105,9 @@
         <ImageView
             android:id="@+id/imgQRCode"
             android:layout_below="@+id/img_pay"
-            android:layout_width="300dp"
-            android:layout_height="300dp"
-            android:layout_marginTop="20dp"
+            android:layout_width="350dp"
+            android:layout_height="350dp"
+            android:layout_marginTop="10dp"
             android:layout_marginEnd="100dp"
             android:layout_centerHorizontal="true"
             android:adjustViewBounds="true"
@@ -129,12 +126,12 @@
             android:layout_centerHorizontal="true"
             android:text="@string/scan_and_pay_using_any_upi_mobile_app"
             android:textColor="@color/black"
-            android:textSize="20sp" />
+            android:textSize="16sp" />
 
         <ImageView
             android:id="@+id/upi"
             android:layout_width="200dp"
-            android:layout_height="50dp"
+            android:layout_height="20dp"
             android:layout_marginTop="5dp"
             android:layout_centerHorizontal="true"
             android:layout_below="@+id/txtScan"
@@ -144,15 +141,15 @@
         <Button
             android:id="@+id/btn_cancel"
             android:layout_below="@+id/upi"
-            android:layout_width="200dp"
+            android:layout_width="150dp"
             android:layout_marginTop="10dp"
-            android:layout_height="50dp"
-
+            android:textAllCaps="true"
+            android:layout_height="40dp"
             android:layout_centerHorizontal="true"
             android:background="@drawable/edit_text_background"
             android:text="@string/cancel"
             android:textColor="@color/white"
-            android:textSize="20sp"
+            android:textSize="15sp"
             tools:ignore="RtlSymmetry" />
 
     </RelativeLayout>
@@ -361,29 +358,27 @@
 
 
 
-<!--    <LinearLayout
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="250dp"
+        android:layout_marginBottom="220dp"
         android:orientation="horizontal">
 
         <ImageView
             android:layout_width="100dp"
-            android:layout_height="40dp"
-            android:layout_marginEnd="30dp"
+            android:layout_height="30dp"
             android:layout_marginTop="20dp"
             android:src="@drawable/ic_xenia"/>
 
         <ImageView
             android:layout_width="100dp"
-            android:layout_height="40dp"
-            android:layout_marginStart="40dp"
+            android:layout_height="30dp"
             android:layout_marginTop="20dp"
             android:src="@drawable/ic_sib"/>
 
-    </LinearLayout>-->
+    </LinearLayout>
 
 
 </RelativeLayout>

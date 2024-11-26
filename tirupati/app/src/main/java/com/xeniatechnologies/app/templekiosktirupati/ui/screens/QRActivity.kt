@@ -3,6 +3,7 @@ package com.xeniatechnologies.app.templekiosktirupati.ui.screens
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.graphics.Bitmap
+import android.graphics.Color
 import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
 import android.os.CountDownTimer
@@ -19,12 +20,13 @@ import com.bumptech.glide.request.target.Target
 import com.google.zxing.BarcodeFormat
 import com.google.zxing.MultiFormatWriter
 import com.google.zxing.WriterException
+import com.google.zxing.common.BitMatrix
 import com.journeyapps.barcodescanner.BarcodeEncoder
 import com.xenia.templekiosk.data.network.model.OrderRequest
 import com.xenia.templekiosk.data.network.model.PaymentStatus
 import com.xenia.templekiosk.data.repository.PaymentRepository
 import com.xenia.templekiosk.utils.SessionManager
-import com.xenia.templekiosk.utils.common.CommonMethod.convertNumberToWords
+import com.xeniatechnologies.app.templekiosktirupati.utils.common.CommonMethod.convertNumberToWords
 import com.xeniatechnologies.app.templekiosktirupati.R
 import com.xeniatechnologies.app.templekiosktirupati.databinding.ActivityQractivityBinding
 import com.xeniatechnologies.app.templekiosktirupati.utils.PrinterConnectionManager
@@ -35,8 +37,6 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import net.posprinter.IDeviceConnection
-import net.posprinter.IPOSListener
-import net.posprinter.POSConnect
 import net.posprinter.POSConst
 import net.posprinter.POSPrinter
 import org.koin.android.ext.android.inject
@@ -139,7 +139,7 @@ class QRActivity : AppCompatActivity() {
     private fun generateUPIQRCode(url: String): Bitmap? {
         return try {
             val bitMatrix = MultiFormatWriter().encode(
-                url, BarcodeFormat.QR_CODE, 300, 300
+                url, BarcodeFormat.QR_CODE, 400, 400
             )
             val barcodeEncoder = BarcodeEncoder()
             barcodeEncoder.createBitmap(bitMatrix)
@@ -150,7 +150,7 @@ class QRActivity : AppCompatActivity() {
     }
 
     private fun startTimer() {
-        val totalTime = 60000L
+        val totalTime = 90000L
         val pollInterval = 3000L
         var elapsedTime = 0L
 
@@ -159,9 +159,7 @@ class QRActivity : AppCompatActivity() {
             override fun onTick(millisUntilFinished: Long) {
                 elapsedTime += 1000
                 val secondsRemaining = millisUntilFinished / 1000
-
                 val formattedTime = String.format("%02d", secondsRemaining)
-
                 binding.txtTimer.text = formattedTime
 
                 if (elapsedTime % pollInterval == 0L) {
@@ -178,23 +176,28 @@ class QRActivity : AppCompatActivity() {
                 binding.relFailedStatus.visibility = View.GONE
                 binding.relExpireQr.visibility = View.VISIBLE
 
-                val initialTime = 3
-                binding.btnSessionCancel.text = "Cancel($initialTime)"
-
-                object : CountDownTimer((initialTime * 1000).toLong(), 1000) {
-                    @SuppressLint("SetTextI18n")
-                    override fun onTick(millisUntilFinished: Long) {
-                        val secondsLeft = (millisUntilFinished / 1000).toInt()
-                        binding.btnSessionCancel.text = "Cancel($secondsLeft)"
-                    }
-
-                    override fun onFinish() {
-                        navigateToHomeScreen()
-                    }
-                }.start()
+                startCancelButtonCountdown()
             }
         }.start()
     }
+
+    private fun startCancelButtonCountdown() {
+        val initialTime = 6
+        binding.btnSessionCancel.text = "Cancel($initialTime)"
+
+        object : CountDownTimer((initialTime * 1000).toLong(), 1000) {
+            @SuppressLint("SetTextI18n")
+            override fun onTick(millisUntilFinished: Long) {
+                val secondsLeft = (millisUntilFinished / 1000).toInt()
+                binding.btnSessionCancel.text = "Cancel($secondsLeft)"
+            }
+
+            override fun onFinish() {
+                navigateToHomeScreen()
+            }
+        }.start()
+    }
+
 
 
     private fun stopCheckingPaymentStatus() {
@@ -282,10 +285,9 @@ class QRActivity : AppCompatActivity() {
     }
 
 
-
     @SuppressLint("SetTextI18n")
     private fun handleTransactionStatus(status: String) {
-        if(status == "S"){
+        if (status == "S") {
             configPrinter()
             binding.relQr.visibility = View.GONE
             binding.relSuccessStatus.visibility = View.VISIBLE
@@ -307,7 +309,7 @@ class QRActivity : AppCompatActivity() {
                     navigateToHomeScreen()
                 }
             }.start()
-        }else{
+        } else {
             binding.relQr.visibility = View.GONE
             binding.relSuccessStatus.visibility = View.GONE
             binding.relFailedStatus.visibility = View.VISIBLE
@@ -359,28 +361,77 @@ class QRActivity : AppCompatActivity() {
             val currentDate = SimpleDateFormat("dd-MMM-yyyy hh:mm a", Locale.getDefault()).format(
                 Date()
             )
-            val drawableDevasam = ContextCompat.getDrawable(this, R.drawable.print_header_logo)
-            val bitmapDevasam = (drawableDevasam as BitmapDrawable).bitmap.copy(Bitmap.Config.ARGB_8888, true)
+            val qrContent = listOf(
+                "Ref.No: $transactionReferenceID",
+                "GST No.: 37AAATT4126G3ZI",
+                "Amount(Rs.): $formattedAmount",
+                "Tr.Date: $currentDate",
+                "MobileNo: $phno"
+            ).joinToString(separator = ", ")
 
-            val drawableDevi = ContextCompat.getDrawable(this, R.drawable.print_bottom_logo)
-            val bitmapDevi = (drawableDevi as BitmapDrawable).bitmap.copy(Bitmap.Config.ARGB_8888, true)
+
+            val qrBitmap = generateQRCode(qrContent, 200, 200)
+
+            val headerImg = ContextCompat.getDrawable(this, R.drawable.print_header_logo)
+            val bitmapHeader = (headerImg as BitmapDrawable).bitmap.copy(Bitmap.Config.ARGB_8888, true)
+
+
+            val footerImg = ContextCompat.getDrawable(this, R.drawable.print_bottom_logo)
+            val bitmapFooter = (footerImg as BitmapDrawable).bitmap.copy(Bitmap.Config.ARGB_8888, true)
 
             POSPrinter(curConnect)
-                .printBitmap(bitmapDevasam, POSConst.ALIGNMENT_CENTER, 590)
-                .printText("${cd.companyName}\n", POSConst.ALIGNMENT_CENTER, POSConst.FNT_BOLD, POSConst.TXT_1WIDTH or POSConst.TXT_2HEIGHT)
-                .feedLine(1)
-                .printText("${cd.companyAddress}\n", POSConst.ALIGNMENT_CENTER, POSConst.STS_NORMAL, POSConst.TXT_1WIDTH or POSConst.TXT_1HEIGHT)
-                .printText("${cd.companyPhone1}\n", POSConst.ALIGNMENT_CENTER, POSConst.STS_NORMAL, POSConst.TXT_1WIDTH or POSConst.TXT_1HEIGHT)
-                .feedLine(1)
-                .printText("Receipt No : $orderID\n", POSConst.ALIGNMENT_LEFT, POSConst.STS_NORMAL, POSConst.TXT_1WIDTH or POSConst.TXT_1HEIGHT)
-                .printText("Date : $currentDate\n", POSConst.ALIGNMENT_LEFT, POSConst.STS_NORMAL, POSConst.TXT_1WIDTH or POSConst.TXT_1HEIGHT)
-                .printText("Contact No : $phno\n", POSConst.ALIGNMENT_LEFT, POSConst.STS_NORMAL , POSConst.TXT_1WIDTH or POSConst.TXT_1HEIGHT)
-                .feedLine(2)
-                .printText("Amount : $formattedAmount\n\n", POSConst.ALIGNMENT_CENTER, POSConst.FNT_BOLD , POSConst.TXT_2WIDTH or POSConst.TXT_2HEIGHT)
-                .printText("UPI Reference No: $transactionReferenceID\n\n", POSConst.ALIGNMENT_CENTER, POSConst.STS_NORMAL, POSConst.TXT_1WIDTH or POSConst.TXT_1HEIGHT)
-                .printBitmap(bitmapDevi, POSConst.ALIGNMENT_CENTER, 500)
+                .printBitmap(bitmapHeader, POSConst.ALIGNMENT_CENTER, 580)
+                .printText(
+                    "\n",
+                    POSConst.ALIGNMENT_CENTER,
+                    POSConst.FNT_BOLD,
+                    POSConst.TXT_1WIDTH or POSConst.TXT_2HEIGHT
+                )
+                .printBitmap(qrBitmap, POSConst.ALIGNMENT_CENTER, 200)
+                .printText(
+                    "\n",
+                    POSConst.ALIGNMENT_CENTER,
+                    POSConst.FNT_BOLD,
+                    POSConst.TXT_1WIDTH or POSConst.TXT_2HEIGHT
+                )
+                .printText(
+                    " Rec.No: $transactionReferenceID\n\n",
+                    POSConst.ALIGNMENT_LEFT,
+                    POSConst.FNT_BOLD,
+                    POSConst.TXT_1WIDTH or POSConst.TXT_1HEIGHT
+                )
+                .printText(
+                    " Tr. Date: $currentDate\n\n",
+                    POSConst.ALIGNMENT_LEFT,
+                    POSConst.FNT_BOLD,
+                    POSConst.TXT_1WIDTH or POSConst.TXT_1HEIGHT
+                )
+                .printText(
+                    " Amount(Rs.):$formattedAmount/-\n\n",
+                    POSConst.ALIGNMENT_LEFT,
+                    POSConst.FNT_BOLD,
+                    POSConst.TXT_2WIDTH or POSConst.TXT_2HEIGHT
+                )
+                .printBitmap(bitmapFooter, POSConst.ALIGNMENT_CENTER, 600)
                 .cutHalfAndFeed(1)
         }
+
+    }
+
+    private fun generateQRCode(content: String, width: Int, height: Int): Bitmap {
+        val bitMatrix: BitMatrix = MultiFormatWriter().encode(content, BarcodeFormat.QR_CODE, width, height)
+        val startX = bitMatrix.enclosingRectangle[0]
+        val startY = bitMatrix.enclosingRectangle[1]
+        val qrWidth = bitMatrix.enclosingRectangle[2]
+        val qrHeight = bitMatrix.enclosingRectangle[3]
+
+        val bitmap = Bitmap.createBitmap(qrWidth, qrHeight, Bitmap.Config.RGB_565)
+        for (x in 0 until qrWidth) {
+            for (y in 0 until qrHeight) {
+                bitmap.setPixel(x, y, if (bitMatrix[x + startX, y + startY]) Color.BLACK else Color.WHITE)
+            }
+        }
+        return bitmap
     }
 
 

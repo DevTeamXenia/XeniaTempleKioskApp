@@ -1,16 +1,19 @@
 @file:Suppress("DEPRECATION")
 
-package com.xenia.templekiosk.utils.common
+package com.xeniatechnologies.app.templekiosktirupati.utils.common
 
 import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.Context
 import android.content.res.Configuration
+import android.graphics.Typeface
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Build
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
@@ -49,6 +52,7 @@ object CommonMethod {
     fun showSnackbar(view: View, message: String) {
         Snackbar.make(view, message, Snackbar.LENGTH_LONG).show()
     }
+
 
 
     fun generateNumericTransactionReferenceID(): String {

@@ -8,9 +8,9 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import com.xenia.templekiosk.data.repository.LoginRepository
 import com.xenia.templekiosk.utils.SessionManager
-import com.xenia.templekiosk.utils.common.CommonMethod.dismissLoader
-import com.xenia.templekiosk.utils.common.CommonMethod.showLoader
-import com.xenia.templekiosk.utils.common.CommonMethod.showSnackbar
+import com.xeniatechnologies.app.templekiosktirupati.utils.common.CommonMethod.dismissLoader
+import com.xeniatechnologies.app.templekiosktirupati.utils.common.CommonMethod.showLoader
+import com.xeniatechnologies.app.templekiosktirupati.utils.common.CommonMethod.showSnackbar
 import com.xeniatechnologies.app.templekiosktirupati.databinding.ActivityLoginBinding
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers

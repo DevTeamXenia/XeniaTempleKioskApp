@@ -14,14 +14,15 @@ import com.xenia.templekiosk.data.network.model.PaymentRequest
 import com.xenia.templekiosk.data.repository.LoginRepository
 import com.xenia.templekiosk.data.repository.PaymentRepository
 import com.xenia.templekiosk.utils.SessionManager
-import com.xenia.templekiosk.utils.common.CommonMethod.dismissLoader
-import com.xenia.templekiosk.utils.common.CommonMethod.generateNumericTransactionReferenceID
-import com.xenia.templekiosk.utils.common.CommonMethod.isInternetAvailable
-import com.xenia.templekiosk.utils.common.CommonMethod.showLoader
-import com.xenia.templekiosk.utils.common.CommonMethod.showSnackbar
+import com.xeniatechnologies.app.templekiosktirupati.utils.common.CommonMethod.dismissLoader
+import com.xeniatechnologies.app.templekiosktirupati.utils.common.CommonMethod.generateNumericTransactionReferenceID
+import com.xeniatechnologies.app.templekiosktirupati.utils.common.CommonMethod.isInternetAvailable
+import com.xeniatechnologies.app.templekiosktirupati.utils.common.CommonMethod.showLoader
+//import com.xeniatechnologies.app.templekiosktirupati.utils.common.CommonMethod.showSnackbar
 import com.xeniatechnologies.app.templekiosktirupati.R
 import com.xeniatechnologies.app.templekiosktirupati.databinding.ActivityHomeBinding
 import com.xeniatechnologies.app.templekiosktirupati.utils.PrinterConnectionManager
+import com.xeniatechnologies.app.templekiosktirupati.utils.common.CommonMethod.showSnackbar
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -176,9 +177,13 @@ class HomeActivity : AppCompatActivity() {
         donationAmount = binding.editTxtDonation.text.toString().toDoubleOrNull()
         when {
             donationAmount == null || donationAmount!! <= 0 -> {
-                showSnackbar(binding.root, "Please enter a valid amount")
+                binding.editTxtDonation.setError("Please enter a valid amount")
+                //showSnackbar(binding.root, "Please enter a valid amount")
             }
-
+            donationAmount!! > 100000 -> {
+                binding.editTxtDonation.setError("Donation amount cannot exceed ₹1,00,000")
+               // showSnackbar(binding.root, "Donation amount cannot exceed ₹1,00,000")
+            }
             else -> {
                 if (isInternetAvailable(this)) {
                     showLoader(this@HomeActivity, "Loading your QR code... Please wait.")
@@ -281,7 +286,7 @@ class HomeActivity : AppCompatActivity() {
             binding.editTxtDonation.isFocused -> {
                 val currentText = binding.editTxtDonation.text.toString()
                 binding.editTxtDonation.setText(currentText + text)
-                binding.editTxtDonation.setSelection(binding.editTxtDonation.text.length)
+                binding.editTxtDonation.setSelection(binding.editTxtDonation.text!!.length)
             }
             binding.edtPhNo.isFocused -> {
                 val currentText = binding.edtPhNo.text.toString()
@@ -292,7 +297,7 @@ class HomeActivity : AppCompatActivity() {
     }
 
     private fun clearFocusedEditText() {
-        binding.editTxtDonation.text.clear()
+        binding.editTxtDonation.text!!.clear()
         binding.edtPhNo.text.clear()
         binding.editTxtDonation.requestFocus()
     }
