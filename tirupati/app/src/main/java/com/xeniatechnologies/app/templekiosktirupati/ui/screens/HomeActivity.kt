@@ -128,13 +128,16 @@ class HomeActivity : AppCompatActivity() {
 
                 if (amount != null) {
                     if (amount > 100000) {
-                        editable?.replace(0, editable.length, "100000")
-                        Toast.makeText(
-                            applicationContext,
-                            "Donation amount cannot exceed ₹1,00,00", Toast.LENGTH_LONG
-                        ).show()
+                        binding.editTxtDonation.error = "Donation amount cannot exceed ₹1,00,000"
+                        binding.btnPay.isEnabled = false
 
+                    }else{
+                        binding.editTxtDonation.error = null
+                        binding.btnPay.isEnabled = true
                     }
+                }else{
+                    binding.editTxtDonation.error = null
+                    binding.btnPay.isEnabled = true
                 }
             }
         })
