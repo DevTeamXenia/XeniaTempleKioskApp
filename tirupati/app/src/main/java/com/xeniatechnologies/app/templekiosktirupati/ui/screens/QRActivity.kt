@@ -237,7 +237,7 @@ class QRActivity : AppCompatActivity() {
                         val statusDesc = response.Data?.statusDesc
                         if (status != null && statusDesc != null) {
                             if (status == "S" && statusDesc == "Transaction success") {
-                               // postPaymentHistory(status)
+                                postPaymentHistory(status)
                                 return@launch
                             } else if (status == "F" && statusDesc == "Transaction fail:Debit was failed") {
                                 postPaymentHistory(status)
