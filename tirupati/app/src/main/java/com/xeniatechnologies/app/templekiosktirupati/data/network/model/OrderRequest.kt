@@ -1,4 +1,4 @@
-package com.xenia.templekiosk.data.network.model
+package com.xeniatechnologies.app.templekiosktirupati.data.network.model
 
 import com.google.gson.annotations.SerializedName
 

@@ -1,4 +1,4 @@
-package com.xenia.templekiosk.data.network.service
+package com.xeniatechnologies.app.templekiosktirupati.data.network.service
 
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory

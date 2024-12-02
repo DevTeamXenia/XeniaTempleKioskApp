@@ -1,6 +1,6 @@
 package com.xenia.templekiosk.data.repository
 
-import com.xenia.templekiosk.data.network.service.ApiClient
+import com.xeniatechnologies.app.templekiosktirupati.data.network.service.ApiClient
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 

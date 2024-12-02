@@ -1,8 +1,8 @@
-package com.xenia.templekiosk.data.network.service
+package com.xeniatechnologies.app.templekiosktirupati.data.network.service
 
 import com.xenia.templekiosk.data.network.model.CompanyResponse
 import com.xenia.templekiosk.data.network.model.LoginResponse
-import com.xenia.templekiosk.data.network.model.OrderRequest
+import com.xeniatechnologies.app.templekiosktirupati.data.network.model.OrderRequest
 import com.xenia.templekiosk.data.network.model.OrderResponse
 import com.xenia.templekiosk.data.network.model.PaymentRequest
 import com.xenia.templekiosk.data.network.model.PaymentResponse
@@ -38,5 +38,6 @@ interface ApiService {
     @POST("orders")
     suspend fun postOrder(@Query("userId") userId: Int,
                               @Query("companyId") companyId: Int,
-                              @Body request: OrderRequest): OrderResponse
+                              @Body request: OrderRequest
+    ): OrderResponse
 }

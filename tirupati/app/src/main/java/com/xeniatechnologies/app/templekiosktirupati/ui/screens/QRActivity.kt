@@ -23,9 +23,9 @@ import com.google.zxing.MultiFormatWriter
 import com.google.zxing.WriterException
 import com.google.zxing.common.BitMatrix
 import com.journeyapps.barcodescanner.BarcodeEncoder
-import com.xenia.templekiosk.data.network.model.OrderRequest
+import com.xeniatechnologies.app.templekiosktirupati.data.network.model.OrderRequest
 import com.xenia.templekiosk.data.network.model.PaymentStatus
-import com.xenia.templekiosk.data.repository.PaymentRepository
+import com.xeniatechnologies.app.templekiosktirupati.data.repository.PaymentRepository
 import com.xenia.templekiosk.utils.SessionManager
 import com.xeniatechnologies.app.templekiosktirupati.utils.common.CommonMethod.convertNumberToWords
 import com.xeniatechnologies.app.templekiosktirupati.R
@@ -49,6 +49,9 @@ class QRActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityQractivityBinding
     private var pollingTimer: CountDownTimer? = null
+    private var successTimer: CountDownTimer? = null
+    private var failedTimer: CountDownTimer? = null
+    private var cancelButtonTimer: CountDownTimer? = null
     private var paymentStatusJob: Job? = null
     private val paymentRepository: PaymentRepository by inject()
     private val sessionManager: SessionManager by inject()
@@ -95,17 +98,29 @@ class QRActivity : AppCompatActivity() {
 
         startTimer()
 
+        setupButtonListeners()
+
+        loadGifs()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        stopTimer()
+        stopCheckingPaymentStatus()
+    }
+
+
+
+    private fun setupButtonListeners() {
         binding.btnCancel.setOnClickListener {
-            stopCheckingPaymentStatus()
-            startActivity(Intent(applicationContext, HomeActivity::class.java))
-            finish()
-        }
-
+            pollingTimer?.cancel()
+            navigateToHomeScreen() }
         binding.btnSessionCancel.setOnClickListener {
-            startActivity(Intent(applicationContext, HomeActivity::class.java))
-            finish()
-        }
+            cancelButtonTimer?.cancel()
+            navigateToHomeScreen() }
+    }
 
+    private fun loadGifs() {
         Glide.with(this)
             .asGif()
             .load(R.drawable.time)
@@ -162,7 +177,6 @@ class QRActivity : AppCompatActivity() {
             @SuppressLint("SetTextI18n")
             override fun onFinish() {
                 stopCheckingPaymentStatus()
-
                 binding.relQr.visibility = View.GONE
                 binding.relSuccessStatus.visibility = View.GONE
                 binding.relFailedStatus.visibility = View.GONE
@@ -171,6 +185,12 @@ class QRActivity : AppCompatActivity() {
                 startCancelButtonCountdown()
             }
         }.start()
+    }
+
+
+    private fun stopTimer() {
+        pollingTimer?.cancel()
+        pollingTimer = null
     }
 
 
@@ -217,6 +237,9 @@ class QRActivity : AppCompatActivity() {
                         val statusDesc = response.Data?.statusDesc
                         if (status != null && statusDesc != null) {
                             if (status == "S" && statusDesc == "Transaction success") {
+                               // postPaymentHistory(status)
+                                return@launch
+                            } else if (status == "F" && statusDesc == "Transaction fail:Debit was failed") {
                                 postPaymentHistory(status)
                                 return@launch
                             } else if (status == "F" && statusDesc != "Invalid PsprefNo") {
@@ -240,7 +263,7 @@ class QRActivity : AppCompatActivity() {
         val initialTime = 6
         binding.btnSessionCancel.text = "Cancel($initialTime)"
 
-        object : CountDownTimer((initialTime * 1000).toLong(), 1000) {
+        cancelButtonTimer = object : CountDownTimer((initialTime * 1000).toLong(), 1000) {
             @SuppressLint("SetTextI18n")
             override fun onTick(millisUntilFinished: Long) {
                 val secondsLeft = (millisUntilFinished / 1000).toInt()
@@ -250,7 +273,9 @@ class QRActivity : AppCompatActivity() {
             override fun onFinish() {
                 navigateToHomeScreen()
             }
-        }.start()
+        }.apply {
+            start()
+        }
     }
 
 
@@ -292,10 +317,10 @@ class QRActivity : AppCompatActivity() {
         }
     }
 
-
     @SuppressLint("SetTextI18n")
     private fun handleTransactionStatus(status: String) {
         if (status == "S") {
+            stopCheckingPaymentStatus()
             configPrinter()
             binding.relQr.visibility = View.GONE
             binding.relSuccessStatus.visibility = View.VISIBLE
@@ -303,44 +328,53 @@ class QRActivity : AppCompatActivity() {
             binding.relExpireQr.visibility = View.GONE
 
             val initialTime = 6
-            binding.btnSuccess.text = "Cancel($initialTime)"
+            binding.btnSuccess.text = "Close($initialTime)"
 
-            object : CountDownTimer((initialTime * 1000).toLong(), 1000) {
+            successTimer = object : CountDownTimer((initialTime * 1000).toLong(), 1000) {
                 @SuppressLint("SetTextI18n")
                 override fun onTick(millisUntilFinished: Long) {
                     val secondsLeft = (millisUntilFinished / 1000).toInt()
-                    binding.btnSuccess.text = "Cancel($secondsLeft)"
+                    binding.btnSuccess.text = "Close($secondsLeft)"
                 }
 
                 override fun onFinish() {
-                    stopCheckingPaymentStatus()
                     navigateToHomeScreen()
                 }
-            }.start()
-        } else if(status == "F"){
+            }.also { it.start() }
+
+            // Set manual cancel for success button
+            binding.btnSuccess.setOnClickListener { manualCancel(successTimer) }
+
+        } else if (status == "F") {
+            stopCheckingPaymentStatus()
             binding.relQr.visibility = View.GONE
             binding.relSuccessStatus.visibility = View.GONE
             binding.relFailedStatus.visibility = View.VISIBLE
             binding.relExpireQr.visibility = View.GONE
             val initialTime = 6
-            binding.btnCancel.text = "Cancel($initialTime)"
+            binding.btnFailed.text = "Close($initialTime)"
 
-            object : CountDownTimer((initialTime * 1000).toLong(), 1000) {
+            failedTimer = object : CountDownTimer((initialTime * 1000).toLong(), 1000) {
                 @SuppressLint("SetTextI18n")
                 override fun onTick(millisUntilFinished: Long) {
                     val secondsLeft = (millisUntilFinished / 1000).toInt()
-                    binding.btnCancel.text = "Cancel($secondsLeft)"
+                    binding.btnFailed.text = "Close($secondsLeft)"
                 }
 
                 override fun onFinish() {
-                    stopCheckingPaymentStatus()
-                    //navigateToHomeScreen()
+                    navigateToHomeScreen()
                 }
-            }.start()
-        }
+            }.also { it.start() }
 
+            binding.btnFailed.setOnClickListener { manualCancel(failedTimer) }
+        }
     }
 
+
+    private fun manualCancel(timer: CountDownTimer?) {
+        timer?.cancel()
+        navigateToHomeScreen()
+    }
 
     private fun configPrinter() {
         PrinterConnectionManager.getPrinterConnection(this) { success ->
@@ -349,7 +383,6 @@ class QRActivity : AppCompatActivity() {
                 initReceiptPrint()
             } else {
                 Toast.makeText(this, "No USB printer devices found", Toast.LENGTH_LONG).show()
-                navigateToHomeScreen()
             }
         }
     }

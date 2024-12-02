@@ -1,9 +1,9 @@
-package com.xenia.templekiosk.data.repository
+package com.xeniatechnologies.app.templekiosktirupati.data.repository
 
-import com.xenia.templekiosk.data.network.model.OrderRequest
+import com.xeniatechnologies.app.templekiosktirupati.data.network.model.OrderRequest
 import com.xenia.templekiosk.data.network.model.PaymentRequest
 import com.xenia.templekiosk.data.network.model.PaymentStatus
-import com.xenia.templekiosk.data.network.service.ApiClient
+import com.xeniatechnologies.app.templekiosktirupati.data.network.service.ApiClient
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 

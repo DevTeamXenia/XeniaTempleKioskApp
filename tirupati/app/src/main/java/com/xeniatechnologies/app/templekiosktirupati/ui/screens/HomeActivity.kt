@@ -12,7 +12,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.xenia.templekiosk.data.network.model.PaymentRequest
 import com.xenia.templekiosk.data.repository.LoginRepository
-import com.xenia.templekiosk.data.repository.PaymentRepository
+import com.xeniatechnologies.app.templekiosktirupati.data.repository.PaymentRepository
 import com.xenia.templekiosk.utils.SessionManager
 import com.xeniatechnologies.app.templekiosktirupati.utils.common.CommonMethod.dismissLoader
 import com.xeniatechnologies.app.templekiosktirupati.utils.common.CommonMethod.generateNumericTransactionReferenceID
@@ -243,9 +243,8 @@ class HomeActivity : AppCompatActivity() {
                     showSnackbar(binding.root, "unable to generate QR code! Please try again...")
                 }
             } catch (e: Exception) {
-                Toast.makeText(applicationContext, e.toString(), Toast.LENGTH_SHORT).show()
                 dismissLoader()
-                showSnackbar(binding.root, "Something went wrong! Please try again...")
+                showSnackbar(binding.root, "unable to generate QR code! Please try again...")
             }
         }
     }
@@ -299,7 +298,7 @@ class HomeActivity : AppCompatActivity() {
             } catch (e: Exception) {
                 dismissLoader()
                 withContext(Dispatchers.Main) {
-                    showSnackbar(binding.root, "Something went wrong! Please try again...")
+                    showSnackbar(binding.root, "Unable to generate QR code! Please try again...")
                 }
             }
         }

@@ -3,7 +3,7 @@ package com.xenia.templekiosk.di
 import android.content.Context
 import android.content.SharedPreferences
 import com.xenia.templekiosk.data.repository.LoginRepository
-import com.xenia.templekiosk.data.repository.PaymentRepository
+import com.xeniatechnologies.app.templekiosktirupati.data.repository.PaymentRepository
 import com.xenia.templekiosk.utils.SessionManager
 import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.module
