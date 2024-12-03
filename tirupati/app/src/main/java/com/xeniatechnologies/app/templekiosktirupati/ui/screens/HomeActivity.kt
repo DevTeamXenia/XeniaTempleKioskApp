@@ -176,11 +176,11 @@ class HomeActivity : AppCompatActivity() {
                     }
                 } catch (e: Exception) {
                     dismissLoader()
-                    showSnackbar(binding.root, "Unable to load settings! Please try again...")
+                    showSnackbar(binding.root, e.toString())
                 }
             }
         } else {
-            //customInternetAvailabilityDialog.show(supportFragmentManager, "CustomPopup")
+            showSnackbar(binding.root,"Please check the internet")
         }
     }
 
@@ -214,7 +214,7 @@ class HomeActivity : AppCompatActivity() {
                     showLoader(this@HomeActivity, "Loading your QR code... Please wait.")
                     generatePaymentToken(donationAmount!!)
                 } else {
-                    //customInternetAvailabilityDialog.show(supportFragmentManager, "warning_dialog")
+                    showSnackbar(binding.root,"Please check your internet connection")
                 }
             }
         }
