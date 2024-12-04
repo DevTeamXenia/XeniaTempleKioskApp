@@ -15,6 +15,9 @@ data class OrderRequest(
     @SerializedName("PaymentStatus")
     val paymentStatus: String,
 
+    @SerializedName("PaymentDes")
+    val paymentDes: String,
+
     @SerializedName("PaymentMethod")
     val paymentMethod: String
 )

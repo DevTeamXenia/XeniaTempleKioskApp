@@ -237,13 +237,13 @@ class QRActivity : AppCompatActivity() {
                         val statusDesc = response.Data?.statusDesc
                         if (status != null && statusDesc != null) {
                             if (status == "S" && statusDesc == "Transaction success") {
-                                postPaymentHistory(status)
+                                postPaymentHistory(status, statusDesc)
                                 return@launch
                             } else if (status == "F" && statusDesc == "Transaction fail:Debit was failed") {
-                                postPaymentHistory(status)
+                                postPaymentHistory(status,statusDesc)
                                 return@launch
                             } else if (status == "F" && statusDesc != "Invalid PsprefNo") {
-                                postPaymentHistory(status)
+                                postPaymentHistory(status, statusDesc)
                                 return@launch
                             }
                         }
@@ -287,12 +287,13 @@ class QRActivity : AppCompatActivity() {
     }
 
 
-    private fun postPaymentHistory(status: String) {
+    private fun postPaymentHistory(status: String, statusDesc: String) {
         val orderRequest = OrderRequest(
             transactionId = transactionReferenceID,
             phoneNumber = phno,
             orderAmount = amount,
             paymentStatus = status,
+            paymentDes = statusDesc,
             paymentMethod = "UPI"
         )
 
@@ -309,10 +310,10 @@ class QRActivity : AppCompatActivity() {
                     orderID = response.data.orderId.toString()
                     handleTransactionStatus(status)
                 } else {
-                    postPaymentHistory(status)
+                    postPaymentHistory(status, statusDesc)
                 }
             } catch (e: Exception) {
-                postPaymentHistory(status)
+                postPaymentHistory(status, statusDesc)
             }
         }
     }
