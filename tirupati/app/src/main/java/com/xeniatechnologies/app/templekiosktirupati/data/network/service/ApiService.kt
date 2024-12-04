@@ -4,7 +4,7 @@ import com.xenia.templekiosk.data.network.model.CompanyResponse
 import com.xenia.templekiosk.data.network.model.LoginResponse
 import com.xeniatechnologies.app.templekiosktirupati.data.network.model.OrderRequest
 import com.xenia.templekiosk.data.network.model.OrderResponse
-import com.xenia.templekiosk.data.network.model.PaymentRequest
+import com.xeniatechnologies.app.templekiosktirupati.data.network.model.PaymentRequest
 import com.xenia.templekiosk.data.network.model.PaymentResponse
 import com.xenia.templekiosk.data.network.model.PaymentStatus
 import retrofit2.http.Body
@@ -28,7 +28,8 @@ interface ApiService {
     @POST("payment/generateQR")
     suspend fun generateQr(@Query("userId") userId: Int,
                            @Query("companyId") companyId: Int,
-                           @Body request: PaymentRequest): PaymentResponse
+                           @Body request: PaymentRequest
+    ): PaymentResponse
 
     @POST("payment/status")
     suspend fun paymentStatus(@Query("userId") userId: Int,

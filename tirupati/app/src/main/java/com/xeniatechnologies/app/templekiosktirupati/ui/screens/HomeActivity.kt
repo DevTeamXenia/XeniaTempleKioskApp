@@ -10,7 +10,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import com.xenia.templekiosk.data.network.model.PaymentRequest
+import com.xeniatechnologies.app.templekiosktirupati.data.network.model.PaymentRequest
 import com.xenia.templekiosk.data.repository.LoginRepository
 import com.xeniatechnologies.app.templekiosktirupati.data.repository.PaymentRepository
 import com.xenia.templekiosk.utils.SessionManager

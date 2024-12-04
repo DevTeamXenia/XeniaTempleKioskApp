@@ -342,7 +342,6 @@ class QRActivity : AppCompatActivity() {
                 }
             }.also { it.start() }
 
-            // Set manual cancel for success button
             binding.btnSuccess.setOnClickListener { manualCancel(successTimer) }
 
         } else if (status == "F") {
