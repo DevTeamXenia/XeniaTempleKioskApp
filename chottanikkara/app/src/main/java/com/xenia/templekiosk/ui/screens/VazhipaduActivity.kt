@@ -11,21 +11,28 @@ import com.xenia.templekiosk.R
 import com.xenia.templekiosk.ui.adapter.CategoryAdapter
 import com.xenia.templekiosk.ui.adapter.ItemAdapter
 import com.xenia.templekiosk.data.listeners.ItemClickListener
+import com.xenia.templekiosk.databinding.ActivityHomeBinding
+import com.xenia.templekiosk.databinding.ActivityVazhipaduBinding
 
 class VazhipaduActivity : AppCompatActivity(), ItemClickListener {
 
 
-    private lateinit var btnSummary : Button
+ /*   private lateinit var btnSummary : Button
     private lateinit var btnPay : Button
-    private lateinit var itemArray: Array<String>
+    private lateinit var itemArray: Array<String>*/
+
+    private lateinit var binding: ActivityVazhipaduBinding
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_vazhipadu)
+        binding = ActivityVazhipaduBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        initUI()
 
 
-        btnSummary = findViewById(R.id.btn_summary)
+       /* btnSummary = findViewById(R.id.btn_summary)
         btnPay = findViewById(R.id.btn_pay)
 
         val resources = this.resources
@@ -56,14 +63,21 @@ class VazhipaduActivity : AppCompatActivity(), ItemClickListener {
 
         btnPay.setOnClickListener {
 
-        }
+        }*/
+    }
+
+    private fun initUI() {
+        binding.txtMelkavu?.text = getString(R.string.melkavu_devi)
+        binding.txtKeezhkavu?.text = getString(R.string.keezhkavu_devi)
+        binding.txtShiva?.text = getString(R.string.shiva)
+        binding.txtAyyappa?.text = getString(R.string.ayyappa)
     }
 
     override fun onItemClick(position: Int) {
-        val selectedItem = itemArray[position]
+       /* val selectedItem = itemArray[position]
         val intent = Intent(applicationContext, VazhipaduDetailActivity::class.java)
         intent.putExtra("ItemName", selectedItem)
-        startActivity(intent)
+        startActivity(intent)*/
 
     }
 }

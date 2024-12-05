@@ -31,7 +31,7 @@
     <string name="your_payment_was_successful">നിങ്ങളുടെ പണമടക്കം വിജയകരമായിരിക്കുന്നു! </string>
     <string name="amount">തുക :</string>
     <string name="transcation_id">ഇടപാട് ഐഡി :</string>
-    <string name="star">താരം :</string>
+    <string name="star">താരം</string>
     <string name="pay_name">പേര് :</string>
     <string name="payment_failed">പെയ്മെന്റ് പരാജയപ്പെട്ടു</string>
     <string name="it_seems_we_have_not_received_money">ഞങ്ങൾ പണം ലഭിച്ചിട്ടില്ല എന്നു തോന്നുന്നു</string>
@@ -43,6 +43,9 @@
     <string name="retry">വീണ്ടും ശ്രമിക്കുക</string>
     <string name="you_have_been_inactive_for_a_while_please_touch_the_screen_to_continue">തുടരാൻ ആഗ്രഹിക്കുന്നുണ്ടോ?</string>
     <string name="qr_expire">ക്യുആർ കാലാവധി അവസാനിക്കും :</string>
+
+    <string name="vazhipadu">വാഴിപ്പാട്</string>
+    <string name="donation">ദാനവ്</string>
 
 
     <string-array name="nakshatras">

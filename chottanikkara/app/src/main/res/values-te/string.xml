@@ -32,7 +32,7 @@
         <string name="your_payment_was_successful">మీ చెల్లింపు విజయవంతమైంది! </string>
         <string name="amount">మొత్తం : </string>
         <string name="transcation_id">లావాదేవీ సంఖ్య : </string>
-        <string name="star">తార:</string>
+        <string name="star">తార</string>
         <string name="pay_name">పేరు :</string>
         <string name="payment_failed">చెల్లింపు విఫలం అయింది</string>
         <string name="it_seems_we_have_not_received_money">మేము డబ్బు పొందలేదని కనిపిస్తున్నది</string>
@@ -44,6 +44,9 @@
         <string name="retry">మళ్లీ ప్రయత్నించండి</string>
         <string name="you_have_been_inactive_for_a_while_please_touch_the_screen_to_continue">ನೀವು ಕೆಲವು ಕಾಲ ನಿರಿಕ್ಷಣೆ ಮಾಡಿಲ್ಲ. ಮುಂದುವರಿಯಲು ದಯವಿಟ್ಟು ಪರದೆಯನ್ನು ಸ್ಪರ್ಶಿಸಿ.</string>
         <string name="qr_expire">క్యూఆర్ గడువు ముగియడానికి :</string>
+
+        <string name="vazhipadu">వాజిపాడు</string>
+        <string name="donation">దానం</string>
 
 
 

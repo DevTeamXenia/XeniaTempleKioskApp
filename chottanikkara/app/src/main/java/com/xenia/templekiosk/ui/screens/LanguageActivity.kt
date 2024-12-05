@@ -117,7 +117,7 @@ class LanguageActivity : AppCompatActivity(),
 
     private fun selectLanguage(language: String) {
         sharedPreferences.edit().putString("SL", language).apply()
-        startActivity(Intent(this, HomeActivity::class.java))
+        startActivity(Intent(this, SelectionActivity::class.java))
     }
 
 

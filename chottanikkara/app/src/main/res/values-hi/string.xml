@@ -32,7 +32,7 @@
     <string name="your_payment_was_successful">आपका भुगतान सफल रहा!</string>
     <string name="amount">राशि : </string>
     <string name="transcation_id">लेनदेन आईडी : </string>
-    <string name="star">सितारा : </string>
+    <string name="star">सितारा</string>
     <string name="pay_name">नाम :</string>
     <string name="payment_failed">भुगतान विफल</string>
     <string name="it_seems_we_have_not_received_money">ऐसा लगता है कि हमें पैसे प्राप्त नहीं हुए हैं</string>
@@ -44,6 +44,9 @@
     <string name="retry">पुनः प्रयास करें</string>
     <string name="you_have_been_inactive_for_a_while_please_touch_the_screen_to_continue">आप कुछ समय से निष्क्रिय हैं। कृपया जारी रखने के लिए स्क्रीन को स्पर्श करें।</string>
     <string name="qr_expire">क्यूआर समाप्त होने में :</string>
+
+    <string name="vazhipadu">वाजिपाडु</string>
+    <string name="donation">दान</string>
 
 
     <string-array name="nakshatras">

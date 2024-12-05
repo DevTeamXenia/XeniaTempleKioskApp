@@ -30,7 +30,7 @@
     <string name="your_payment_was_successful">ನಿಮ್ಮ ಪಾವತಿ ಯಶಸ್ವಿಯಾಗಿದೆ!</string>
     <string name="amount">ಮೊತ್ತ</string>
     <string name="transcation_id">ವ್ಯವಹಾರ ಸಂಖ್ಯೆ:</string>
-    <string name="star">ತಾರೆ:</string>
+    <string name="star">ತಾರೆ</string>
     <string name="pay_name">ಹೆಸರು :</string>
     <string name="payment_failed">ಪಾವತಿ ವಿಫಲವಾಗಿದೆ</string>
     <string name="it_seems_we_have_not_received_money">ನಾವು ಹಣವನ್ನು ಸ್ವೀಕರಿಸಿಲ್ಲ ಎಂದು ತೋರುತ್ತದೆ</string>
@@ -42,6 +42,9 @@
     <string name="retry"> ಪುನಃ ಪ್ರಯತ್ನಿಸಿ</string>
     <string name="you_have_been_inactive_for_a_while_please_touch_the_screen_to_continue">ನೀವು ಕೆಲವು ಕಾಲ ನಿರಿಕ್ಷಣೆ ಮಾಡಿಲ್ಲ. ಮುಂದುವರಿಯಲು ದಯವಿಟ್ಟು ಪರದೆಯನ್ನು ಸ್ಪರ್ಶಿಸಿ.</string>
     <string name="qr_expire"> ಕ್ಯೂಆರ್ ಅವಧಿ ಮುಗಿಯಲು :</string>
+
+    <string name="vazhipadu">ವಾಜಿಪಡು</string>
+    <string name="donation">ದಾನ</string>
 
 
 
