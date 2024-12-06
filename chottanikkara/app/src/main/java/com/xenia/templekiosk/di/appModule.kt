@@ -4,8 +4,11 @@ import android.content.Context
 import android.content.SharedPreferences
 import com.xenia.templekiosk.data.repository.LoginRepository
 import com.xenia.templekiosk.data.repository.PaymentRepository
+import com.xenia.templekiosk.data.repository.VazhipaduRepository
 import com.xenia.templekiosk.ui.dialogue.CustomInternetAvailabilityDialog
 import com.xenia.templekiosk.ui.dialogue.CustomQRPopupDialogue
+import com.xenia.templekiosk.ui.dialogue.CustomStarPopupDialogue
+import com.xenia.templekiosk.ui.dialogue.CustomVazhipaduQRPopupDialogue
 import com.xenia.templekiosk.ui.dialogue.CustomWarningPopupDialog
 import com.xenia.templekiosk.utils.SessionManager
 import org.koin.android.ext.koin.androidContext
@@ -15,11 +18,14 @@ val roomModule = module {
 
     single { SessionManager(androidContext()) }
     single { LoginRepository() }
+    single { VazhipaduRepository() }
     single { PaymentRepository() }
 
     factory { CustomWarningPopupDialog() }
     factory { CustomQRPopupDialogue() }
+    factory { CustomVazhipaduQRPopupDialogue() }
     factory { CustomInternetAvailabilityDialog() }
+    factory { CustomStarPopupDialogue() }
 
     single { provideSharedPreferences(get()) }
 }

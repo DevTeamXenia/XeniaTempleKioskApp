@@ -3,12 +3,16 @@ package com.xenia.templekiosk.utils
 import android.content.Context
 import android.content.SharedPreferences
 import com.google.gson.Gson
+import com.xenia.templekiosk.data.network.model.CartItem
 import com.xenia.templekiosk.data.network.model.Company
+import com.xenia.templekiosk.data.network.model.Offering
 
 class SessionManager(context: Context) {
     private val sharedPreferences: SharedPreferences =
         context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
     private val editor: SharedPreferences.Editor = sharedPreferences.edit()
+
+    private val cartItems = mutableListOf<CartItem>()
 
     companion object {
         private const val PREF_NAME = "UserSession"
@@ -16,6 +20,7 @@ class SessionManager(context: Context) {
         private const val KEY_USER_NAME = "userName"
         private const val KEY_COMPANY_ID = "companyId"
         private const val KEY_COMPANY_OBJECT = "company"
+        private const val KEY_CART_ITEMS = "cartItems"
     }
 
     fun saveUserDetails(userId: Int, userName: String, companyId: Int) {
@@ -63,5 +68,59 @@ class SessionManager(context: Context) {
     fun clearSession() {
         editor.clear()
         editor.apply()
+    }
+
+    fun addToCart(cartItem: CartItem) {
+        if (!cartItems.contains(cartItem)) {
+            cartItems.add(cartItem)
+        }
+    }
+
+
+    fun removeFromCart(cartItem: CartItem) {
+        cartItems.remove(cartItem)
+    }
+
+
+    fun saveCartItems(updatedCartItems: List<CartItem>) {
+        val gson = Gson()
+        val cartItemsJson = gson.toJson(updatedCartItems)
+        editor.putString(KEY_CART_ITEMS, cartItemsJson)
+        editor.apply()
+    }
+
+    fun removeCartItem(cartItem: CartItem) {
+        // Get the current list of cart items from SharedPreferences
+        val cartItemsJson = sharedPreferences.getString(KEY_CART_ITEMS, "[]")
+        val cartItems = Gson().fromJson(cartItemsJson, Array<CartItem>::class.java).toMutableList()
+
+        // Remove the item with the matching offeringId
+        cartItems.removeIf { it.offeringId == cartItem.offeringId }
+
+        // Save the updated list of cart items back to SharedPreferences
+        editor.putString(KEY_CART_ITEMS, Gson().toJson(cartItems))
+        editor.apply()
+
+        // Update the in-memory cartItems list
+        this.cartItems.clear()
+        this.cartItems.addAll(cartItems)
+    }
+
+
+
+    fun getCartCount(): Int {
+        return cartItems.size
+    }
+
+
+    fun getCartItems(): List<CartItem> {
+        return cartItems
+    }
+
+    fun clearCart() {
+        cartItems.clear()
+        editor.remove(KEY_CART_ITEMS)
+        editor.apply()
+
     }
 }

@@ -3,6 +3,7 @@ package com.xenia.templekiosk.data.repository
 import com.xenia.templekiosk.data.network.model.OrderRequest
 import com.xenia.templekiosk.data.network.model.PaymentRequest
 import com.xenia.templekiosk.data.network.model.PaymentStatus
+import com.xenia.templekiosk.data.network.model.TK_VazhipaduDetails
 import com.xenia.templekiosk.data.network.service.ApiClient
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -22,6 +23,10 @@ class PaymentRepository {
 
     suspend fun postOrder(userId:Int,companyId:Int,request: OrderRequest) = withContext(Dispatchers.IO) {
         ApiClient.apiService.postOrder(userId,companyId,request)
+    }
+
+    suspend fun postVazhipadu(request: TK_VazhipaduDetails) = withContext(Dispatchers.IO) {
+        ApiClient.apiService.postVazhipadi(request)
     }
 
 }

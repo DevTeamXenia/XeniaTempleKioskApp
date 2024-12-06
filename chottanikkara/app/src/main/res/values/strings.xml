@@ -64,7 +64,8 @@
 
     <string name="vazhipadu">Vazhipadu</string>
     <string name="donation">Donation</string>
-
+    <string name="birth_star_of_devotees">Birth Star of Devotees</string>
+    <string name="my_cart">My Cart</string>
 
 
     <string-array name="vazhipaduCategory">
@@ -126,7 +127,6 @@
         <item>Uttara Bhadrapada</item>
         <item>Revati</item>
     </string-array>
-
 
 
 </resources>

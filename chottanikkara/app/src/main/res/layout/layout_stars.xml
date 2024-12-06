@@ -6,11 +6,11 @@
 
     <TextView
         android:id="@+id/nakshatra_name"
-        android:layout_width="160dp"
+        android:layout_width="140dp"
         android:layout_marginStart="5dp"
         android:layout_marginEnd="5dp"
         android:layout_height="wrap_content"
-        android:textSize="18sp"
+        android:textSize="14sp"
         android:textColor="@color/black"
         android:background="@drawable/textview_board"
         android:gravity="center"
