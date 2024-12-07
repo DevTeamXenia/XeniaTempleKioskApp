@@ -17,6 +17,7 @@ import android.view.Window
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.DialogFragment
+import com.google.gson.Gson
 import com.google.zxing.BarcodeFormat
 import com.google.zxing.MultiFormatWriter
 import com.google.zxing.WriterException
@@ -28,6 +29,7 @@ import com.xenia.templekiosk.data.network.model.TK_VazhipaduDetails
 import com.xenia.templekiosk.data.repository.PaymentRepository
 import com.xenia.templekiosk.ui.screens.LanguageActivity
 import com.xenia.templekiosk.ui.screens.PaymentActivity
+import com.xenia.templekiosk.ui.screens.PaymentVazhipaduActivity
 import com.xenia.templekiosk.utils.SessionManager
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -227,7 +229,10 @@ class CustomVazhipaduQRPopupDialogue : DialogFragment() {
 
 
     private fun handleTransactionStatus(status: String, orderId: Int) {
-        val intent = Intent(requireContext(), PaymentActivity::class.java).apply {
+        val gson = Gson()
+        val allCartItemsJson = gson.toJson(allCartItems)
+
+        val intent = Intent(requireContext(), PaymentVazhipaduActivity::class.java).apply {
             putExtra("status", status)
             putExtra("amount", donationAmount)
             putExtra("transID", transactionReferenceID)
@@ -236,6 +241,7 @@ class CustomVazhipaduQRPopupDialogue : DialogFragment() {
             putExtra("devatha", "")
             putExtra("orderID", orderId.toString())
             putExtra("phno","")
+            putExtra("allCartItems",allCartItemsJson)
         }
         startActivity(intent)
         dismiss()

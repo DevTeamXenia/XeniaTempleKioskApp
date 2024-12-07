@@ -37,6 +37,9 @@
             android:name=".ui.screens.PaymentActivity"
             android:exported="false" />
         <activity
+            android:name=".ui.screens.PaymentVazhipaduActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.screens.DonationActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
