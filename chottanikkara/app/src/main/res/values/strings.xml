@@ -34,7 +34,7 @@
     <string name="pay">PAY</string>
     <string name="phone_number">Phone Number</string>
     <string name="_91">+91</string>
-    <string name="name">Name*</string>
+    <string name="name">Name</string>
     <string name="select_your_janma_nakshatra">Select Your Janma Nakshatra</string>
 
 
@@ -49,7 +49,7 @@
     <string name="your_payment_was_successful">Your payment was successful!</string>
     <string name="amount">Amount : </string>
     <string name="transcation_id">Transcation ID : </string>
-    <string name="star">Star*</string>
+    <string name="star">Star</string>
     <string name="pay_name">Name  :</string>
     <string name="payment_failed">Payment Failed</string>
     <string name="it_seems_we_have_not_received_money">It seems we have not received money</string>

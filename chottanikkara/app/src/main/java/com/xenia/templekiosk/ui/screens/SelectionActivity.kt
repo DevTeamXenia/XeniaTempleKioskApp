@@ -48,6 +48,11 @@ class SelectionActivity : AppCompatActivity(),CustomInactivityDialog.InactivityC
             startActivity(Intent(applicationContext,VazhipaduActivity::class.java))
         }
 
+        binding.leftHome.setOnClickListener {
+            startActivity(Intent(applicationContext,LanguageActivity::class.java))
+            finish()
+        }
+
     }
 
     private fun initUI() {

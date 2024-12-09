@@ -8,7 +8,7 @@
     <color name="creamy_white">#FFF6EC</color>
     <color name="light_cream">#FFEAD3</color>
     <color name="light_grey">#FF888888</color>
-
+    <color name="red">#FF0000</color>
     <color name="light_bg">#FFE9DC</color>
     
 </resources>

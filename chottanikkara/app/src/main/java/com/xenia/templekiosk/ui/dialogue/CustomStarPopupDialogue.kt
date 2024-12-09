@@ -52,7 +52,7 @@ class CustomStarPopupDialogue : DialogFragment() {
         val englishNakshatras = arrayOf(
             "Ashwini", "Bharani", "Krittika", "Rohini", "Mrigashira", "Ardra", "Punarvasu",
             "Pushya", "Ashlesha", "Magha", "Purva Phalguni", "Uttara Phalguni", "Hasta",
-            "Chitra", "Svati", "Vishakha", "Anuradha", "Jyeshta", "Mula", "Purva Ashadha",
+            "Chitra", "Svati", "Vishakha", "Anuradha", "Jyeshta", "Moola", "Purva Ashadha",
             "Uttara Ashadha", "Shravana", "Dhanishta", "Shatabhisha", "Purva Bhadrapada",
             "Uttara Bhadrapada", "Revati"
         )

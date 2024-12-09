@@ -1,6 +1,7 @@
 package com.xenia.templekiosk.ui.adapter
 
 import android.annotation.SuppressLint
+import android.content.SharedPreferences
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,9 +9,16 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.xenia.templekiosk.R
 import com.xenia.templekiosk.data.network.model.Offering
+import com.xenia.templekiosk.utils.common.Constants.LANGUAGE_ENGLISH
+import com.xenia.templekiosk.utils.common.Constants.LANGUAGE_HINDI
+import com.xenia.templekiosk.utils.common.Constants.LANGUAGE_KANNADA
+import com.xenia.templekiosk.utils.common.Constants.LANGUAGE_MALAYALAM
+import com.xenia.templekiosk.utils.common.Constants.LANGUAGE_TAMIL
+import com.xenia.templekiosk.utils.common.Constants.LANGUAGE_TELUGU
 
 class OfferingAdapter(
     private val offeringList: List<Offering>,
+    private val sharedPreferences: SharedPreferences,
     private val itemClickListener: ItemClickListener,
     selectedItems: List<Offering> = emptyList()
 ) : RecyclerView.Adapter<OfferingAdapter.ViewHolder>() {
@@ -30,6 +38,17 @@ class OfferingAdapter(
         @SuppressLint("SetTextI18n")
         fun bind(item: Offering) {
             itemNameTextView.text = item.offeringsName
+            val selectedLanguage = sharedPreferences.getString("SL", "en") ?: "en"
+            itemNameTextView.text = when (selectedLanguage) {
+                LANGUAGE_ENGLISH -> item.offeringsName
+                LANGUAGE_MALAYALAM -> item.offeringsNameMa
+                LANGUAGE_TAMIL -> item.offeringsNameTa
+                LANGUAGE_KANNADA -> item.offeringsNameKa
+                LANGUAGE_TELUGU -> item.offeringsNameTe
+                LANGUAGE_HINDI -> item.offeringsNameHi
+                else -> item.offeringsName
+            }
+
             itemPriceTextView.text = "₹ ${item.offeringsAmount}/-"
 
             if (selectedItemIds.contains(item.offeringsId.toString())) {

@@ -18,7 +18,7 @@
     <string name="pay">തുക അടയ്ക്കുക</string>
     <string name="phone_number">ഫോൺ നമ്പർ</string>
     <string name="_91">+91</string>
-    <string name="name">പേര് </string>
+    <string name="name">പേര്</string>
     <string name="select_your_janma_nakshatra">നിങ്ങളുടെ ജന്മ നക്ഷത്രം തിരഞ്ഞെടുക്കുക</string>
 
     //Popup_Screen
@@ -31,7 +31,7 @@
     <string name="your_payment_was_successful">നിങ്ങളുടെ പണമടക്കം വിജയകരമായിരിക്കുന്നു! </string>
     <string name="amount">തുക :</string>
     <string name="transcation_id">ഇടപാട് ഐഡി :</string>
-    <string name="star">താരം</string>
+    <string name="star">ജന്മ നക്ഷത്രം</string>
     <string name="pay_name">പേര് :</string>
     <string name="payment_failed">പെയ്മെന്റ് പരാജയപ്പെട്ടു</string>
     <string name="it_seems_we_have_not_received_money">ഞങ്ങൾ പണം ലഭിച്ചിട്ടില്ല എന്നു തോന്നുന്നു</string>
@@ -44,8 +44,8 @@
     <string name="you_have_been_inactive_for_a_while_please_touch_the_screen_to_continue">തുടരാൻ ആഗ്രഹിക്കുന്നുണ്ടോ?</string>
     <string name="qr_expire">ക്യുആർ കാലാവധി അവസാനിക്കും :</string>
 
-    <string name="vazhipadu">വാഴിപ്പാട്</string>
-    <string name="donation">ദാനവ്</string>
+    <string name="vazhipadu">വഴിപാട്</string>
+    <string name="donation">ഇ-കാണിക്ക</string>
 
 
     <string-array name="nakshatras">

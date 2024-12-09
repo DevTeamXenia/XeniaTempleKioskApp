@@ -13,6 +13,11 @@ data class ApiProductResponse(
 data class Offering(
     @SerializedName("offeringsId") val offeringsId: Int,
     @SerializedName("offeringsName") val offeringsName: String,
+    @SerializedName("offeringsNameMa") val offeringsNameMa: String,
+    @SerializedName("offeringsNameTa") val offeringsNameTa: String,
+    @SerializedName("offeringsNameTe") val offeringsNameTe: String,
+    @SerializedName("offeringsNameKa") val offeringsNameKa: String,
+    @SerializedName("offeringsNameHi") val offeringsNameHi: String,
     @SerializedName("offeringsCategoryId") val offeringsCategoryId: Int,
     @SerializedName("offeringsAmount") val offeringsAmount: Double,
     @SerializedName("offeringsCreatedDate") val offeringsCreatedDate: String,

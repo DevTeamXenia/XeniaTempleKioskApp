@@ -2,6 +2,7 @@ package com.xenia.templekiosk.ui.adapter
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.SharedPreferences
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,9 +11,17 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.xenia.templekiosk.R
 import com.xenia.templekiosk.data.network.model.Category
+import com.xenia.templekiosk.utils.SessionManager
+import com.xenia.templekiosk.utils.common.Constants.LANGUAGE_ENGLISH
+import com.xenia.templekiosk.utils.common.Constants.LANGUAGE_HINDI
+import com.xenia.templekiosk.utils.common.Constants.LANGUAGE_KANNADA
+import com.xenia.templekiosk.utils.common.Constants.LANGUAGE_MALAYALAM
+import com.xenia.templekiosk.utils.common.Constants.LANGUAGE_TAMIL
+import com.xenia.templekiosk.utils.common.Constants.LANGUAGE_TELUGU
 
 class CategoryAdapter(
     private val context: Context,
+    private val sharedPreferences: SharedPreferences,
     private val onCategoryClickListener: OnCategoryClickListener
 ) : RecyclerView.Adapter<CategoryAdapter.ViewHolder>() {
 
@@ -46,7 +55,17 @@ class CategoryAdapter(
         private val categoryNameTextView: TextView = itemView.findViewById(R.id.category_name)
 
         fun bind(category: Category, position: Int) {
-            categoryNameTextView.text = category.categoryName
+
+            val selectedLanguage = sharedPreferences.getString("SL", "en") ?: "en"
+            categoryNameTextView.text = when (selectedLanguage) {
+                LANGUAGE_ENGLISH -> category.categoryName
+                LANGUAGE_MALAYALAM -> category.categoryNameMa
+                LANGUAGE_TAMIL -> category.categoryNameTa
+                LANGUAGE_KANNADA -> category.categoryNameKa
+                LANGUAGE_TELUGU -> category.categoryNameTe
+                LANGUAGE_HINDI -> category.categoryNameHi
+                else -> category.categoryName
+            }
 
             val isSelected = position == selectedItemPosition
             itemView.setBackgroundResource(

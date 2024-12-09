@@ -3,11 +3,14 @@ package com.xenia.templekiosk.ui.screens
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.inputmethod.InputMethodManager
+import android.widget.EditText
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -35,6 +38,7 @@ class VazhipaduActivity : AppCompatActivity(), CategoryAdapter.OnCategoryClickLi
 
     private lateinit var binding: ActivityVazhipaduBinding
     private val sessionManager: SessionManager by inject()
+    private val sharedPreferences: SharedPreferences by inject()
     private val vazhipaduRepository: VazhipaduRepository by inject()
     private lateinit var itemArray: Array<String>
     private lateinit var categoryAdapter: CategoryAdapter
@@ -82,7 +86,7 @@ class VazhipaduActivity : AppCompatActivity(), CategoryAdapter.OnCategoryClickLi
         val resources = this.resources
         itemArray = resources.getStringArray(R.array.vazhipaduItem)
 
-        categoryAdapter = CategoryAdapter(this, this)
+        categoryAdapter = CategoryAdapter(this,sharedPreferences, this)
 
         binding.relOfferCat?.layoutManager = LinearLayoutManager(this)
         binding.relOfferCat?.adapter = categoryAdapter
@@ -99,11 +103,37 @@ class VazhipaduActivity : AppCompatActivity(), CategoryAdapter.OnCategoryClickLi
 
         binding.btnPay.setOnClickListener {
             val cartItems = sessionManager.getCartItems()
-            val intent = Intent(this, SummaryActivity::class.java)
-            intent.putExtra("cartItems", Gson().toJson(cartItems))
-            startActivity(intent)
-        }
+            val name: EditText = findViewById(R.id.edit_name)
+            val star: EditText = findViewById(R.id.edit_star)
 
+            if(name.text.isEmpty()){
+                Toast.makeText(this, "Please enter your name", Toast.LENGTH_LONG).show()
+            }
+            else if(star.text.isEmpty()){
+                Toast.makeText(this, "Please select your star", Toast.LENGTH_LONG).show()
+            }
+            else if(cartItems.isEmpty()){
+                Toast.makeText(this, "No items in cart", Toast.LENGTH_LONG).show()
+            }
+            else{
+                val intent = Intent(this, SummaryActivity::class.java)
+                intent.putExtra("cartItems", Gson().toJson(cartItems))
+                startActivity(intent)
+            }
+        }
+        binding.linCart?.setOnClickListener {
+            val cartItems = sessionManager.getCartItems()
+            if(cartItems.isNotEmpty()){
+                val intent = Intent(this, SummaryActivity::class.java)
+                intent.putExtra("cartItems", Gson().toJson(cartItems))
+                startActivity(intent)
+            }
+            else{
+                Toast.makeText(this, "No items in cart", Toast.LENGTH_LONG).show()
+
+            }
+
+        }
         binding.linHome?.setOnClickListener {
             sessionManager.clearCart()
             startActivity(Intent(applicationContext, LanguageActivity::class.java))
@@ -265,7 +295,7 @@ class VazhipaduActivity : AppCompatActivity(), CategoryAdapter.OnCategoryClickLi
                             binding.relOffers?.layoutManager =
                                 GridLayoutManager(this@VazhipaduActivity, 3)
                             binding.relOffers?.adapter =
-                                OfferingAdapter(items, this@VazhipaduActivity, selectedItems)
+                                OfferingAdapter(items, sharedPreferences,this@VazhipaduActivity, selectedItems)
                         }
                     }
 
@@ -409,7 +439,7 @@ class VazhipaduActivity : AppCompatActivity(), CategoryAdapter.OnCategoryClickLi
                 ContextCompat.getColor(this, R.color.primaryColor)
             )
         } else {
-            binding.btnPay.isEnabled = false
+//            binding.btnPay.isEnabled = false
             binding.btnPay.setBackgroundColor(
                 ContextCompat.getColor(this, R.color.light_grey)
             )

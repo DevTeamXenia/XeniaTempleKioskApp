@@ -121,16 +121,26 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1.3"
                             android:orientation="vertical">
-
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                >
                             <TextView
                                 android:id="@+id/txt_name"
-                                android:layout_width="match_parent"
+                                android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/poppins_regular"
                                 android:text="@string/name"
                                 android:textColor="@color/black"
                                 android:textSize="18sp" />
-
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="@font/poppins_regular"
+                                    android:text="*"
+                                    android:textColor="@color/red"
+                                    android:textSize="18sp" />
+                            </LinearLayout>
                             <RelativeLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="50dp"
@@ -174,16 +184,26 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1.3"
                             android:orientation="vertical">
-
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                >
                             <TextView
                                 android:id="@+id/txt_star"
-                                android:layout_width="match_parent"
+                                android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/poppins_regular"
                                 android:text="@string/star"
                                 android:textColor="@color/black"
                                 android:textSize="18sp" />
-
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="@font/poppins_regular"
+                                    android:text="*"
+                                    android:textColor="@color/red"
+                                    android:textSize="18sp" />
+                            </LinearLayout>
                             <RelativeLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="50dp"
@@ -473,7 +493,7 @@
 
         <LinearLayout
             android:id="@+id/addMore"
-            android:visibility="gone"
+            android:visibility="invisible"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -518,7 +538,7 @@
                 android:layout_marginEnd="20dp"
                 android:layout_gravity="center"
                 android:backgroundTint="@color/light_grey"
-                android:enabled="false"
+                android:enabled="true"
                 android:text="@string/pay"
                 android:textColor="@color/white"
                 android:textSize="30sp"
