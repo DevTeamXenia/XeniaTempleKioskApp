@@ -2,7 +2,11 @@ package com.xenia.templekiosk.ui.screens
 
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.content.SharedPreferences
 import android.graphics.Bitmap
+import android.graphics.Canvas
+import android.graphics.Color
+import android.graphics.Paint
 import android.graphics.drawable.BitmapDrawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -10,18 +14,19 @@ import android.os.Handler
 import android.view.View
 import android.widget.Toast
 import androidx.core.content.ContextCompat
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
+import androidx.lifecycle.lifecycleScope
 import com.xenia.templekiosk.R
-import com.xenia.templekiosk.data.network.model.CartItem
+import com.xenia.templekiosk.data.network.model.PersonWithItems
+import com.xenia.templekiosk.data.repository.VazhipaduRepository
 import com.xenia.templekiosk.databinding.ActivityPaymentBinding
 import com.xenia.templekiosk.utils.SessionManager
+import com.xenia.templekiosk.utils.common.CommonMethod.setLocale
+import kotlinx.coroutines.launch
 import net.posprinter.IDeviceConnection
 import net.posprinter.IPOSListener
 import net.posprinter.POSConnect
 import net.posprinter.POSConst
 import net.posprinter.POSPrinter
-import net.posprinter.model.PTable
 import org.koin.android.ext.android.inject
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -31,18 +36,14 @@ import java.util.Locale
 class PaymentVazhipaduActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityPaymentBinding
-    private val sessionManager: SessionManager by inject()
+    private val sharedPreferences: SharedPreferences by inject()
+    private val vazhipaduRepository: VazhipaduRepository by inject()
     private var curConnect: IDeviceConnection? = null
+    private lateinit var selectedLanguage :String
 
     private var status: String? = null
     private var amount: String? = null
     private var transID: String? = null
-    private var name: String? = null
-    private var star: String? = null
-    private var devatha: String? = null
-    private var orderID: String? = null
-    private var phoneNo: String? = null
-private var allCartItems:String? = null
 
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -53,24 +54,15 @@ private var allCartItems:String? = null
          status = intent.getStringExtra("status")
          amount = intent.getStringExtra("amount")
          transID = intent.getStringExtra("transID")
-         name = intent.getStringExtra("name")
-         star = intent.getStringExtra("star")
-         devatha = intent.getStringExtra("devatha")
-         orderID = intent.getStringExtra("orderID")
-         phoneNo = intent.getStringExtra("phno")
-        allCartItems = intent.getStringExtra("allCartItems")
 
         if(status.equals("S")){
             binding.linSuccess.visibility = View.VISIBLE
             binding.linFailed.visibility = View.GONE
             binding.txtAmount.text = getString(R.string.amount)+" "+ amount
             binding.txtTransId.text = getString(R.string.transcation_id) +" "+ transID
-            if(name!!.isNotEmpty()){
-                binding.txtName.visibility = View.VISIBLE
-                binding.txtName.text = getString(R.string.pay_name) +" "+ name
-            }
-            binding.txtStar.text = getString(R.string.star) +" "+ star
+
             configPrinter()
+
         }else{
             binding.linSuccess.visibility = View.GONE
             binding.linFailed.visibility = View.VISIBLE
@@ -149,84 +141,312 @@ private var allCartItems:String? = null
 
     @SuppressLint("DefaultLocale")
     private fun initReceiptPrint() {
-
-        if (!allCartItems.isNullOrEmpty()) {
-            val gson = Gson()
-            val itemType = object : TypeToken<List<CartItem>>() {}.type
-            val allCartItemsList: List<CartItem> = gson.fromJson(allCartItems, itemType)
-
-            // Use allCartItems as needed
-
-        val cd = sessionManager.getCompanyDetails()
-        if (cd != null) {
+        lifecycleScope.launch {
+            val distinctPersons = vazhipaduRepository.getDistinctPersonsWithOfferings()
             val currentDate = SimpleDateFormat("dd-MMM-yyyy hh:mm a", Locale.getDefault()).format(Date())
-            val drawableDevasam = ContextCompat.getDrawable(this, R.drawable.print_header_logo)
+
+            val selectedLanguage = sharedPreferences.getString("SL", "en") ?: "en"
+            setLocale(this@PaymentVazhipaduActivity, selectedLanguage)
+            val receiptBitmap: Bitmap
+
+            if (selectedLanguage == "en") {
+                receiptBitmap = generateReceiptBitmap(transID!!, distinctPersons, currentDate)
+            } else {
+                receiptBitmap = generateReceiptBitmapMl(transID!!, distinctPersons, currentDate)
+            }
+
+
+            val drawableDevasam = ContextCompat.getDrawable(this@PaymentVazhipaduActivity, R.drawable.print_header_logo)
             val bitmapDevasam = (drawableDevasam as BitmapDrawable).bitmap.copy(Bitmap.Config.ARGB_8888, true)
 
-            val drawableDevi = ContextCompat.getDrawable(this, R.drawable.print_bottom_logo)
+            val drawableDevi = ContextCompat.getDrawable(this@PaymentVazhipaduActivity, R.drawable.print_bottom_logo)
             val bitmapDevi = (drawableDevi as BitmapDrawable).bitmap.copy(Bitmap.Config.ARGB_8888, true)
-val header = ContextCompat.getDrawable(this, R.drawable.header)
-            val headerBitmap = (header as BitmapDrawable).bitmap.copy(Bitmap.Config.ARGB_8888, true)
 
-           
-            val vazhipadu = ContextCompat.getDrawable(this, R.drawable.vazhipadu_receipt)
-            val vazhipaduBitmap = (vazhipadu as BitmapDrawable).bitmap.copy(Bitmap.Config.ARGB_8888, true)
-            val amountValue: Float = amount!!.toFloat()
-//            POSPrinter(curConnect)
-//                .printBitmap(bitmapDevasam, POSConst.ALIGNMENT_CENTER, 590)
-//                .printText("Receipt No : $orderID\n", POSConst.ALIGNMENT_LEFT, POSConst.STS_NORMAL, POSConst.TXT_1WIDTH or POSConst.TXT_1HEIGHT)
-//                .printText("Date : $currentDate\n", POSConst.ALIGNMENT_LEFT, POSConst.STS_NORMAL, POSConst.TXT_1WIDTH or POSConst.TXT_1HEIGHT)
-//                .feedLine(1)
-//                .printText("Received From : $name\n", POSConst.ALIGNMENT_LEFT, POSConst.STS_NORMAL , POSConst.TXT_1WIDTH or POSConst.TXT_1HEIGHT)
-//                .printText("Contact No : $phoneNo\n", POSConst.ALIGNMENT_LEFT, POSConst.STS_NORMAL , POSConst.TXT_1WIDTH or POSConst.TXT_1HEIGHT)
-//                .printText("Birth Star : $star\n", POSConst.ALIGNMENT_LEFT, POSConst.STS_NORMAL , POSConst.TXT_1WIDTH or POSConst.TXT_1HEIGHT)
-//                .feedLine(1)
-//                .printText("E-Kanikka for : $devatha\n\n", POSConst.ALIGNMENT_RIGHT, POSConst.STS_NORMAL , POSConst.TXT_1WIDTH or POSConst.TXT_1HEIGHT)
-//                .printText("Amount Paid : ${String.format("%.2f", amountValue)}\n", POSConst.ALIGNMENT_RIGHT, POSConst.FNT_BOLD, POSConst.TXT_1WIDTH or POSConst.TXT_2HEIGHT)
-//                .printText("UPI Reference No: $transID\n\n", POSConst.ALIGNMENT_RIGHT, POSConst.STS_NORMAL, POSConst.TXT_1WIDTH or POSConst.TXT_1HEIGHT)
-//                .printBitmap(bitmapDevi, POSConst.ALIGNMENT_CENTER, 500)
-//                .cutHalfAndFeed(1)
-            val totalWidth = 54
-            val spaces = totalWidth - (allCartItemsList[0].personName?.length?.plus(allCartItemsList[0].personStar?.length!!)!!)
-            val paddedStar = allCartItemsList[0].personStar?.padStart(spaces)
 
-            POSPrinter(curConnect).printBitmap(headerBitmap, POSConst.ALIGNMENT_CENTER, 590)
+            POSPrinter(curConnect).printBitmap(bitmapDevasam, POSConst.ALIGNMENT_CENTER, 590)
                 .feedLine(1)
-                .printBitmap(vazhipaduBitmap, POSConst.ALIGNMENT_CENTER, 590)
+            POSPrinter(curConnect).printBitmap(receiptBitmap, POSConst.ALIGNMENT_CENTER, 800)
                 .feedLine(1)
-                .printText("Receipt No : $transID\n", POSConst.ALIGNMENT_LEFT, POSConst.STS_NORMAL, POSConst.TXT_1WIDTH or POSConst.TXT_1HEIGHT)
-                .printText("Date : $currentDate\n", POSConst.ALIGNMENT_LEFT, POSConst.STS_NORMAL, POSConst.TXT_1WIDTH or POSConst.TXT_1HEIGHT)
-                .feedLine(1)
-                .printText("${allCartItemsList[0].personName} ${paddedStar}\n", POSConst.ALIGNMENT_LEFT, POSConst.STS_NORMAL , POSConst.TXT_1WIDTH or POSConst.TXT_1HEIGHT)
-            .feedLine(1)
-
-
-            for (item in allCartItemsList){
-                val totalWidthTable = 50
-
-                val offeringName = item.offeringName.toString()
-                val amount = item.amount.toString()
-                val itemSpaces = totalWidthTable - (offeringName.length.plus(amount.length))
-                val paddedAmount = amount.padStart(itemSpaces)
-
-                POSPrinter(curConnect).printText("${item.offeringName}${paddedAmount}\n", POSConst.ALIGNMENT_LEFT, POSConst.STS_NORMAL, POSConst.TXT_1WIDTH or POSConst.TXT_1HEIGHT)
-            }
-            POSPrinter(curConnect)
-                .feedLine(1)
-                .printText("Amount Paid : ${String.format("%.2f", amountValue)}\n", POSConst.ALIGNMENT_RIGHT, POSConst.FNT_BOLD, POSConst.TXT_1WIDTH or POSConst.TXT_2HEIGHT)
-                .printText("UPI Reference No: $transID\n\n", POSConst.ALIGNMENT_RIGHT, POSConst.STS_NORMAL, POSConst.TXT_1WIDTH or POSConst.TXT_1HEIGHT)
-                .printBitmap(bitmapDevi, POSConst.ALIGNMENT_CENTER, 500)
+            POSPrinter(curConnect).printBitmap(bitmapDevi, POSConst.ALIGNMENT_CENTER, 500)
                 .cutHalfAndFeed(1)
         }
 
         redirect()
+    }
+
+    @SuppressLint("DefaultLocale")
+    private fun generateReceiptBitmap(
+        transID: String,
+        allCartItems: List<PersonWithItems>,
+        currentDate: String
+    ): Bitmap {
+        val width = 576
+        val baseHeight = 200f
+        val itemLineHeight = 40f
+        val interItemSpacing = 30f
+
+        val totalItemLines = allCartItems.sumBy { personWithItems ->
+            personWithItems.items.size + 3
         }
+
+        val height = (baseHeight + (totalItemLines * itemLineHeight) + (allCartItems.size * interItemSpacing) + 180f).toInt()
+
+        val bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
+        val canvas = Canvas(bitmap)
+        val paint = Paint()
+        paint.isAntiAlias = true
+
+        paint.textSize = 40f
+        paint.color = Color.BLACK
+        paint.textAlign = Paint.Align.CENTER
+        canvas.drawText("വഴിപാട് രസീത്", width / 2f, 50f, paint)
+        canvas.drawText("Vazhipadu Receipt", width / 2f, 100f, paint)
+
+        var yOffset = 150f
+
+        paint.textAlign = Paint.Align.LEFT
+        paint.textSize = 24f
+        canvas.drawText("രസീത് നം : $transID", 20f, yOffset, paint)
+        yOffset += 30f
+        canvas.drawText("Receipt No", 20f, yOffset, paint)
+        yOffset += 30f
+        canvas.drawText("തീയതി : $currentDate", 20f, yOffset, paint)
+        yOffset += 30f
+        canvas.drawText("Date", 20f, yOffset, paint)
+
+        yOffset += 60f
+
+        val nakshatras = resources.getStringArray(R.array.nakshatras)
+
+        var totalAmount = 0.0
+
+        allCartItems.forEach { personWithItems ->
+            paint.textSize = 30f
+            paint.color = Color.BLACK
+
+            paint.textAlign = Paint.Align.LEFT
+            canvas.drawText(personWithItems.personName, 20f, yOffset, paint)
+
+            paint.textAlign = Paint.Align.RIGHT
+
+            selectedLanguage = "ml"
+
+            val nakshatrasArrayRes = when (selectedLanguage) {
+                "hi" -> R.array.nakshatras // Hindi
+                "ta" -> R.array.nakshatras // Tamil
+                "te" -> R.array.nakshatras // Telugu
+                "ml" -> R.array.nakshatras // Malayalam
+                "kn" -> R.array.nakshatras // Kannada
+                else -> R.array.nakshatras // Default (English or fallback)
+            }
+
+            val nakshatras = resources.getStringArray(nakshatrasArrayRes)
+
+            val starIndex = personWithItems.personStar.toIntOrNull() ?: 0
+            val starText = if (starIndex in nakshatras.indices) nakshatras[starIndex] else "Unknown"
+
+            canvas.drawText(starText, width - 20f, yOffset, paint)
+            yOffset += 30f
+            selectedLanguage = "en"
+
+            val nakshatrasArrayRes1 = when (selectedLanguage) {
+                "hi" -> R.array.nakshatras // Hindi
+                "ta" -> R.array.nakshatras // Tamil
+                "te" -> R.array.nakshatras // Telugu
+                "ml" -> R.array.nakshatras // Malayalam
+                "kn" -> R.array.nakshatras // Kannada
+                else -> R.array.nakshatras // Default (English or fallback)
+            }
+
+            val nakshatras1 = resources.getStringArray(nakshatrasArrayRes1)
+
+            val starIndex1 = personWithItems.personStar.toIntOrNull() ?: 0
+            val starText1 = if (starIndex1 in nakshatras1.indices) nakshatras[starIndex] else "Unknown"
+
+            canvas.drawText(starText1, width - 20f, yOffset, paint)
+
+
+            paint.color = Color.BLACK
+            paint.strokeWidth = 1f
+            canvas.drawLine(20f, yOffset, width - 20f, yOffset, paint)
+
+            yOffset += 50f
+
+
+            personWithItems.items.forEach { item ->
+                val offeringName = item.vaOfferingsNameMa
+                val amountStr = String.format("%.2f", item.vaOfferingsAmount)
+
+                paint.color = Color.BLACK
+                paint.textSize = 22f
+                paint.textAlign = Paint.Align.LEFT
+                canvas.drawText(offeringName, 20f, yOffset, paint)
+                yOffset += 30f
+                canvas.drawText(item.vaOfferingsName, 20f, yOffset, paint)
+
+                paint.textAlign = Paint.Align.RIGHT
+                canvas.drawText(amountStr, width - 20f, yOffset, paint)
+
+
+                paint.textAlign = Paint.Align.RIGHT
+                canvas.drawText(amountStr, width - 20f, yOffset, paint)
+
+                totalAmount += item.vaOfferingsAmount
+                yOffset += itemLineHeight
+            }
+
+
+            paint.color = Color.BLACK
+            paint.strokeWidth = 1f
+            canvas.drawLine(20f, yOffset, width - 20f, yOffset, paint)
+
+
+            yOffset += interItemSpacing
+        }
+
+        yOffset += 30f
+
+
+        paint.color = Color.BLACK
+        paint.textSize = 36f
+        paint.textAlign = Paint.Align.RIGHT
+        canvas.drawText("ആകെ തുക: ${String.format("%.2f", totalAmount)}", width - 20f, yOffset, paint)
+        yOffset += 40f
+        val moveLeft = 135f
+        canvas.drawText("Amount Paid", width - 20f - moveLeft, yOffset, paint)
+
+        paint.textSize = 24f
+        paint.textAlign = Paint.Align.RIGHT
+        yOffset += 30f
+        canvas.drawText("UPI Reference No: $transID", width - 20f, yOffset, paint)
+
+        return bitmap
+    }
+
+    @SuppressLint("DefaultLocale")
+    private fun generateReceiptBitmapMl(
+        transID: String,
+        allCartItems: List<PersonWithItems>,
+        currentDate: String
+    ): Bitmap {
+        val width = 576
+        val baseHeight = 200f
+        val itemLineHeight = 40f
+        val interItemSpacing = 30f
+
+        val totalItemLines = allCartItems.sumBy { personWithItems ->
+            personWithItems.items.size + 3
+        }
+
+        val height = (baseHeight + (totalItemLines * itemLineHeight) + (allCartItems.size * interItemSpacing) + 100f).toInt()
+
+        val bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
+        val canvas = Canvas(bitmap)
+        val paint = Paint()
+        paint.isAntiAlias = true
+
+        paint.textSize = 40f
+        paint.color = Color.BLACK
+        paint.textAlign = Paint.Align.CENTER
+        canvas.drawText("വഴിപാട് രസീത്", width / 2f, 50f, paint)
+
+        var yOffset = 120f
+
+        paint.textAlign = Paint.Align.LEFT
+        paint.textSize = 24f
+        canvas.drawText("രസീത് നം : $transID", 20f, yOffset, paint)
+        yOffset += 30f
+        canvas.drawText("തീയതി : $currentDate", 20f, yOffset, paint)
+
+        yOffset += 60f
+
+        val nakshatras = resources.getStringArray(R.array.nakshatras)
+
+        var totalAmount = 0.0
+
+        allCartItems.forEach { personWithItems ->
+            paint.textSize = 30f
+            paint.color = Color.BLACK
+
+            paint.textAlign = Paint.Align.LEFT
+            canvas.drawText(personWithItems.personName, 20f, yOffset, paint)
+
+            paint.textAlign = Paint.Align.RIGHT
+
+            val starIndex = personWithItems.personStar.toIntOrNull() ?: 0
+            val starText = if (starIndex in nakshatras.indices) nakshatras[starIndex] else "Unknown"
+            canvas.drawText(starText, width - 20f, yOffset, paint)
+
+            yOffset += 40f
+            paint.color = Color.BLACK
+            paint.strokeWidth = 1f
+            canvas.drawLine(20f, yOffset, width - 20f, yOffset, paint)
+
+            yOffset += 100f
+
+
+            personWithItems.items.forEach { item ->
+                val offeringName = item.vaOfferingsNameMa
+                val amountStr = String.format("%.2f", item.vaOfferingsAmount)
+
+                paint.color = Color.BLACK
+                paint.textSize = 22f
+                paint.textAlign = Paint.Align.LEFT
+                canvas.drawText(offeringName, 20f, yOffset, paint)
+
+                paint.textAlign = Paint.Align.RIGHT
+                canvas.drawText(amountStr, width - 20f, yOffset, paint)
+
+                totalAmount += item.vaOfferingsAmount
+                yOffset += itemLineHeight
+            }
+
+
+            paint.color = Color.BLACK
+            paint.strokeWidth = 1f
+            canvas.drawLine(20f, yOffset, width - 20f, yOffset, paint)
+
+
+            yOffset += interItemSpacing
+        }
+
+        yOffset += 30f
+
+
+        paint.color = Color.BLACK
+        paint.textSize = 36f
+        paint.textAlign = Paint.Align.RIGHT
+        canvas.drawText("ആകെ തുക: ${String.format("%.2f", totalAmount)}", width - 20f, yOffset, paint)
+
+        paint.textSize = 24f
+        paint.textAlign = Paint.Align.RIGHT
+        yOffset += 30f
+        canvas.drawText("UPI Reference No: $transID", width - 20f, yOffset, paint)
+
+        return bitmap
     }
 
     private fun redirect(){
         Handler(mainLooper).postDelayed({
-            startActivity(Intent(applicationContext, LanguageActivity::class.java))
-            finish()
+            lifecycleScope.launch {
+                startActivity(Intent(applicationContext, LanguageActivity::class.java))
+                finish()
+            }
+
         }, 1000)
     }
+
+    fun getNakshatrasByLanguage(selectedLanguage: String): Array<String> {
+        val nakshatrasArrayRes = when (selectedLanguage) {
+            "hi" -> R.array.nakshatras // Hindi
+            "ta" -> R.array.nakshatras // Tamil
+            "te" -> R.array.nakshatras // Telugu
+            "ml" -> R.array.nakshatras // Malayalam
+            "kn" -> R.array.nakshatras // Kannada
+            else -> R.array.nakshatras // Default (English or fallback)
+        }
+        return resources.getStringArray(nakshatrasArrayRes)
+    }
+
 }
+

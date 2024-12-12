@@ -64,6 +64,8 @@
 
     <string name="vazhipadu">Vazhipadu</string>
     <string name="donation">Donation</string>
+    <string name="more_people">More people</string>
+    <string name="pay_vazhipadu">Pay ₹%1$s</string>
     <string name="birth_star_of_devotees">Birth Star of Devotees</string>
     <string name="my_cart">My Cart</string>
 

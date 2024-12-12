@@ -1,48 +1,61 @@
-package com.xenia.templekiosk.ui.adapter
+    package com.xenia.templekiosk.ui.adapter
 
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.widget.TextView
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.xenia.templekiosk.R
-import com.xenia.templekiosk.data.network.model.CartItem
-import com.xenia.templekiosk.data.network.model.PersonWithItems
-import com.xenia.templekiosk.utils.SessionManager
+    import android.annotation.SuppressLint
+    import android.view.LayoutInflater
+    import android.view.View
+    import android.view.ViewGroup
+    import android.widget.TextView
+    import androidx.recyclerview.widget.LinearLayoutManager
+    import androidx.recyclerview.widget.RecyclerView
+    import com.xenia.templekiosk.R
+    import com.xenia.templekiosk.data.network.model.PersonWithItems
 
-class PersonAdapter(
-    private val personList: List<PersonWithItems>,
-    private val onItemRemoved: (CartItem) -> Unit,
-    private val sessionManager: SessionManager
-) : RecyclerView.Adapter<PersonAdapter.PersonViewHolder>() {
+    class PersonAdapter(
+        private var personList: List<PersonWithItems>,
+        private val onItemDeleteListener: PersonItemAdapter.OnItemDeleteListener
+    ) : RecyclerView.Adapter<PersonAdapter.PersonViewHolder>() {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PersonViewHolder {
-        val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.vazhipadi_cart_single_row, parent, false)
-        return PersonViewHolder(view)
-    }
+        @SuppressLint("NotifyDataSetChanged")
+        fun updatePersonList(updatedList: List<PersonWithItems>) {
+            personList = updatedList
+            notifyDataSetChanged()
+        }
 
-    override fun onBindViewHolder(holder: PersonViewHolder, position: Int) {
-        val person = personList[position]
-        holder.bind(person, onItemRemoved, sessionManager)
-    }
+        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PersonViewHolder {
+            val view = LayoutInflater.from(parent.context)
+                .inflate(R.layout.vazhipadi_cart_single_row, parent, false)
+            return PersonViewHolder(view)
+        }
 
-    override fun getItemCount(): Int = personList.size
+        override fun onBindViewHolder(holder: PersonViewHolder, position: Int) {
+            val person = personList[position]
+            holder.bind(person,onItemDeleteListener)
+        }
 
-    class PersonViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        override fun getItemCount(): Int = personList.size
 
-        private val nameTextView: TextView = itemView.findViewById(R.id.txtName)
-        private val starTextView: TextView = itemView.findViewById(R.id.txtStar)
-        private val itemsRecyclerView: RecyclerView = itemView.findViewById(R.id.relPersonItem)
+        class PersonViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-        fun bind(personWithItems: PersonWithItems, onItemRemoved: (CartItem) -> Unit, sessionManager: SessionManager) {
-            nameTextView.text = personWithItems.personName
-            starTextView.text = personWithItems.personStar
+            private val nameTextView: TextView = itemView.findViewById(R.id.txtName)
+            private val starTextView: TextView = itemView.findViewById(R.id.txtStar)
+            private val itemsRecyclerView: RecyclerView = itemView.findViewById(R.id.relPersonItem)
 
-            val adapter = PersonItemAdapter(personWithItems.items.toMutableList(), onItemRemoved, sessionManager)
-            itemsRecyclerView.layoutManager = LinearLayoutManager(itemView.context)
-            itemsRecyclerView.adapter = adapter
+            fun bind(
+                personWithItems: PersonWithItems,
+                onItemDeleteListener: PersonItemAdapter.OnItemDeleteListener
+            ) {
+                nameTextView.text = personWithItems.personName
+                starTextView.text = personWithItems.personStar
+
+                val adapter = PersonItemAdapter(
+                    personWithItems.items.toMutableList(),
+                    personWithItems.personName,
+                    personWithItems.personStar,
+                    onItemDeleteListener
+                )
+
+                itemsRecyclerView.layoutManager = LinearLayoutManager(itemView.context)
+                itemsRecyclerView.adapter = adapter
+            }
         }
     }
-}

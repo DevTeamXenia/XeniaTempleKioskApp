@@ -57,7 +57,6 @@ class SelectionActivity : AppCompatActivity(),CustomInactivityDialog.InactivityC
 
     private fun initUI() {
         binding.txtHome.text = getString(R.string.home)
-        binding.txtKanika?.text = getString(R.string.kanika)
         binding.txtVazhipadu?.text = getString(R.string.vazhipadu)
         binding.txtDonation?.text = getString(R.string.donation)
     }

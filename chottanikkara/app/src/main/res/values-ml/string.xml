@@ -46,7 +46,8 @@
 
     <string name="vazhipadu">വഴിപാട്</string>
     <string name="donation">ഇ-കാണിക്ക</string>
-
+    <string name="more_people">കൂടുതൽ ആളുകൾ</string>
+    <string name="pay_vazhipadu">തുക: ₹%1$s</string>
 
     <string-array name="nakshatras">
         <item>അശ്വതി</item>

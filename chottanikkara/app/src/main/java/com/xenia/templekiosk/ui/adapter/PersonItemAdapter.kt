@@ -8,14 +8,19 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.xenia.templekiosk.R
-import com.xenia.templekiosk.data.network.model.CartItem
-import com.xenia.templekiosk.utils.SessionManager
+import com.xenia.templekiosk.data.network.model.OfferingItem
+
 
 class PersonItemAdapter(
-    private val itemList: MutableList<CartItem>,
-    private val onItemRemoved: (CartItem) -> Unit,
-    private val sessionManager: SessionManager
+    private val itemList: MutableList<OfferingItem>,
+    private val name: String,
+    private val star: String,
+    private val onItemDeleteListener: OnItemDeleteListener
 ) : RecyclerView.Adapter<PersonItemAdapter.ItemViewHolder>() {
+
+    interface OnItemDeleteListener {
+        fun onItemDelete(name: String, star: String, offeringId: Int)
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
         val view = LayoutInflater.from(parent.context)
@@ -37,18 +42,20 @@ class PersonItemAdapter(
         private val itemDelete: ImageView = itemView.findViewById(R.id.txtItemDelete)
 
         @SuppressLint("SetTextI18n")
-        fun bind(item: CartItem) {
-            itemNameTextView.text = item.offeringName
-            itemPriceTextView.text = "₹ ${item.amount}"
+        fun bind(item: OfferingItem) {
+            itemNameTextView.text = item.vaOfferingsName
+            itemPriceTextView.text = "₹ ${item.vaOfferingsAmount}"
 
             itemDelete.setOnClickListener {
                 val position = adapterPosition
                 if (position != RecyclerView.NO_POSITION) {
-                    val removedItem = itemList.removeAt(position)
-                    notifyItemRemoved(position)
-                    sessionManager.removeCartItem(removedItem)
+                    val removedItem = itemList[position]
 
-                    onItemRemoved(removedItem)
+                    onItemDeleteListener.onItemDelete(name, star, removedItem.vaOfferingsId)
+
+                    // Remove item from the list
+                    itemList.removeAt(position)
+                    notifyItemRemoved(position)
                 }
             }
         }

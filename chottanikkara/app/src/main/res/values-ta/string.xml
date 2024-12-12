@@ -46,7 +46,8 @@
 
     <string name="vazhipadu">வழிபாடு</string>
     <string name="donation">தானம்</string>
-
+    <string name="more_people">மேலும் மக்கள்</string>
+    <string name="pay_vazhipadu">செலுத்தவும்: ₹%1$s</string>
 
     <string-array name="nakshatras">
         <item>அஸ்வினி</item>

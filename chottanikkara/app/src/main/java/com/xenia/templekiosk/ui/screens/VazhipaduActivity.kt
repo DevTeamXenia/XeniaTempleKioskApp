@@ -9,19 +9,18 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.inputmethod.InputMethodManager
-import android.widget.EditText
-import android.widget.Toast
+import androidx.activity.addCallback
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.button.MaterialButton
-import com.google.gson.Gson
 import com.xenia.templekiosk.R
-import com.xenia.templekiosk.data.network.model.CartItem
 import com.xenia.templekiosk.ui.adapter.CategoryAdapter
 import com.xenia.templekiosk.data.network.model.Category
 import com.xenia.templekiosk.data.network.model.Offering
 import com.xenia.templekiosk.data.repository.VazhipaduRepository
+import com.xenia.templekiosk.data.room.entity.Vazhipadu
 import com.xenia.templekiosk.databinding.ActivityVazhipaduBinding
 import com.xenia.templekiosk.ui.adapter.OfferingAdapter
 import com.xenia.templekiosk.ui.dialogue.CustomStarPopupDialogue
@@ -51,6 +50,13 @@ class VazhipaduActivity : AppCompatActivity(), CategoryAdapter.OnCategoryClickLi
         binding = ActivityVazhipaduBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        onBackPressedDispatcher.addCallback(this) {
+            lifecycleScope.launch {
+                vazhipaduRepository.clearAllData()
+                finish()
+            }
+        }
+
         setupUI()
         setupRecyclerViews()
         setupListeners()
@@ -58,6 +64,8 @@ class VazhipaduActivity : AppCompatActivity(), CategoryAdapter.OnCategoryClickLi
 
     override fun onResume() {
         fetchDetails()
+        updateCartCount()
+        updateButtonState()
         super.onResume()
     }
 
@@ -66,19 +74,14 @@ class VazhipaduActivity : AppCompatActivity(), CategoryAdapter.OnCategoryClickLi
         super.onRestart()
     }
 
-    override fun onBackPressed() {
-        sessionManager.clearCart()
-        super.onBackPressed()
-    }
 
     private fun setupUI() {
         binding.txtMelkavu?.text = getString(R.string.melkavu_devi)
         binding.txtKeezhkavu?.text = getString(R.string.keezhkavu_devi)
         binding.txtShiva?.text = getString(R.string.shiva)
         binding.txtAyyappa?.text = getString(R.string.ayyappa)
-
+        binding.txtPeople?.text = getString(R.string.more_people)
         updateCartCount()
-        getDistinctCountOfCartItems()
     }
 
     @SuppressLint("NotifyDataSetChanged")
@@ -86,13 +89,14 @@ class VazhipaduActivity : AppCompatActivity(), CategoryAdapter.OnCategoryClickLi
         val resources = this.resources
         itemArray = resources.getStringArray(R.array.vazhipaduItem)
 
-        categoryAdapter = CategoryAdapter(this,sharedPreferences, this)
+        categoryAdapter = CategoryAdapter(this, sharedPreferences, this)
 
         binding.relOfferCat?.layoutManager = LinearLayoutManager(this)
         binding.relOfferCat?.adapter = categoryAdapter
     }
 
     private fun setupListeners() {
+        val selectedLanguage = sharedPreferences.getString("SL", "en") ?: "en"
         binding.editStar?.setOnClickListener {
             val dialog = CustomStarPopupDialogue()
             dialog.onNakshatraSelected = { selectedNakshatra ->
@@ -102,40 +106,106 @@ class VazhipaduActivity : AppCompatActivity(), CategoryAdapter.OnCategoryClickLi
         }
 
         binding.btnPay.setOnClickListener {
-            val cartItems = sessionManager.getCartItems()
-            val name: EditText = findViewById(R.id.edit_name)
-            val star: EditText = findViewById(R.id.edit_star)
+            val userName = binding.editName?.text.toString()
+            val star = binding.editStar?.text.toString()
+            lifecycleScope.launch {
+                val cartCount = vazhipaduRepository.getCartCount()
+                val countForEmptyOrNullNameAndStar = vazhipaduRepository.getCountForEmptyOrNullNameAndStar()
+                val hasIncompleteItems = vazhipaduRepository.hasIncompleteItems()
 
-            if(name.text.isEmpty()){
-                Toast.makeText(this, "Please enter your name", Toast.LENGTH_LONG).show()
-            }
-            else if(star.text.isEmpty()){
-                Toast.makeText(this, "Please select your star", Toast.LENGTH_LONG).show()
-            }
-            else if(cartItems.isEmpty()){
-                Toast.makeText(this, "No items in cart", Toast.LENGTH_LONG).show()
-            }
-            else{
-                val intent = Intent(this, SummaryActivity::class.java)
-                intent.putExtra("cartItems", Gson().toJson(cartItems))
-                startActivity(intent)
+                if (cartCount > 0) {
+                    if (hasIncompleteItems && countForEmptyOrNullNameAndStar > 0) {
+                        if (userName.isEmpty()) {
+                            showSnackbar(binding.root, "Please enter your name")
+                        } else if (star.isEmpty()) {
+                            showSnackbar(binding.root, "Please select your star")
+                        } else {
+                            completeAndNavigate(userName, star)
+                        }
+                    } else {
+                        completeAndNavigate(userName, star)
+                    }
+                } else {
+                    if (userName.isEmpty()) {
+                        showSnackbar(binding.root, "Please enter your name")
+                    } else if (star.isEmpty()) {
+                        showSnackbar(binding.root, "Please select your star")
+                    } else {
+                        completeAndNavigate(userName, star)
+                    }
+                }
             }
         }
+
+
         binding.linCart?.setOnClickListener {
-            val cartItems = sessionManager.getCartItems()
-            if(cartItems.isNotEmpty()){
-                val intent = Intent(this, SummaryActivity::class.java)
-                intent.putExtra("cartItems", Gson().toJson(cartItems))
-                startActivity(intent)
-            }
-            else{
-                Toast.makeText(this, "No items in cart", Toast.LENGTH_LONG).show()
+            val userName = binding.editName?.text.toString()
+            val star = binding.editStar?.text.toString()
+            lifecycleScope.launch {
+                val cartCount = vazhipaduRepository.getCartCount()
+                val countForEmptyOrNullNameAndStar = vazhipaduRepository.getCountForEmptyOrNullNameAndStar()
+                val hasIncompleteItems = vazhipaduRepository.hasIncompleteItems()
 
+                if (cartCount > 0) {
+                    if (hasIncompleteItems && countForEmptyOrNullNameAndStar > 0) {
+                        if (userName.isEmpty()) {
+                            showSnackbar(binding.root, "Please enter your name")
+                        } else if (star.isEmpty()) {
+                            showSnackbar(binding.root, "Please select your star")
+                        } else {
+                            completeAndNavigate(userName, star)
+                        }
+                    } else {
+                        completeAndNavigate(userName, star)
+                    }
+                } else {
+                    if (userName.isEmpty()) {
+                        showSnackbar(binding.root, "Please enter your name")
+                    } else if (star.isEmpty()) {
+                        showSnackbar(binding.root, "Please select your star")
+                    } else {
+                        completeAndNavigate(userName, star)
+                    }
+                }
             }
-
         }
+
+        binding.linPersonCart?.setOnClickListener {
+            val userName = binding.editName?.text.toString()
+            val star = binding.editStar?.text.toString()
+            lifecycleScope.launch {
+                val cartCount = vazhipaduRepository.getCartCount()
+                val countForEmptyOrNullNameAndStar = vazhipaduRepository.getCountForEmptyOrNullNameAndStar()
+                val hasIncompleteItems = vazhipaduRepository.hasIncompleteItems()
+
+                if (cartCount > 0) {
+                    if (hasIncompleteItems && countForEmptyOrNullNameAndStar > 0) {
+                        if (userName.isEmpty()) {
+                            showSnackbar(binding.root, "Please enter your name")
+                        } else if (star.isEmpty()) {
+                            showSnackbar(binding.root, "Please select your star")
+                        } else {
+                            completeAndNavigate(userName, star)
+                        }
+                    } else {
+                        completeAndNavigate(userName, star)
+                    }
+                } else {
+                    if (userName.isEmpty()) {
+                        showSnackbar(binding.root, "Please enter your name")
+                    } else if (star.isEmpty()) {
+                        showSnackbar(binding.root, "Please select your star")
+                    } else {
+                        completeAndNavigate(userName, star)
+                    }
+                }
+            }
+        }
+
+
+
+
         binding.linHome?.setOnClickListener {
-            sessionManager.clearCart()
             startActivity(Intent(applicationContext, LanguageActivity::class.java))
             finish()
         }
@@ -196,33 +266,39 @@ class VazhipaduActivity : AppCompatActivity(), CategoryAdapter.OnCategoryClickLi
         binding.addMore?.setOnClickListener {
             val userName = binding.editName?.text.toString()
             val userStar = binding.editStar?.text.toString()
-
             if (userName.isNotEmpty() && userStar.isNotEmpty()) {
-                val updatedCartItems = sessionManager.getCartItems()
-                updatedCartItems.forEach {
-                    it.personName = userName
-                    it.personStar = userStar
+                lifecycleScope.launch {
+                    vazhipaduRepository.updateNameAndSetCompleted(userName)
+                    updateButtonState()
+                    binding.editName?.setText("")
+                    binding.editStar?.setText("")
+                    fetchDetails()
                 }
-                updatedCartItems.forEach {
-                    println("Updated Cart Item: ${it.offeringName}, Name: ${it.personName}, Star: ${it.personStar}")
-                }
-                sessionManager.saveCartItems(updatedCartItems)
-                updateCartCount()
-                getDistinctCountOfCartItems()
-                updateButtonState()
 
             } else {
                 if (userName.isEmpty()) {
                     binding.editName?.requestFocus()
                     val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
                     imm.showSoftInput(binding.editName, InputMethodManager.SHOW_IMPLICIT)
+
                 }
             }
         }
 
-
     }
 
+
+    private fun completeAndNavigate(userName: String, star: String) {
+        lifecycleScope.launch {
+            vazhipaduRepository.updateNameAndSetCompleted(userName)
+            val intent = Intent(this@VazhipaduActivity, SummaryActivity::class.java).apply {
+                putExtra("USER_NAME", userName)
+                putExtra("STAR", star)
+            }
+            startActivity(intent)
+        }
+
+    }
     private fun fetchDetails() {
         getOfferingCategory()
     }
@@ -280,22 +356,27 @@ class VazhipaduActivity : AppCompatActivity(), CategoryAdapter.OnCategoryClickLi
                         categoryId
                     )
                 }
-
                 when {
                     response.status.equals("success", ignoreCase = true) -> {
                         val items = response.data
                         if (items.isNullOrEmpty()) {
                             showSnackbar(binding.root, "No items found for this category.")
                         } else {
-                            val cartItems = sessionManager.getCartItems()
-                            val selectedItems = items.filter { item ->
-                                cartItems.any { cartItem -> cartItem.offeringId == item.offeringsId.toString() }
+                            val selectedItems = vazhipaduRepository.getSelectedVazhipaduItems()
+                            val filteredItems = items.filter { item ->
+                                selectedItems.any { selectedItem ->
+                                    selectedItem.vaOfferingsId == item.offeringsId
+                                }
                             }
-
                             binding.relOffers?.layoutManager =
                                 GridLayoutManager(this@VazhipaduActivity, 3)
                             binding.relOffers?.adapter =
-                                OfferingAdapter(items, sharedPreferences,this@VazhipaduActivity, selectedItems)
+                                OfferingAdapter(
+                                    items,
+                                    sharedPreferences,
+                                    this@VazhipaduActivity,
+                                    filteredItems
+                                )
                         }
                     }
 
@@ -309,6 +390,7 @@ class VazhipaduActivity : AppCompatActivity(), CategoryAdapter.OnCategoryClickLi
         }
     }
 
+
     override fun onCategoryClick(category: Category) {
         selectedCategoryId = category.categoryId
         fetchOfferingsForCategory(selectedCategoryId)
@@ -319,131 +401,107 @@ class VazhipaduActivity : AppCompatActivity(), CategoryAdapter.OnCategoryClickLi
         if (binding.editStar?.text.isNullOrEmpty()) {
             if (!isDialogVisible) {
                 isDialogVisible = true
-                val dialog = CustomStarPopupDialogue()
-
-                dialog.onNakshatraSelected = { selectedNakshatra ->
-                    binding.editStar?.setText(selectedNakshatra)
-                    val cartItem = CartItem(
-                        categoryId = item.offeringsCategoryId.toString(),
-                        offeringId = item.offeringsId.toString(),
-                        subTempleId = selectedCardId.toString(),
-                        offeringName = item.offeringsName,
-                        amount = item.offeringsAmount
-                    )
-                    sessionManager.addToCart(cartItem)
-                    updateCartCount()
-                }
-
-                dialog.show(supportFragmentManager, "CustomStarPopupDialogue")
+                showNakshatraDialog(item)
             }
         } else {
-            val cartItem = CartItem(
-                categoryId = item.offeringsCategoryId.toString(),
-                offeringId = item.offeringsId.toString(),
-                subTempleId = "1",
-                offeringName = item.offeringsName,
-                amount = item.offeringsAmount
-            )
-
-            sessionManager.addToCart(cartItem)
-            updateCartCount()
-            getDistinctCountOfCartItems()
-            updateButtonState()
+            addToCart(item)
         }
     }
+
 
     override fun onItemRemoved(item: Offering) {
         if (binding.editStar?.text.isNullOrEmpty()) {
             if (!isDialogVisible) {
                 isDialogVisible = true
-                val dialog = CustomStarPopupDialogue()
-
-                dialog.onNakshatraSelected = { selectedNakshatra ->
-                    binding.editStar?.setText(selectedNakshatra)
-                    val cartItem = CartItem(
-                        categoryId = item.offeringsCategoryId.toString(),
-                        offeringId = item.offeringsId.toString(),
-                        subTempleId = "1",
-                        offeringName = item.offeringsName,
-                        amount = item.offeringsAmount
-                    )
-                    sessionManager.removeFromCart(cartItem)
-                    updateCartCount()
-                    getDistinctCountOfCartItems()
-                    updateButtonState()
-                }
-
-                dialog.show(supportFragmentManager, "CustomStarPopupDialogue")
+                showNakshatraDialog(item)
             }
         } else {
-            val cartItem = CartItem(
-                categoryId = item.offeringsCategoryId.toString(),
-                offeringId = item.offeringsId.toString(),
-                subTempleId = "1",
-                offeringName = item.offeringsName,
-                amount = item.offeringsAmount
-            )
+            deleteToCart(item)
+        }
+    }
 
-            sessionManager.removeFromCart(cartItem)
+
+    private fun showNakshatraDialog(item: Offering) {
+        val dialog = CustomStarPopupDialogue()
+
+        dialog.onNakshatraSelected = { selectedNakshatra ->
+            binding.editStar?.setText(selectedNakshatra)
+            addToCart(item)
+        }
+
+        dialog.show(supportFragmentManager, "CustomStarPopupDialogue")
+    }
+
+    private fun addToCart(item: Offering) {
+        val cartItem = Vazhipadu(
+            vaName = binding.editName?.text.toString(),
+            vaStar = binding.editStar?.text.toString(),
+            vaPhoneNumber = "",
+            vaOfferingsId = item.offeringsId,
+            vaOfferingsName = item.offeringsName,
+            vaOfferingsNameMa = item.offeringsNameMa,
+            vaOfferingsAmount = item.offeringsAmount,
+            vaSubTempleId = selectedCardId!!,
+            vaIsCompleted = false
+        )
+
+        lifecycleScope.launch {
+            vazhipaduRepository.insertCartItem(cartItem)
             updateCartCount()
+            updateButtonState()
+        }
+    }
+
+    private fun deleteToCart(item: Offering) {
+        lifecycleScope.launch {
+            vazhipaduRepository.deleteCartItemByOfferingId(item.offeringsId)
+            updateCartCount()
+            updateButtonState()
         }
     }
 
 
-    @SuppressLint("DefaultLocale", "SetTextI18n")
+    @SuppressLint("DefaultLocale", "SetTextI18n", "StringFormatInvalid")
     private fun updateCartCount() {
-        val cartCount = sessionManager.getCartCount()
-        binding.cartCartCount?.text = cartCount.toString()
+        lifecycleScope.launch {
+            val cartCount = vazhipaduRepository.getCartCount()
+            binding.cartCartCount?.text = cartCount.toString()
 
-        val totalAmount = calculateTotalAmount()
-        val btnPay: MaterialButton = findViewById(R.id.btn_pay)
-        btnPay.text = "Pay: ₹${String.format("%.2f", totalAmount)}"
-    }
+            val cartPersonCount = vazhipaduRepository.getDistinctCountOfNameAndStar()
+            binding.cartPersonCartCount?.text = cartPersonCount.toString()
 
-    private fun calculateTotalAmount(): Double {
-        val cartItems = sessionManager.getCartItems()
-        var totalAmount = 0.0
-        for (item in cartItems) {
-            totalAmount += item.amount
+            val totalAmount = vazhipaduRepository.getTotalAmount()
+            val formattedAmount = String.format("%.2f", totalAmount)
+
+            val btnPay: MaterialButton = findViewById(R.id.btn_pay)
+            btnPay.text = getString(R.string.pay_vazhipadu, formattedAmount)
+
         }
-
-        return totalAmount
     }
-
-    @SuppressLint("SetTextI18n")
-    private fun getDistinctCountOfCartItems() {
-        val cartItems = sessionManager.getCartItems()
-        val distinctCartItems = cartItems.distinctBy { Pair(it.personName, it.personStar) }
-        binding.cartPersonCartCount?.text = distinctCartItems.size.toString()
-
-    }
-
 
     private fun updateButtonState() {
         val userName = binding.editName?.text.toString()
         val userStar = binding.editStar?.text.toString()
+        lifecycleScope.launch {
+            val cartCount = vazhipaduRepository.getCartCount()
+            val countForEmptyOrNullNameAndStar =
+                vazhipaduRepository.getCountForEmptyOrNullNameAndStar()
 
-
-        if (userName.isNotEmpty() && userStar.isNotEmpty() && sessionManager.getCartCount() > 0) {
-            val updatedCartItems = sessionManager.getCartItems()
-            updatedCartItems.forEach {
-                it.personName = userName
-                it.personStar = userStar
+            if (cartCount > 0 && countForEmptyOrNullNameAndStar <= 0) {
+                binding.btnPay.setBackgroundColor(
+                    ContextCompat.getColor(this@VazhipaduActivity, R.color.primaryColor)
+                )
+            } else if (userName.isNotEmpty() && userStar.isNotEmpty() && cartCount > 0) {
+                binding.btnPay.setBackgroundColor(
+                    ContextCompat.getColor(this@VazhipaduActivity, R.color.primaryColor)
+                )
+            } else {
+                binding.btnPay.setBackgroundColor(
+                    ContextCompat.getColor(this@VazhipaduActivity, R.color.light_grey)
+                )
             }
-            updatedCartItems.forEach {
-                println("Updated Cart Item: ${it.offeringName}, Name: ${it.personName}, Star: ${it.personStar}")
-            }
-            sessionManager.saveCartItems(updatedCartItems)
-            binding.btnPay.isEnabled = true
-            binding.btnPay.setBackgroundColor(
-                ContextCompat.getColor(this, R.color.primaryColor)
-            )
-        } else {
-//            binding.btnPay.isEnabled = false
-            binding.btnPay.setBackgroundColor(
-                ContextCompat.getColor(this, R.color.light_grey)
-            )
         }
     }
+
 
 }

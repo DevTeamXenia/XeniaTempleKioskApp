@@ -146,12 +146,10 @@ class DonationActivity : AppCompatActivity(), CustomInactivityDialog.InactivityC
         val inputText = binding.editTxtDonation.text.toString().trim()
 
         if (inputText.isNotEmpty()) {
-            binding.btnPay.isEnabled = true
             binding.btnPay.setBackgroundColor(
                 ContextCompat.getColor(this, R.color.primaryColor)
             )
         } else {
-            binding.btnPay.isEnabled = false
             binding.btnPay.setBackgroundColor(
                 ContextCompat.getColor(this, R.color.light_grey)
             )

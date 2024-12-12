@@ -11,7 +11,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="30"
+        android:layout_weight="25"
         android:background="@drawable/home_top_bg">
 
         <androidx.cardview.widget.CardView
@@ -74,7 +74,7 @@
         android:layout_marginTop="30dp"
         android:layout_marginEnd="100dp"
         android:layout_marginBottom="10dp"
-        android:layout_weight="70"
+        android:layout_weight="75"
         android:orientation="vertical">
 
 

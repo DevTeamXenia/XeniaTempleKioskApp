@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.Settings
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
 import com.bumptech.glide.Priority
 import com.bumptech.glide.load.engine.DiskCacheStrategy
@@ -28,6 +29,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
 import com.bumptech.glide.request.target.Target
+import com.xenia.templekiosk.data.repository.VazhipaduRepository
 
 
 class LanguageActivity : AppCompatActivity(),
@@ -36,6 +38,7 @@ class LanguageActivity : AppCompatActivity(),
     private lateinit var binding: ActivityLanguageBinding
     private val sharedPreferences: SharedPreferences by inject()
     private val loginRepository: LoginRepository by inject()
+    private val vazhipaduRepository: VazhipaduRepository by inject()
     private val sessionManager: SessionManager by inject()
     private val customInternetAvailabilityDialog: CustomInternetAvailabilityDialog by inject()
 
@@ -48,8 +51,18 @@ class LanguageActivity : AppCompatActivity(),
         requestOverlayPermission()
         setupBackgroundImage()
         setupLanguageButtons()
-
+        lifecycleScope.launch {
+            vazhipaduRepository.clearAllData()
+        }
     }
+
+    override fun onRestart() {
+        lifecycleScope.launch {
+            vazhipaduRepository.clearAllData()
+        }
+        super.onRestart()
+    }
+
 
 
     private fun setupBackgroundImage() {
@@ -123,7 +136,11 @@ class LanguageActivity : AppCompatActivity(),
 
     override fun onResume() {
         super.onResume()
-        loadCompanyDetails()
+        lifecycleScope.launch {
+            vazhipaduRepository.clearAllData()
+            loadCompanyDetails()
+        }
+
     }
 
     private fun requestOverlayPermission() {

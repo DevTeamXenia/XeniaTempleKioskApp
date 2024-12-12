@@ -50,7 +50,6 @@
 
             <RelativeLayout
                 android:id="@+id/linPersonCart"
-                android:visibility="gone"
                 android:layout_width="90dp"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
@@ -83,7 +82,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:layout_marginEnd="10dp"
-                android:layout_toStartOf="@id/linCart"
                 android:gravity="center">
 
                 <ImageView
@@ -493,7 +491,6 @@
 
         <LinearLayout
             android:id="@+id/addMore"
-            android:visibility="invisible"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -510,14 +507,14 @@
                     android:layout_marginEnd="10dp"
                     android:contentDescription="@string/todo"
                     android:scaleType="fitCenter"
-                    android:src="@drawable/ic_home" />
+                    android:src="@drawable/ic_more" />
 
                 <TextView
-                    android:id="@+id/txt_home"
+                    android:id="@+id/txt_people"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="0dp"
-                    android:text="More people"
+                    android:text="@string/more_people"
                     android:fontFamily="@font/poppins_regular"
                     android:textColor="@color/secondaryColor"
                     android:textSize="14sp" />
@@ -538,8 +535,6 @@
                 android:layout_marginEnd="20dp"
                 android:layout_gravity="center"
                 android:backgroundTint="@color/light_grey"
-                android:enabled="true"
-                android:text="@string/pay"
                 android:textColor="@color/white"
                 android:textSize="30sp"
                 app:cornerRadius="10dp"

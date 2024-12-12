@@ -9,7 +9,7 @@ import com.xenia.templekiosk.data.network.model.OrderResponse
 import com.xenia.templekiosk.data.network.model.PaymentRequest
 import com.xenia.templekiosk.data.network.model.PaymentResponse
 import com.xenia.templekiosk.data.network.model.PaymentStatus
-import com.xenia.templekiosk.data.network.model.TK_VazhipaduDetails
+import com.xenia.templekiosk.data.network.model.TK_Vazhipadi
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
@@ -70,9 +70,11 @@ interface ApiService {
         @Query("categoryId") categoryId: Int
     ): ApiProductResponse
 
-    @POST("vazhipadi")
+    @POST("vazhipadu")
     suspend fun postVazhipadi(
-        @Body request: TK_VazhipaduDetails
+        @Query("userId") userId: Int,
+        @Query("companyId") companyId: Int,
+        @Body request: TK_Vazhipadi
     ): OrderResponse
 
 }

@@ -3,6 +3,7 @@ package com.xenia.templekiosk.ui.dialogue
 import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.DialogInterface
+import android.content.SharedPreferences
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
@@ -17,10 +18,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.xenia.templekiosk.R
 import com.xenia.templekiosk.ui.adapter.NakshatraAdapter
 import com.xenia.templekiosk.ui.screens.VazhipaduActivity
+import org.koin.android.ext.android.inject
 
 class CustomStarPopupDialogue : DialogFragment() {
 
     var onNakshatraSelected: ((String) -> Unit)? = null
+    private val sharedPreferences: SharedPreferences by inject()
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         return object : Dialog(requireActivity(), theme) {
@@ -48,24 +51,27 @@ class CustomStarPopupDialogue : DialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val translatedNakshatras = resources.getStringArray(R.array.nakshatras)
-        val englishNakshatras = arrayOf(
-            "Ashwini", "Bharani", "Krittika", "Rohini", "Mrigashira", "Ardra", "Punarvasu",
-            "Pushya", "Ashlesha", "Magha", "Purva Phalguni", "Uttara Phalguni", "Hasta",
-            "Chitra", "Svati", "Vishakha", "Anuradha", "Jyeshta", "Moola", "Purva Ashadha",
-            "Uttara Ashadha", "Shravana", "Dhanishta", "Shatabhisha", "Purva Bhadrapada",
-            "Uttara Bhadrapada", "Revati"
-        )
+        val selectedLanguage = sharedPreferences.getString("SL", "en") ?: "en"
+
+        val nakshatrasArrayRes = when (selectedLanguage) {
+            "hi" -> R.array.nakshatras
+            "ta" -> R.array.nakshatras
+            "te" -> R.array.nakshatras
+            "ml" -> R.array.nakshatras
+            "kn" -> R.array.nakshatras
+            else -> R.array.nakshatras
+        }
+
+        val translatedNakshatras = resources.getStringArray(nakshatrasArrayRes)
 
         val listStar = view.findViewById<RecyclerView>(R.id.list_star)
         listStar.layoutManager = GridLayoutManager(requireContext(), 4)
         listStar.adapter = NakshatraAdapter(translatedNakshatras) { selectedNakshatra ->
-            val index = translatedNakshatras.indexOf(selectedNakshatra)
-            val englishName = englishNakshatras[index]
-            onNakshatraSelected?.invoke(englishName) // Invoke the callback with the selected Nakshatra
+            onNakshatraSelected?.invoke(selectedNakshatra)
             dismiss()
         }
     }
+
 
     override fun onStart() {
         super.onStart()

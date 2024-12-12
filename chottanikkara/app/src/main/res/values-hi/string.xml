@@ -47,6 +47,8 @@
 
     <string name="vazhipadu">वाजिपाडु</string>
     <string name="donation">दान</string>
+    <string name="more_people">और लोग</string>
+    <string name="pay_vazhipadu">भुगतान करें: ₹%1$s</string>
 
 
     <string-array name="nakshatras">

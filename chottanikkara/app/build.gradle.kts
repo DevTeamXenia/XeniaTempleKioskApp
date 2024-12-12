@@ -1,6 +1,7 @@
     plugins {
         id("com.android.application")
         id("org.jetbrains.kotlin.android")
+        id("kotlin-kapt")
     }
 
     android {
@@ -34,14 +35,17 @@
                 )
             }
         }
+
         compileOptions {
-            sourceCompatibility = JavaVersion.VERSION_1_8
-            targetCompatibility = JavaVersion.VERSION_1_8
+            sourceCompatibility = JavaVersion.VERSION_17
+            targetCompatibility = JavaVersion.VERSION_17
         }
         kotlinOptions {
-            jvmTarget = "1.8"
+            jvmTarget = "17"
         }
-
+        kotlin {
+            jvmToolchain(17)
+        }
     }
 
 
@@ -54,7 +58,7 @@
         implementation("androidx.constraintlayout:constraintlayout:2.2.0")
         implementation("androidx.activity:activity-ktx:1.9.3")
         implementation(files("libs/printer-lib-2.2.4.aar"))
-        implementation("androidx.activity:activity:1.9.3")
+        implementation("androidx.activity:activity-ktx:1.9.3")
         testImplementation("junit:junit:4.13.2")
         androidTestImplementation("androidx.test.ext:junit:1.2.1")
         androidTestImplementation("androidx.test.espresso:espresso-core:3.6.1")
@@ -71,5 +75,9 @@
 
         //di
         implementation ("io.insert-koin:koin-android:3.2.2")
+
+        //room
+        implementation ("androidx.room:room-ktx:2.6.1")
+        kapt ("androidx.room:room-compiler:2.6.1")
 
     }
