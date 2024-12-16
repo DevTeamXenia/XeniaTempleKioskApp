@@ -1,13 +1,11 @@
 package com.xenia.templekiosk.data.room.dao
 
 import androidx.room.Dao
-import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.xenia.templekiosk.data.network.model.DistinctPerson
 import com.xenia.templekiosk.data.network.model.OfferingItem
-import com.xenia.templekiosk.data.network.model.PersonWithItems
 import com.xenia.templekiosk.data.room.entity.Vazhipadu
 
 @Dao
@@ -18,6 +16,9 @@ interface VazhipaduDao {
 
     @Query("SELECT * FROM vazhipadu WHERE vaIsCompleted = 0")
     suspend fun getSelectedItems(): List<Vazhipadu>
+
+    @Query("SELECT * FROM Vazhipadu WHERE vaName = :name AND vaStar = :star")
+    suspend fun selectToCompleteByNameAndStar(name: String, star: String) : List<Vazhipadu>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertCartItem(vazhipadu: Vazhipadu)
@@ -37,12 +38,11 @@ interface VazhipaduDao {
     @Query("SELECT EXISTS (SELECT 1 FROM vazhipadu WHERE vaIsCompleted = 0)")
     suspend fun hasIncompleteItems(): Boolean
 
-
     @Query("SELECT COALESCE(SUM(vaOfferingsAmount), 0) FROM vazhipadu")
     suspend fun getTotalAmount(): Double
 
-    @Query("UPDATE Vazhipadu SET vaName = :newName, vaIsCompleted = 1 WHERE vaIsCompleted = 0")
-    suspend fun updateNameAndSetCompleted(newName: String)
+    @Query("UPDATE Vazhipadu SET vaName = :newName, vaSubTempleId = :cardId, vaSubTempleName = :cardName, vaIsCompleted = 1 WHERE vaIsCompleted = 0")
+    suspend fun updateNameAndSetCompleted(newName: String, cardId: Int, cardName: String)
 
     @Query("UPDATE Vazhipadu SET vaIsCompleted = 0 WHERE vaName = :name AND vaStar = :star")
     suspend fun updateToIncompleteByNameAndStar(name: String, star: String)
@@ -50,8 +50,7 @@ interface VazhipaduDao {
     @Query("SELECT COUNT(DISTINCT vaName || vaStar) FROM Vazhipadu")
     suspend fun getDistinctCountOfNameAndStar(): Int
 
-
-    @Query("SELECT DISTINCT vaName, vaStar FROM Vazhipadu")
+    @Query("SELECT DISTINCT vaName, vaStar, vaStarLa FROM Vazhipadu")
     suspend fun getDistinctPersons(): List<DistinctPerson>
 
     @Query("SELECT * FROM Vazhipadu WHERE vaName = :name AND vaStar = :star")

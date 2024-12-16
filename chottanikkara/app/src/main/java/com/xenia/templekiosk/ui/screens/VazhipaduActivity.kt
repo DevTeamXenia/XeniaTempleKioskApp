@@ -43,12 +43,20 @@ class VazhipaduActivity : AppCompatActivity(), CategoryAdapter.OnCategoryClickLi
     private lateinit var categoryAdapter: CategoryAdapter
     private var selectedCategoryId: Int = 1
     private var selectedCardId: Int? = null
+    private var selectedCardName: String? = null
+    private var englishNakshatra: String? = null
+    private var selectedNakshatra: String? = null
+    private var userName: String? = null
     var isDialogVisible = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityVazhipaduBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        userName = intent.getStringExtra("USER_NAME")
+        englishNakshatra = intent.getStringExtra("STAR")
+        selectedNakshatra = intent.getStringExtra("SELECTED_STAR")
 
         onBackPressedDispatcher.addCallback(this) {
             lifecycleScope.launch {
@@ -96,11 +104,12 @@ class VazhipaduActivity : AppCompatActivity(), CategoryAdapter.OnCategoryClickLi
     }
 
     private fun setupListeners() {
-        val selectedLanguage = sharedPreferences.getString("SL", "en") ?: "en"
         binding.editStar?.setOnClickListener {
             val dialog = CustomStarPopupDialogue()
-            dialog.onNakshatraSelected = { selectedNakshatra ->
-                binding.editStar?.setText(selectedNakshatra)
+            dialog.onNakshatraSelected = { selectedLaNakshatra,selectedEnglishNakshatra  ->
+                binding.editStar?.setText(selectedLaNakshatra)
+                englishNakshatra = selectedEnglishNakshatra
+                selectedNakshatra = selectedLaNakshatra
             }
             dialog.show(supportFragmentManager, "CustomStarPopupDialogue")
         }
@@ -203,8 +212,6 @@ class VazhipaduActivity : AppCompatActivity(), CategoryAdapter.OnCategoryClickLi
         }
 
 
-
-
         binding.linHome?.setOnClickListener {
             startActivity(Intent(applicationContext, LanguageActivity::class.java))
             finish()
@@ -218,6 +225,13 @@ class VazhipaduActivity : AppCompatActivity(), CategoryAdapter.OnCategoryClickLi
             R.id.card_keezhkavu to 2,
             R.id.card_shiva to 3,
             R.id.card_ayyappa to 4
+        )
+
+        val cardNames = mapOf(
+            R.id.card_melkavu to  getString(R.string.melkavu_devi),
+            R.id.card_keezhkavu to getString(R.string.keezhkavu_devi),
+            R.id.card_shiva to getString(R.string.shiva),
+            R.id.card_ayyappa to getString(R.string.ayyappa)
         )
 
         val cardViews = mapOf(
@@ -237,18 +251,19 @@ class VazhipaduActivity : AppCompatActivity(), CategoryAdapter.OnCategoryClickLi
         }
 
         selectedCardId = cards[selectedCard]
-
+        selectedCardName = cardNames[selectedCard]
 
         cardViews.forEach { (id, card) ->
             card?.setOnClickListener {
                 cardViews.entries.forEach { (_, value) ->
                     value?.setBackgroundResource(defaultBackground)
                 }
+
                 card.setBackgroundResource(selectedBackground)
                 selectedCardId = cards[id]
+                selectedCardName = cardNames[id]
 
                 fetchDetails()
-
             }
         }
 
@@ -268,7 +283,7 @@ class VazhipaduActivity : AppCompatActivity(), CategoryAdapter.OnCategoryClickLi
             val userStar = binding.editStar?.text.toString()
             if (userName.isNotEmpty() && userStar.isNotEmpty()) {
                 lifecycleScope.launch {
-                    vazhipaduRepository.updateNameAndSetCompleted(userName)
+                    vazhipaduRepository.updateNameAndSetCompleted(userName,selectedCardId,selectedCardName)
                     updateButtonState()
                     binding.editName?.setText("")
                     binding.editStar?.setText("")
@@ -290,10 +305,15 @@ class VazhipaduActivity : AppCompatActivity(), CategoryAdapter.OnCategoryClickLi
 
     private fun completeAndNavigate(userName: String, star: String) {
         lifecycleScope.launch {
-            vazhipaduRepository.updateNameAndSetCompleted(userName)
+            vazhipaduRepository.updateNameAndSetCompleted(
+                userName,
+                selectedCardId,
+                selectedCardName
+            )
             val intent = Intent(this@VazhipaduActivity, SummaryActivity::class.java).apply {
                 putExtra("USER_NAME", userName)
-                putExtra("STAR", star)
+                putExtra("STAR", englishNakshatra)
+                putExtra("SELECTED_STAR", selectedNakshatra)
             }
             startActivity(intent)
         }
@@ -362,7 +382,16 @@ class VazhipaduActivity : AppCompatActivity(), CategoryAdapter.OnCategoryClickLi
                         if (items.isNullOrEmpty()) {
                             showSnackbar(binding.root, "No items found for this category.")
                         } else {
-                            val selectedItems = vazhipaduRepository.getSelectedVazhipaduItems()
+                            val selectedItems: List<Vazhipadu>
+                            if (userName.isNullOrEmpty() && englishNakshatra.isNullOrEmpty()) {
+                                selectedItems = vazhipaduRepository.getSelectedVazhipaduItems()
+                            } else {
+                                binding.editName?.text = userName?.let { Editable.Factory.getInstance().newEditable(it) }
+                                binding.editStar?.text = selectedNakshatra?.let { Editable.Factory.getInstance().newEditable(it) }
+                                selectedItems = vazhipaduRepository.getLastVazhipaduItems(userName ?: "", englishNakshatra ?: "")
+
+                            }
+
                             val filteredItems = items.filter { item ->
                                 selectedItems.any { selectedItem ->
                                     selectedItem.vaOfferingsId == item.offeringsId
@@ -404,7 +433,7 @@ class VazhipaduActivity : AppCompatActivity(), CategoryAdapter.OnCategoryClickLi
                 showNakshatraDialog(item)
             }
         } else {
-            addToCart(item)
+            addToCart(item, englishNakshatra!!, selectedNakshatra!!)
         }
     }
 
@@ -424,24 +453,36 @@ class VazhipaduActivity : AppCompatActivity(), CategoryAdapter.OnCategoryClickLi
     private fun showNakshatraDialog(item: Offering) {
         val dialog = CustomStarPopupDialogue()
 
-        dialog.onNakshatraSelected = { selectedNakshatra ->
-            binding.editStar?.setText(selectedNakshatra)
-            addToCart(item)
+        dialog.onNakshatraSelected = { selectedLaNakshatra,selectedEnglishNakshatra  ->
+            binding.editStar?.setText(selectedLaNakshatra)
+            englishNakshatra = selectedEnglishNakshatra
+            selectedNakshatra = selectedLaNakshatra
+            addToCart(item,selectedEnglishNakshatra,selectedLaNakshatra)
         }
 
         dialog.show(supportFragmentManager, "CustomStarPopupDialogue")
     }
 
-    private fun addToCart(item: Offering) {
+    private fun addToCart(
+        item: Offering,
+        selectedEnglishNakshatra: String,
+        selectedNakshatra: String
+    ) {
         val cartItem = Vazhipadu(
             vaName = binding.editName?.text.toString(),
-            vaStar = binding.editStar?.text.toString(),
+            vaStar = selectedEnglishNakshatra,
+            vaStarLa = selectedNakshatra,
             vaPhoneNumber = "",
             vaOfferingsId = item.offeringsId,
             vaOfferingsName = item.offeringsName,
             vaOfferingsNameMa = item.offeringsNameMa,
+            vaOfferingsNameTa = item.offeringsNameTa,
+            vaOfferingsNameKa = item.offeringsNameKa,
+            vaOfferingsNameTe = item.offeringsNameTe,
+            vaOfferingsNameHi = item.offeringsNameHi,
             vaOfferingsAmount = item.offeringsAmount,
             vaSubTempleId = selectedCardId!!,
+            vaSubTempleName = selectedCardName!!,
             vaIsCompleted = false
         )
 

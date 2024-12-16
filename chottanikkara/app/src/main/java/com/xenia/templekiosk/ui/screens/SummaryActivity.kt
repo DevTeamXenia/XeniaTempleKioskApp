@@ -2,6 +2,8 @@ package com.xenia.templekiosk.ui.screens
 
 
 import android.annotation.SuppressLint
+import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.activity.addCallback
 import androidx.appcompat.app.AppCompatActivity
@@ -36,6 +38,7 @@ class SummaryActivity : AppCompatActivity(), PersonItemAdapter.OnItemDeleteListe
     private lateinit var personAdapter: PersonAdapter
     private val vazhipaduRepository: VazhipaduRepository by inject()
     private val paymentRepository: PaymentRepository by inject()
+    private val sharedPreferences: SharedPreferences by inject()
     private val sessionManager: SessionManager by inject()
     private val customVazhipaduQRPopupDialog: CustomVazhipaduQRPopupDialogue by inject()
     private val customInternetAvailabilityDialog: CustomInternetAvailabilityDialog by inject()
@@ -48,15 +51,17 @@ class SummaryActivity : AppCompatActivity(), PersonItemAdapter.OnItemDeleteListe
 
         val userName = intent.getStringExtra("USER_NAME")
         val star = intent.getStringExtra("STAR")
+        val selectedStar = intent.getStringExtra("SELECTED_STAR")
 
         onBackPressedDispatcher.addCallback(this) {
             lifecycleScope.launch {
-                lifecycleScope.launch {
-                    vazhipaduRepository.updateToIncompleteByNameAndStar(userName!!, star!!)
+                    val intent = Intent(this@SummaryActivity, VazhipaduActivity::class.java).apply {
+                        putExtra("USER_NAME", userName)
+                        putExtra("STAR", star)
+                        putExtra("SELECTED_STAR", selectedStar)
+                    }
+                    startActivity(intent)
                     finish()
-                }
-
-
             }
         }
 
@@ -64,6 +69,7 @@ class SummaryActivity : AppCompatActivity(), PersonItemAdapter.OnItemDeleteListe
             val distinctPersons = vazhipaduRepository.getDistinctPersonsWithOfferings()
             personAdapter = PersonAdapter(
                 personList = distinctPersons,
+                sharedPreferences,
                 onItemDeleteListener = this@SummaryActivity
             )
             binding.relSummary.layoutManager = LinearLayoutManager(this@SummaryActivity)
@@ -74,6 +80,11 @@ class SummaryActivity : AppCompatActivity(), PersonItemAdapter.OnItemDeleteListe
 
         binding.btnPay.setOnClickListener {
             generatePayment()
+        }
+
+        binding.addMore.setOnClickListener {
+            startActivity(Intent(applicationContext,VazhipaduActivity::class.java))
+            finish()
         }
 
     }

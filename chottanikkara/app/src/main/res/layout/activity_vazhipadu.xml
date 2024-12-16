@@ -160,7 +160,6 @@
                                     android:focusable="true"
                                     android:imeOptions="actionDone"
                                     android:inputType="text"
-                                    android:maxLength="10"
                                     android:paddingStart="7dp" />
 
                             </RelativeLayout>
@@ -536,7 +535,7 @@
                 android:layout_gravity="center"
                 android:backgroundTint="@color/light_grey"
                 android:textColor="@color/white"
-                android:textSize="30sp"
+                android:textSize="26sp"
                 app:cornerRadius="10dp"
                 tools:ignore="RtlSymmetry" />
 

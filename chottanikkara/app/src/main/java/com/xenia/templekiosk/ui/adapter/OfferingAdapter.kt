@@ -35,7 +35,7 @@ class OfferingAdapter(
         private val itemNameTextView: TextView = itemView.findViewById(R.id.txt_item_name)
         private val itemPriceTextView: TextView = itemView.findViewById(R.id.txt_item_price)
 
-        @SuppressLint("SetTextI18n")
+        @SuppressLint("SetTextI18n", "DefaultLocale")
         fun bind(item: Offering) {
             itemNameTextView.text = item.offeringsName
             val selectedLanguage = sharedPreferences.getString("SL", "en") ?: "en"
@@ -49,7 +49,9 @@ class OfferingAdapter(
                 else -> item.offeringsName
             }
 
-            itemPriceTextView.text = "₹ ${item.offeringsAmount}/-"
+            val amountDouble = item.offeringsAmount
+            val formattedAmount = String.format("%.2f", amountDouble)
+            itemPriceTextView.text = "₹ $formattedAmount/-"
 
             if (selectedItemIds.contains(item.offeringsId.toString())) {
                 itemView.setBackgroundResource(R.drawable.item_selected_bg)

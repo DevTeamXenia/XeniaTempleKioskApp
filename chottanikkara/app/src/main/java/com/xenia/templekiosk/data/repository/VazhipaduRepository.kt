@@ -30,6 +30,10 @@ class VazhipaduRepository(private val vazhipaduDao: VazhipaduDao) {
         return vazhipaduDao.getAllCart()
     }
 
+    suspend fun getLastVazhipaduItems(name: String, star: String): List<Vazhipadu> {
+        return vazhipaduDao.selectToCompleteByNameAndStar(name,star)
+    }
+
     suspend fun insertCartItem(vazhipadu: Vazhipadu) = withContext(Dispatchers.IO) {
         vazhipaduDao.insertCartItem(vazhipadu)
     }
@@ -46,18 +50,18 @@ class VazhipaduRepository(private val vazhipaduDao: VazhipaduDao) {
         }
     }
 
-    suspend fun updateNameAndSetCompleted(newName: String) {
+    suspend fun updateNameAndSetCompleted(
+        newName: String,
+        selectedCardId: Int?,
+        selectedCardName: String?
+    ) {
         withContext(Dispatchers.IO) {
-            vazhipaduDao.updateNameAndSetCompleted(newName)
+            vazhipaduDao.updateNameAndSetCompleted(newName,selectedCardId!!,selectedCardName!!)
         }
     }
 
     suspend fun getDistinctCountOfNameAndStar(): Int {
         return vazhipaduDao.getDistinctCountOfNameAndStar()
-    }
-
-    suspend fun updateToIncompleteByNameAndStar(name: String, star: String) {
-        vazhipaduDao.updateToIncompleteByNameAndStar(name, star)
     }
 
     suspend fun getCountForEmptyOrNullNameAndStar(): Int {
@@ -86,6 +90,7 @@ class VazhipaduRepository(private val vazhipaduDao: VazhipaduDao) {
             val personWithItems = PersonWithItems(
                 personName = person.vaName,
                 personStar = person.vaStar,
+                personStarLa = person.vaStarLa,
                 items = offerings
             )
             personWithItemsList.add(personWithItems)
