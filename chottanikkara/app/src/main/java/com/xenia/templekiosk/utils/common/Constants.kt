@@ -10,7 +10,7 @@ object Constants {
 
     const val MELVAKUBHAGAVATI = "Melvaku Bhagavati"
     const val KEEZHKAVUBHAGAVATI = "Keezhkavu Bhagavati"
-    const val SHIVA = "Shivan"
-    const val AYYAPPA = "Ayyappan"
+    const val SHIVA = "Shivan "
+    const val AYYAPPA = "Ayyappan "
 
 }

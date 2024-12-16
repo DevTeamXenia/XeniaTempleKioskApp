@@ -132,8 +132,7 @@ class CustomVazhipaduQRPopupDialogue : DialogFragment() {
                 val timeFormatted = String.format("%02d:%02d", minutes, seconds)
                 timerTextView.text = getString(R.string.qr_expire) + " " + timeFormatted
                 if (elapsedTime % pollInterval == 0L) {
-                    postPaymentHistory("s","success")
-                    //checkPaymentStatus()
+                    checkPaymentStatus()
 
 
                 }
@@ -163,7 +162,11 @@ class CustomVazhipaduQRPopupDialogue : DialogFragment() {
                         accessToken = "Bearer $token",
                     )
                     val response = withContext(Dispatchers.IO) {
-                        paymentRepository.paymentStatus(sessionManager.getUserId(), sessionManager.getCompanyId(), paymentRequest)
+                        paymentRepository.paymentStatus(
+                            sessionManager.getUserId(),
+                            sessionManager.getCompanyId(),
+                            paymentRequest
+                        )
                     }
 
                     if (response.Status == "success") {
@@ -171,11 +174,13 @@ class CustomVazhipaduQRPopupDialogue : DialogFragment() {
                         val statusDesc = response.Data?.statusDesc
                         if (status != null && statusDesc != null) {
                             if (status == "S" && statusDesc == "Transaction success") {
-                                postPaymentHistory(status,statusDesc)
+                                postPaymentHistory(status, statusDesc)
                                 return@launch
-
+                            } else if (status == "F" && statusDesc == "Transaction fail:Debit was failed") {
+                                postPaymentHistory(status, statusDesc)
+                                return@launch
                             } else if (status == "F" && statusDesc != "Invalid PsprefNo") {
-                                postPaymentHistory(status,statusDesc)
+                                postPaymentHistory(status, statusDesc)
                                 return@launch
 
                             }
@@ -241,7 +246,7 @@ class CustomVazhipaduQRPopupDialogue : DialogFragment() {
                         println("Failed to process payment history after 3 retries.")
                     }
 
-                     handleTransactionStatus(status)
+                    handleTransactionStatus(status)
 
                 }
             } catch (e: Exception) {
@@ -252,7 +257,7 @@ class CustomVazhipaduQRPopupDialogue : DialogFragment() {
 
     private fun handleTransactionStatus(status: String) {
         val intent = Intent(requireContext(), PaymentVazhipaduActivity::class.java).apply {
-            putExtra("status", "S")
+            putExtra("status", status)
             putExtra("amount", amount)
             putExtra("transID", transactionReferenceID)
         }
@@ -293,6 +298,7 @@ class CustomVazhipaduQRPopupDialogue : DialogFragment() {
         isCheckingPaymentStatus = false
         paymentStatusJob?.cancel()
     }
+
     fun isDialogShowing(): Boolean {
         return dialog?.isShowing == true
     }

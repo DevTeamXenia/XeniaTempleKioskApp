@@ -46,15 +46,17 @@ class VazhipaduActivity : AppCompatActivity(), CategoryAdapter.OnCategoryClickLi
     private var selectedCardName: String? = null
     private var englishNakshatra: String? = null
     private var selectedNakshatra: String? = null
-    private var userName: String? = null
+    private var selectedUserName: String? = null
+    private var isCardClick: Boolean = false
     var isDialogVisible = false
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityVazhipaduBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        userName = intent.getStringExtra("USER_NAME")
+        selectedUserName = intent.getStringExtra("USER_NAME")
         englishNakshatra = intent.getStringExtra("STAR")
         selectedNakshatra = intent.getStringExtra("SELECTED_STAR")
 
@@ -129,10 +131,10 @@ class VazhipaduActivity : AppCompatActivity(), CategoryAdapter.OnCategoryClickLi
                         } else if (star.isEmpty()) {
                             showSnackbar(binding.root, "Please select your star")
                         } else {
-                            completeAndNavigate(userName, star)
+                            completeAndNavigate(userName)
                         }
                     } else {
-                        completeAndNavigate(userName, star)
+                        completeAndNavigate(userName)
                     }
                 } else {
                     if (userName.isEmpty()) {
@@ -140,7 +142,7 @@ class VazhipaduActivity : AppCompatActivity(), CategoryAdapter.OnCategoryClickLi
                     } else if (star.isEmpty()) {
                         showSnackbar(binding.root, "Please select your star")
                     } else {
-                        completeAndNavigate(userName, star)
+                        completeAndNavigate(userName)
                     }
                 }
             }
@@ -162,10 +164,10 @@ class VazhipaduActivity : AppCompatActivity(), CategoryAdapter.OnCategoryClickLi
                         } else if (star.isEmpty()) {
                             showSnackbar(binding.root, "Please select your star")
                         } else {
-                            completeAndNavigate(userName, star)
+                            completeAndNavigate(userName)
                         }
                     } else {
-                        completeAndNavigate(userName, star)
+                        completeAndNavigate(userName)
                     }
                 } else {
                     if (userName.isEmpty()) {
@@ -173,7 +175,7 @@ class VazhipaduActivity : AppCompatActivity(), CategoryAdapter.OnCategoryClickLi
                     } else if (star.isEmpty()) {
                         showSnackbar(binding.root, "Please select your star")
                     } else {
-                        completeAndNavigate(userName, star)
+                        completeAndNavigate(userName)
                     }
                 }
             }
@@ -194,10 +196,10 @@ class VazhipaduActivity : AppCompatActivity(), CategoryAdapter.OnCategoryClickLi
                         } else if (star.isEmpty()) {
                             showSnackbar(binding.root, "Please select your star")
                         } else {
-                            completeAndNavigate(userName, star)
+                            completeAndNavigate(userName)
                         }
                     } else {
-                        completeAndNavigate(userName, star)
+                        completeAndNavigate(userName)
                     }
                 } else {
                     if (userName.isEmpty()) {
@@ -205,7 +207,7 @@ class VazhipaduActivity : AppCompatActivity(), CategoryAdapter.OnCategoryClickLi
                     } else if (star.isEmpty()) {
                         showSnackbar(binding.root, "Please select your star")
                     } else {
-                        completeAndNavigate(userName, star)
+                        completeAndNavigate(userName)
                     }
                 }
             }
@@ -262,7 +264,7 @@ class VazhipaduActivity : AppCompatActivity(), CategoryAdapter.OnCategoryClickLi
                 card.setBackgroundResource(selectedBackground)
                 selectedCardId = cards[id]
                 selectedCardName = cardNames[id]
-
+                isCardClick = true
                 fetchDetails()
             }
         }
@@ -285,8 +287,12 @@ class VazhipaduActivity : AppCompatActivity(), CategoryAdapter.OnCategoryClickLi
                 lifecycleScope.launch {
                     vazhipaduRepository.updateNameAndSetCompleted(userName,selectedCardId,selectedCardName)
                     updateButtonState()
-                    binding.editName?.setText("")
-                    binding.editStar?.setText("")
+                        binding.editName?.setText("")
+                        binding.editStar?.setText("")
+                        selectedUserName = ""
+                        selectedNakshatra = ""
+                        englishNakshatra = ""
+                    isCardClick = false
                     fetchDetails()
                 }
 
@@ -303,7 +309,7 @@ class VazhipaduActivity : AppCompatActivity(), CategoryAdapter.OnCategoryClickLi
     }
 
 
-    private fun completeAndNavigate(userName: String, star: String) {
+    private fun completeAndNavigate(userName: String) {
         lifecycleScope.launch {
             vazhipaduRepository.updateNameAndSetCompleted(
                 userName,
@@ -316,6 +322,7 @@ class VazhipaduActivity : AppCompatActivity(), CategoryAdapter.OnCategoryClickLi
                 putExtra("SELECTED_STAR", selectedNakshatra)
             }
             startActivity(intent)
+            finish()
         }
 
     }
@@ -382,14 +389,14 @@ class VazhipaduActivity : AppCompatActivity(), CategoryAdapter.OnCategoryClickLi
                         if (items.isNullOrEmpty()) {
                             showSnackbar(binding.root, "No items found for this category.")
                         } else {
-                            val selectedItems: List<Vazhipadu>
-                            if (userName.isNullOrEmpty() && englishNakshatra.isNullOrEmpty()) {
-                                selectedItems = vazhipaduRepository.getSelectedVazhipaduItems()
+                            val selectedItems: List<Vazhipadu> = if (selectedUserName.isNullOrEmpty() && englishNakshatra.isNullOrEmpty()) {
+                                vazhipaduRepository.getSelectedVazhipaduItems()
                             } else {
-                                binding.editName?.text = userName?.let { Editable.Factory.getInstance().newEditable(it) }
-                                binding.editStar?.text = selectedNakshatra?.let { Editable.Factory.getInstance().newEditable(it) }
-                                selectedItems = vazhipaduRepository.getLastVazhipaduItems(userName ?: "", englishNakshatra ?: "")
-
+                                if (!isCardClick) {
+                                    binding.editName?.text = selectedUserName?.let { Editable.Factory.getInstance().newEditable(it) }
+                                    binding.editStar?.text = selectedNakshatra?.let { Editable.Factory.getInstance().newEditable(it) }
+                                }
+                                vazhipaduRepository.getLastVazhipaduItems(selectedUserName ?: "", englishNakshatra ?: "")
                             }
 
                             val filteredItems = items.filter { item ->
@@ -397,6 +404,7 @@ class VazhipaduActivity : AppCompatActivity(), CategoryAdapter.OnCategoryClickLi
                                     selectedItem.vaOfferingsId == item.offeringsId
                                 }
                             }
+
                             binding.relOffers?.layoutManager =
                                 GridLayoutManager(this@VazhipaduActivity, 3)
                             binding.relOffers?.adapter =
@@ -409,7 +417,7 @@ class VazhipaduActivity : AppCompatActivity(), CategoryAdapter.OnCategoryClickLi
                         }
                     }
 
-                    else -> {
+                else -> {
                         showSnackbar(binding.root, response.message ?: "Failed to fetch items.")
                     }
                 }

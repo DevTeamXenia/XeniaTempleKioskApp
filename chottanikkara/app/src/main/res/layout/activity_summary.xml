@@ -94,7 +94,7 @@
                 android:layout_gravity="center"
                 android:backgroundTint="@color/primaryColor"
                 android:textColor="@color/white"
-                android:textSize="30sp"
+                android:textSize="26sp"
                 app:cornerRadius="10dp"
                 tools:ignore="RtlSymmetry" />
 
