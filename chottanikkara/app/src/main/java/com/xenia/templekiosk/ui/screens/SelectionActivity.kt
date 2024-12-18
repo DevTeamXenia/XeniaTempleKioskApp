@@ -5,10 +5,8 @@ import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MotionEvent
-import androidx.cardview.widget.CardView
 import com.xenia.templekiosk.R
 import com.xenia.templekiosk.data.listeners.InactivityHandlerActivity
-import com.xenia.templekiosk.databinding.ActivityHomeBinding
 import com.xenia.templekiosk.databinding.ActivitySelectionBinding
 import com.xenia.templekiosk.ui.dialogue.CustomInactivityDialog
 import com.xenia.templekiosk.ui.dialogue.CustomQRPopupDialogue

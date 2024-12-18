@@ -30,17 +30,17 @@ class VazhipaduRepository(private val vazhipaduDao: VazhipaduDao) {
         return vazhipaduDao.getAllCart()
     }
 
-    suspend fun getLastVazhipaduItems(name: String, star: String): List<Vazhipadu> {
-        return vazhipaduDao.selectToCompleteByNameAndStar(name,star)
+    suspend fun getLastVazhipaduItems(name: String, star: String, devathaId: Int): List<Vazhipadu> {
+        return vazhipaduDao.selectToCompleteByNameAndStar(name,star,devathaId)
     }
 
     suspend fun insertCartItem(vazhipadu: Vazhipadu) = withContext(Dispatchers.IO) {
         vazhipaduDao.insertCartItem(vazhipadu)
     }
 
-    suspend fun deleteCartItemByOfferingId(offeringsId: Int) {
+    suspend fun deleteCartItemByOfferingId(offeringsId: Int, selectedCardId: Int?) {
         withContext(Dispatchers.IO) {
-            vazhipaduDao.deleteCartItemByOfferingId(offeringsId)
+            vazhipaduDao.deleteCartItemByOfferingId(offeringsId,selectedCardId)
         }
     }
 
@@ -50,13 +50,9 @@ class VazhipaduRepository(private val vazhipaduDao: VazhipaduDao) {
         }
     }
 
-    suspend fun updateNameAndSetCompleted(
-        newName: String,
-        selectedCardId: Int?,
-        selectedCardName: String?
-    ) {
+    suspend fun updateNameAndSetCompleted(newName: String) {
         withContext(Dispatchers.IO) {
-            vazhipaduDao.updateNameAndSetCompleted(newName,selectedCardId!!,selectedCardName!!)
+            vazhipaduDao.updateNameAndSetCompleted(newName)
         }
     }
 

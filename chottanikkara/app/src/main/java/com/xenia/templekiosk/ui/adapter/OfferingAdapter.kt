@@ -17,7 +17,7 @@ import com.xenia.templekiosk.utils.common.Constants.LANGUAGE_TAMIL
 import com.xenia.templekiosk.utils.common.Constants.LANGUAGE_TELUGU
 
 class OfferingAdapter(
-    private val offeringList: List<Offering>,
+    private var offeringList: List<Offering>,
     private val sharedPreferences: SharedPreferences,
     private val itemClickListener: ItemClickListener,
     selectedItems: List<Offering> = emptyList()
@@ -37,7 +37,6 @@ class OfferingAdapter(
 
         @SuppressLint("SetTextI18n", "DefaultLocale")
         fun bind(item: Offering) {
-            itemNameTextView.text = item.offeringsName
             val selectedLanguage = sharedPreferences.getString("SL", "en") ?: "en"
             itemNameTextView.text = when (selectedLanguage) {
                 LANGUAGE_ENGLISH -> item.offeringsName
@@ -63,13 +62,11 @@ class OfferingAdapter(
             itemView.setOnClickListener {
                 if (selectedItemIds.contains(item.offeringsId.toString())) {
                     selectedItemIds.remove(item.offeringsId.toString())
-                    itemClickListener.onItemRemoved(item)
+                    itemClickListener.onItemRemoved(item, selectedItemIds)
                 } else {
                     selectedItemIds.add(item.offeringsId.toString())
-                    itemClickListener.onItemAdded(item)
+                    itemClickListener.onItemAdded(item, selectedItemIds)
                 }
-
-                notifyItemChanged(adapterPosition)
             }
         }
     }
@@ -87,8 +84,27 @@ class OfferingAdapter(
         return offeringList.size
     }
 
+
+    fun updateBackgroundForItem(offeringsId: String) {
+        val position = offeringList.indexOfFirst { it.offeringsId.toString() == offeringsId }
+        if (position != -1) {
+            notifyItemChanged(position)
+        }
+    }
+
+
+    @SuppressLint("NotifyDataSetChanged")
+    fun updateData(newOfferingList: List<Offering>, newSelectedItems: List<Offering> = emptyList()) {
+        offeringList = newOfferingList
+        selectedItemIds.clear()
+        newSelectedItems.forEach { selectedItem ->
+            selectedItemIds.add(selectedItem.offeringsId.toString())
+        }
+        notifyDataSetChanged()
+    }
+
     interface ItemClickListener {
-        fun onItemAdded(item: Offering)
-        fun onItemRemoved(item: Offering)
+        fun onItemAdded(item: Offering, selectedItemIds: MutableSet<String>)
+        fun onItemRemoved(item: Offering, selectedItemIds: MutableSet<String>)
     }
 }

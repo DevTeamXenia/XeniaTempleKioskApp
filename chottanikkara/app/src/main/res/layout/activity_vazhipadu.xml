@@ -259,7 +259,7 @@
                             <RelativeLayout
                                 android:id="@+id/card_melkavu"
                                 android:layout_width="match_parent"
-                                android:layout_height="130dp"
+                                android:layout_height="110dp"
                                 android:layout_marginEnd="10dp"
                                 android:background="@drawable/bg_grey_card"
                                 android:gravity="center">
@@ -286,7 +286,7 @@
                                 android:fontFamily="@font/montserrat_semibold"
                                 android:gravity="center"
                                 android:textColor="@color/secondaryColor"
-                                android:textSize="20sp" />
+                                android:textSize="16sp" />
 
 
                         </LinearLayout>
@@ -300,7 +300,7 @@
                             <RelativeLayout
                                 android:id="@+id/card_keezhkavu"
                                 android:layout_width="match_parent"
-                                android:layout_height="130dp"
+                                android:layout_height="110dp"
                                 android:layout_marginEnd="10dp"
                                 android:background="@drawable/bg_grey_card"
                                 android:gravity="center">
@@ -327,7 +327,7 @@
                                 android:fontFamily="@font/montserrat_semibold"
                                 android:gravity="center"
                                 android:textColor="@color/secondaryColor"
-                                android:textSize="20sp" />
+                                android:textSize="16sp" />
 
 
                         </LinearLayout>
@@ -341,7 +341,7 @@
                             <RelativeLayout
                                 android:id="@+id/card_shiva"
                                 android:layout_width="match_parent"
-                                android:layout_height="130dp"
+                                android:layout_height="110dp"
                                 android:layout_marginEnd="10dp"
                                 android:background="@drawable/bg_grey_card"
                                 android:gravity="center">
@@ -368,7 +368,7 @@
                                 android:fontFamily="@font/montserrat_semibold"
                                 android:gravity="center"
                                 android:textColor="@color/secondaryColor"
-                                android:textSize="20sp" />
+                                android:textSize="16sp" />
 
 
                         </LinearLayout>
@@ -382,7 +382,7 @@
                             <RelativeLayout
                                 android:id="@+id/card_ayyappa"
                                 android:layout_width="match_parent"
-                                android:layout_height="130dp"
+                                android:layout_height="110dp"
                                 android:layout_marginEnd="10dp"
                                 android:background="@drawable/bg_grey_card"
                                 android:gravity="center">
@@ -409,7 +409,48 @@
                                 android:fontFamily="@font/montserrat_semibold"
                                 android:gravity="center"
                                 android:textColor="@color/secondaryColor"
-                                android:textSize="20sp" />
+                                android:textSize="16sp" />
+
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <RelativeLayout
+                                android:id="@+id/card_nagam"
+                                android:layout_width="match_parent"
+                                android:layout_height="110dp"
+                                android:layout_marginEnd="10dp"
+                                android:background="@drawable/bg_grey_card"
+                                android:gravity="center">
+
+                                <ImageView
+                                    android:id="@+id/img_nagam"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_marginStart="10dp"
+                                    android:layout_marginTop="20dp"
+                                    android:layout_marginEnd="10dp"
+                                    android:layout_marginBottom="20dp"
+                                    android:contentDescription="@string/todo"
+                                    android:src="@drawable/ic_nagam" />
+
+
+                            </RelativeLayout>
+
+                            <TextView
+                                android:id="@+id/txt_nagam"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="10dp"
+                                android:fontFamily="@font/montserrat_semibold"
+                                android:gravity="center"
+                                android:textColor="@color/secondaryColor"
+                                android:textSize="16sp" />
 
 
                         </LinearLayout>

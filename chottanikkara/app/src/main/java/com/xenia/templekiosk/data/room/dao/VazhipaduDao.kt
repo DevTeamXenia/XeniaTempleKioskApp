@@ -17,14 +17,14 @@ interface VazhipaduDao {
     @Query("SELECT * FROM vazhipadu WHERE vaIsCompleted = 0")
     suspend fun getSelectedItems(): List<Vazhipadu>
 
-    @Query("SELECT * FROM Vazhipadu WHERE vaName = :name AND vaStar = :star")
-    suspend fun selectToCompleteByNameAndStar(name: String, star: String) : List<Vazhipadu>
+    @Query("SELECT * FROM Vazhipadu WHERE vaName = :name AND vaStar = :star AND vaSubTempleId = :devathaId")
+    suspend fun selectToCompleteByNameAndStar(name: String, star: String, devathaId: Int) : List<Vazhipadu>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertCartItem(vazhipadu: Vazhipadu)
 
-    @Query("DELETE FROM vazhipadu WHERE vaOfferingsId = :offeringsId")
-    suspend fun deleteCartItemByOfferingId(offeringsId: Int)
+    @Query("DELETE FROM vazhipadu WHERE vaOfferingsId = :offeringsId AND vaSubTempleId = :selectedCardId")
+    suspend fun deleteCartItemByOfferingId(offeringsId: Int, selectedCardId: Int?)
 
     @Query("DELETE FROM vazhipadu")
     suspend fun truncateTable()
@@ -41,8 +41,8 @@ interface VazhipaduDao {
     @Query("SELECT COALESCE(SUM(vaOfferingsAmount), 0) FROM vazhipadu")
     suspend fun getTotalAmount(): Double
 
-    @Query("UPDATE Vazhipadu SET vaName = :newName, vaSubTempleId = :cardId, vaSubTempleName = :cardName, vaIsCompleted = 1 WHERE vaIsCompleted = 0")
-    suspend fun updateNameAndSetCompleted(newName: String, cardId: Int, cardName: String)
+    @Query("UPDATE Vazhipadu SET vaName = :newName, vaIsCompleted = 1 WHERE vaIsCompleted = 0")
+    suspend fun updateNameAndSetCompleted(newName: String)
 
     @Query("UPDATE Vazhipadu SET vaIsCompleted = 0 WHERE vaName = :name AND vaStar = :star")
     suspend fun updateToIncompleteByNameAndStar(name: String, star: String)

@@ -8,7 +8,9 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.view.MotionEvent
 import android.view.inputmethod.InputMethodManager
+import android.widget.EditText
 import androidx.activity.addCallback
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
@@ -16,6 +18,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.button.MaterialButton
 import com.xenia.templekiosk.R
+import com.xenia.templekiosk.data.listeners.InactivityHandlerActivity
 import com.xenia.templekiosk.ui.adapter.CategoryAdapter
 import com.xenia.templekiosk.data.network.model.Category
 import com.xenia.templekiosk.data.network.model.Offering
@@ -23,7 +26,10 @@ import com.xenia.templekiosk.data.repository.VazhipaduRepository
 import com.xenia.templekiosk.data.room.entity.Vazhipadu
 import com.xenia.templekiosk.databinding.ActivityVazhipaduBinding
 import com.xenia.templekiosk.ui.adapter.OfferingAdapter
+import com.xenia.templekiosk.ui.dialogue.CustomInactivityDialog
+import com.xenia.templekiosk.ui.dialogue.CustomQRPopupDialogue
 import com.xenia.templekiosk.ui.dialogue.CustomStarPopupDialogue
+import com.xenia.templekiosk.utils.InactivityHandler
 import com.xenia.templekiosk.utils.SessionManager
 import com.xenia.templekiosk.utils.common.CommonMethod.showSnackbar
 import kotlinx.coroutines.CoroutineScope
@@ -32,15 +38,21 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.koin.android.ext.android.inject
 
+
 class VazhipaduActivity : AppCompatActivity(), CategoryAdapter.OnCategoryClickListener,
-    OfferingAdapter.ItemClickListener {
+    OfferingAdapter.ItemClickListener, CustomInactivityDialog.InactivityCallback,
+    InactivityHandlerActivity {
 
     private lateinit var binding: ActivityVazhipaduBinding
     private val sessionManager: SessionManager by inject()
     private val sharedPreferences: SharedPreferences by inject()
     private val vazhipaduRepository: VazhipaduRepository by inject()
+    private val customQRPopupDialog: CustomQRPopupDialogue by inject()
     private lateinit var itemArray: Array<String>
     private lateinit var categoryAdapter: CategoryAdapter
+    private lateinit var offeringAdapter: OfferingAdapter
+    private lateinit var inactivityHandler: InactivityHandler
+    private lateinit var inactivityDialog: CustomInactivityDialog
     private var selectedCategoryId: Int = 1
     private var selectedCardId: Int? = null
     private var selectedCardName: String? = null
@@ -60,16 +72,25 @@ class VazhipaduActivity : AppCompatActivity(), CategoryAdapter.OnCategoryClickLi
         englishNakshatra = intent.getStringExtra("STAR")
         selectedNakshatra = intent.getStringExtra("SELECTED_STAR")
 
+
+
         onBackPressedDispatcher.addCallback(this) {
             lifecycleScope.launch {
                 vazhipaduRepository.clearAllData()
                 finish()
             }
         }
+        inactivityDialog = CustomInactivityDialog(this)
+        inactivityHandler =
+            InactivityHandler(this, supportFragmentManager, inactivityDialog, customQRPopupDialog)
 
         setupUI()
         setupRecyclerViews()
         setupListeners()
+    }
+
+    override fun resetInactivityTimer() {
+        inactivityHandler.resetTimer()
     }
 
     override fun onResume() {
@@ -77,11 +98,27 @@ class VazhipaduActivity : AppCompatActivity(), CategoryAdapter.OnCategoryClickLi
         updateCartCount()
         updateButtonState()
         super.onResume()
+        inactivityHandler.resumeInactivityCheck()
     }
 
     override fun onRestart() {
         fetchDetails()
         super.onRestart()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        inactivityHandler.pauseInactivityCheck()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        inactivityHandler.cleanup()
+    }
+
+    override fun dispatchTouchEvent(ev: MotionEvent?): Boolean {
+        inactivityHandler.resetTimer()
+        return super.dispatchTouchEvent(ev)
     }
 
 
@@ -90,6 +127,7 @@ class VazhipaduActivity : AppCompatActivity(), CategoryAdapter.OnCategoryClickLi
         binding.txtKeezhkavu?.text = getString(R.string.keezhkavu_devi)
         binding.txtShiva?.text = getString(R.string.shiva)
         binding.txtAyyappa?.text = getString(R.string.ayyappa)
+        binding.txtNagam?.text = getString(R.string.nagam)
         binding.txtPeople?.text = getString(R.string.more_people)
         updateCartCount()
     }
@@ -108,7 +146,7 @@ class VazhipaduActivity : AppCompatActivity(), CategoryAdapter.OnCategoryClickLi
     private fun setupListeners() {
         binding.editStar?.setOnClickListener {
             val dialog = CustomStarPopupDialogue()
-            dialog.onNakshatraSelected = { selectedLaNakshatra,selectedEnglishNakshatra  ->
+            dialog.onNakshatraSelected = { selectedLaNakshatra, selectedEnglishNakshatra ->
                 binding.editStar?.setText(selectedLaNakshatra)
                 englishNakshatra = selectedEnglishNakshatra
                 selectedNakshatra = selectedLaNakshatra
@@ -121,14 +159,18 @@ class VazhipaduActivity : AppCompatActivity(), CategoryAdapter.OnCategoryClickLi
             val star = binding.editStar?.text.toString()
             lifecycleScope.launch {
                 val cartCount = vazhipaduRepository.getCartCount()
-                val countForEmptyOrNullNameAndStar = vazhipaduRepository.getCountForEmptyOrNullNameAndStar()
+                val countForEmptyOrNullNameAndStar =
+                    vazhipaduRepository.getCountForEmptyOrNullNameAndStar()
                 val hasIncompleteItems = vazhipaduRepository.hasIncompleteItems()
 
                 if (cartCount > 0) {
                     if (hasIncompleteItems && countForEmptyOrNullNameAndStar > 0) {
                         if (userName.isEmpty()) {
+                            binding.editName?.requestFocus()
+                            showKeyboard(binding.editName)
                             showSnackbar(binding.root, "Please enter your name")
                         } else if (star.isEmpty()) {
+                            showKeyboard(binding.editStar)
                             showSnackbar(binding.root, "Please select your star")
                         } else {
                             completeAndNavigate(userName)
@@ -138,8 +180,11 @@ class VazhipaduActivity : AppCompatActivity(), CategoryAdapter.OnCategoryClickLi
                     }
                 } else {
                     if (userName.isEmpty()) {
+                        binding.editName?.requestFocus()
+                        showKeyboard(binding.editName)
                         showSnackbar(binding.root, "Please enter your name")
                     } else if (star.isEmpty()) {
+                        showKeyboard(binding.editStar)
                         showSnackbar(binding.root, "Please select your star")
                     } else {
                         completeAndNavigate(userName)
@@ -154,7 +199,8 @@ class VazhipaduActivity : AppCompatActivity(), CategoryAdapter.OnCategoryClickLi
             val star = binding.editStar?.text.toString()
             lifecycleScope.launch {
                 val cartCount = vazhipaduRepository.getCartCount()
-                val countForEmptyOrNullNameAndStar = vazhipaduRepository.getCountForEmptyOrNullNameAndStar()
+                val countForEmptyOrNullNameAndStar =
+                    vazhipaduRepository.getCountForEmptyOrNullNameAndStar()
                 val hasIncompleteItems = vazhipaduRepository.hasIncompleteItems()
 
                 if (cartCount > 0) {
@@ -186,7 +232,8 @@ class VazhipaduActivity : AppCompatActivity(), CategoryAdapter.OnCategoryClickLi
             val star = binding.editStar?.text.toString()
             lifecycleScope.launch {
                 val cartCount = vazhipaduRepository.getCartCount()
-                val countForEmptyOrNullNameAndStar = vazhipaduRepository.getCountForEmptyOrNullNameAndStar()
+                val countForEmptyOrNullNameAndStar =
+                    vazhipaduRepository.getCountForEmptyOrNullNameAndStar()
                 val hasIncompleteItems = vazhipaduRepository.hasIncompleteItems()
 
                 if (cartCount > 0) {
@@ -226,21 +273,24 @@ class VazhipaduActivity : AppCompatActivity(), CategoryAdapter.OnCategoryClickLi
             R.id.card_melkavu to 1,
             R.id.card_keezhkavu to 2,
             R.id.card_shiva to 3,
-            R.id.card_ayyappa to 4
+            R.id.card_ayyappa to 4,
+            R.id.card_nagam to 5
         )
 
         val cardNames = mapOf(
-            R.id.card_melkavu to  getString(R.string.melkavu_devi),
+            R.id.card_melkavu to getString(R.string.melkavu_devi),
             R.id.card_keezhkavu to getString(R.string.keezhkavu_devi),
             R.id.card_shiva to getString(R.string.shiva),
-            R.id.card_ayyappa to getString(R.string.ayyappa)
+            R.id.card_ayyappa to getString(R.string.ayyappa),
+            R.id.card_nagam to getString(R.string.nagam)
         )
 
         val cardViews = mapOf(
             R.id.card_melkavu to binding.cardMelkavu,
             R.id.card_keezhkavu to binding.cardKeezhkavu,
             R.id.card_shiva to binding.cardShiva,
-            R.id.card_ayyappa to binding.cardAyyappa
+            R.id.card_ayyappa to binding.cardAyyappa,
+            R.id.card_nagam to binding.cardNagam
         )
 
         val selectedCard = R.id.card_melkavu
@@ -265,7 +315,10 @@ class VazhipaduActivity : AppCompatActivity(), CategoryAdapter.OnCategoryClickLi
                 selectedCardId = cards[id]
                 selectedCardName = cardNames[id]
                 isCardClick = true
-                fetchDetails()
+                lifecycleScope.launch {
+                    vazhipaduRepository.updateNameAndSetCompleted(binding.editName?.text.toString())
+                    fetchDetails()
+                }
             }
         }
 
@@ -285,13 +338,13 @@ class VazhipaduActivity : AppCompatActivity(), CategoryAdapter.OnCategoryClickLi
             val userStar = binding.editStar?.text.toString()
             if (userName.isNotEmpty() && userStar.isNotEmpty()) {
                 lifecycleScope.launch {
-                    vazhipaduRepository.updateNameAndSetCompleted(userName,selectedCardId,selectedCardName)
+                    vazhipaduRepository.updateNameAndSetCompleted(userName)
                     updateButtonState()
-                        binding.editName?.setText("")
-                        binding.editStar?.setText("")
-                        selectedUserName = ""
-                        selectedNakshatra = ""
-                        englishNakshatra = ""
+                    binding.editName?.setText("")
+                    binding.editStar?.setText("")
+                    selectedUserName = ""
+                    selectedNakshatra = ""
+                    englishNakshatra = ""
                     isCardClick = false
                     fetchDetails()
                 }
@@ -311,11 +364,7 @@ class VazhipaduActivity : AppCompatActivity(), CategoryAdapter.OnCategoryClickLi
 
     private fun completeAndNavigate(userName: String) {
         lifecycleScope.launch {
-            vazhipaduRepository.updateNameAndSetCompleted(
-                userName,
-                selectedCardId,
-                selectedCardName
-            )
+            vazhipaduRepository.updateNameAndSetCompleted(userName)
             val intent = Intent(this@VazhipaduActivity, SummaryActivity::class.java).apply {
                 putExtra("USER_NAME", userName)
                 putExtra("STAR", englishNakshatra)
@@ -326,6 +375,7 @@ class VazhipaduActivity : AppCompatActivity(), CategoryAdapter.OnCategoryClickLi
         }
 
     }
+
     private fun fetchDetails() {
         getOfferingCategory()
     }
@@ -389,35 +439,52 @@ class VazhipaduActivity : AppCompatActivity(), CategoryAdapter.OnCategoryClickLi
                         if (items.isNullOrEmpty()) {
                             showSnackbar(binding.root, "No items found for this category.")
                         } else {
-                            val selectedItems: List<Vazhipadu> = if (selectedUserName.isNullOrEmpty() && englishNakshatra.isNullOrEmpty()) {
-                                vazhipaduRepository.getSelectedVazhipaduItems()
-                            } else {
-                                if (!isCardClick) {
-                                    binding.editName?.text = selectedUserName?.let { Editable.Factory.getInstance().newEditable(it) }
-                                    binding.editStar?.text = selectedNakshatra?.let { Editable.Factory.getInstance().newEditable(it) }
+                            val selectedItems: List<Vazhipadu> =
+                                if (selectedUserName.isNullOrEmpty() && englishNakshatra.isNullOrEmpty()) {
+                                    vazhipaduRepository.getSelectedVazhipaduItems()
+                                } else {
+                                    if (!isCardClick) {
+                                        binding.editName?.text = selectedUserName?.let {
+                                            Editable.Factory.getInstance().newEditable(it)
+                                        }
+                                        binding.editStar?.text = selectedNakshatra?.let {
+                                            Editable.Factory.getInstance().newEditable(it)
+                                        }
+                                    }
+                                    if(selectedUserName.isNullOrEmpty()){
+                                        vazhipaduRepository.getLastVazhipaduItems(
+                                            binding.editName?.text.toString(), englishNakshatra ?: "",selectedCardId!!
+                                        )
+                                    }else{
+                                        vazhipaduRepository.getLastVazhipaduItems(
+                                            selectedUserName ?: "", englishNakshatra ?: "",selectedCardId!!
+                                        )
+                                    }
+
                                 }
-                                vazhipaduRepository.getLastVazhipaduItems(selectedUserName ?: "", englishNakshatra ?: "")
-                            }
 
                             val filteredItems = items.filter { item ->
                                 selectedItems.any { selectedItem ->
                                     selectedItem.vaOfferingsId == item.offeringsId
                                 }
                             }
-
-                            binding.relOffers?.layoutManager =
-                                GridLayoutManager(this@VazhipaduActivity, 3)
-                            binding.relOffers?.adapter =
-                                OfferingAdapter(
+                            if (!::offeringAdapter.isInitialized) {
+                                offeringAdapter = OfferingAdapter(
                                     items,
                                     sharedPreferences,
                                     this@VazhipaduActivity,
                                     filteredItems
                                 )
+                                binding.relOffers?.layoutManager =
+                                    GridLayoutManager(this@VazhipaduActivity, 3)
+                                binding.relOffers?.adapter = offeringAdapter
+                            } else {
+                                offeringAdapter.updateData(items, filteredItems)
+                            }
                         }
                     }
 
-                else -> {
+                    else -> {
                         showSnackbar(binding.root, response.message ?: "Failed to fetch items.")
                     }
                 }
@@ -434,19 +501,20 @@ class VazhipaduActivity : AppCompatActivity(), CategoryAdapter.OnCategoryClickLi
     }
 
 
-    override fun onItemAdded(item: Offering) {
+    override fun onItemAdded(item: Offering, selectedItemIds: MutableSet<String>) {
         if (binding.editStar?.text.isNullOrEmpty()) {
             if (!isDialogVisible) {
                 isDialogVisible = true
                 showNakshatraDialog(item)
             }
         } else {
+
             addToCart(item, englishNakshatra!!, selectedNakshatra!!)
         }
     }
 
 
-    override fun onItemRemoved(item: Offering) {
+    override fun onItemRemoved(item: Offering, selectedItemIds: MutableSet<String>) {
         if (binding.editStar?.text.isNullOrEmpty()) {
             if (!isDialogVisible) {
                 isDialogVisible = true
@@ -461,11 +529,11 @@ class VazhipaduActivity : AppCompatActivity(), CategoryAdapter.OnCategoryClickLi
     private fun showNakshatraDialog(item: Offering) {
         val dialog = CustomStarPopupDialogue()
 
-        dialog.onNakshatraSelected = { selectedLaNakshatra,selectedEnglishNakshatra  ->
+        dialog.onNakshatraSelected = { selectedLaNakshatra, selectedEnglishNakshatra ->
             binding.editStar?.setText(selectedLaNakshatra)
             englishNakshatra = selectedEnglishNakshatra
             selectedNakshatra = selectedLaNakshatra
-            addToCart(item,selectedEnglishNakshatra,selectedLaNakshatra)
+            addToCart(item, selectedEnglishNakshatra, selectedLaNakshatra)
         }
 
         dialog.show(supportFragmentManager, "CustomStarPopupDialogue")
@@ -498,14 +566,16 @@ class VazhipaduActivity : AppCompatActivity(), CategoryAdapter.OnCategoryClickLi
             vazhipaduRepository.insertCartItem(cartItem)
             updateCartCount()
             updateButtonState()
+            offeringAdapter.updateBackgroundForItem(item.offeringsId.toString())
         }
     }
 
     private fun deleteToCart(item: Offering) {
         lifecycleScope.launch {
-            vazhipaduRepository.deleteCartItemByOfferingId(item.offeringsId)
+            vazhipaduRepository.deleteCartItemByOfferingId(item.offeringsId,selectedCardId)
             updateCartCount()
             updateButtonState()
+            offeringAdapter.updateBackgroundForItem(item.offeringsId.toString())
         }
     }
 
@@ -552,5 +622,13 @@ class VazhipaduActivity : AppCompatActivity(), CategoryAdapter.OnCategoryClickLi
         }
     }
 
+    private fun showKeyboard(editText: EditText?) {
+        editText?.let {
+            val inputMethodManager =
+                it.context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            it.requestFocus()
+            inputMethodManager.showSoftInput(it, InputMethodManager.SHOW_IMPLICIT)
+        }
+    }
 
 }

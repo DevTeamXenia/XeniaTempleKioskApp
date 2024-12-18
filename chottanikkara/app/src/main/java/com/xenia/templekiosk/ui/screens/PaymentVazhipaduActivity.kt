@@ -17,11 +17,13 @@ import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
 import com.xenia.templekiosk.R
+import com.xenia.templekiosk.data.network.model.PersonDevathaOffering
 import com.xenia.templekiosk.data.network.model.PersonWithItems
 import com.xenia.templekiosk.data.repository.VazhipaduRepository
 import com.xenia.templekiosk.databinding.ActivityPaymentBinding
 import com.xenia.templekiosk.utils.common.CommonMethod.setLocale
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import net.posprinter.IDeviceConnection
@@ -145,78 +147,130 @@ class PaymentVazhipaduActivity : AppCompatActivity() {
     private fun initReceiptPrint() {
         lifecycleScope.launch {
             val distinctPersons = vazhipaduRepository.getDistinctPersonsWithOfferings()
-            val currentDate = SimpleDateFormat("dd-MMM-yyyy hh:mm a", Locale.getDefault()).format(Date())
+            val currentDate =
+                SimpleDateFormat("dd-MMM-yyyy hh:mm a", Locale.getDefault()).format(Date())
             val selectedLanguage = sharedPreferences.getString("SL", "en") ?: "en"
 
             setLocale(this@PaymentVazhipaduActivity, selectedLanguage)
 
-            val receiptBitmap: Bitmap = when (selectedLanguage) {
-                "en" -> generateReceiptBitmap(transID!!, distinctPersons, currentDate)
-                "ml" -> generateReceiptBitmapMl(transID!!, distinctPersons, currentDate)
-                "ta" -> generateReceiptBitmapTa(transID!!, distinctPersons, currentDate)
-                "kn" -> generateReceiptBitmapKa(transID!!, distinctPersons, currentDate)
-                "te" -> generateReceiptBitmapTe(transID!!, distinctPersons, currentDate)
-                "hi" -> generateReceiptBitmapHi(transID!!, distinctPersons, currentDate)
-                else -> throw IllegalArgumentException("Unsupported language: $selectedLanguage")
-            }
-
             val drawableDevasam = ContextCompat.getDrawable(
                 this@PaymentVazhipaduActivity,
                 R.drawable.print_header_logo
-            )
-            val bitmapDevasam = (drawableDevasam as BitmapDrawable).bitmap.copy(Bitmap.Config.ARGB_8888, true)
-
+            ) as BitmapDrawable
             val drawableDevi = ContextCompat.getDrawable(
                 this@PaymentVazhipaduActivity,
                 R.drawable.print_bottom_logo
-            )
-            val bitmapDevi = (drawableDevi as BitmapDrawable).bitmap.copy(Bitmap.Config.ARGB_8888, true)
-            val compressedBitmapDevasam = Bitmap.createScaledBitmap(bitmapDevasam, 500, 100, true)
-            val compressedBitmapDevi = Bitmap.createScaledBitmap(bitmapDevi, 500, 100, true)
+            ) as BitmapDrawable
 
             withContext(Dispatchers.IO) {
                 val printer = POSPrinter(curConnect)
-                printer.printBitmap(compressedBitmapDevasam, POSConst.ALIGNMENT_CENTER, 500)
-                    .feedLine(1)
 
-                printer.printBitmap(receiptBitmap, POSConst.ALIGNMENT_CENTER, 600)
-                    .feedLine(1)
+                for (personWithItems in distinctPersons) {
+                    val personDevathaOfferings = personWithItems.items.groupBy {
+                        it.vaSubTempleName
+                    }
+                    val devathasToProcess = personDevathaOfferings.keys.take(2)
 
-                printer.printBitmap(compressedBitmapDevi, POSConst.ALIGNMENT_CENTER, 500)
-                    .cutHalfAndFeed(1)
+                    devathasToProcess.forEachIndexed { _, devatha ->
+
+                        val offerings = listOf(
+                            PersonWithItems(
+                                personName = personWithItems.personName,
+                                personStar = personWithItems.personStar,
+                                personStarLa = personWithItems.personStarLa,
+                                items = personDevathaOfferings[devatha] ?: emptyList()
+                            )
+                        )
+
+                        val bitmapDevasam = drawableDevasam.bitmap.copy(Bitmap.Config.ARGB_8888, true)
+                        val compressedBitmapDevasam =
+                            Bitmap.createScaledBitmap(bitmapDevasam, 500, 100, true)
+
+                        val bitmapDevi = drawableDevi.bitmap.copy(Bitmap.Config.ARGB_8888, true)
+                        val compressedBitmapDevi = Bitmap.createScaledBitmap(bitmapDevi, 500, 100, true)
+
+                        val receiptBitmap: Bitmap = when (selectedLanguage) {
+                            "en" -> generateReceiptBitmap(transID!!, offerings, currentDate, devatha)
+                            "ml" -> generateReceiptBitmapMl(transID!!, offerings, currentDate, devatha)
+                            "ta" -> generateReceiptBitmapTa(transID!!, offerings, currentDate, devatha)
+                            "kn" -> generateReceiptBitmapKa(transID!!, offerings, currentDate, devatha)
+                            "te" -> generateReceiptBitmapTe(transID!!, offerings, currentDate, devatha)
+                            "hi" -> generateReceiptBitmapHi(transID!!, offerings, currentDate, devatha)
+                            else -> throw IllegalArgumentException("Unsupported language: $selectedLanguage")
+                        }
+
+                        printer.printBitmap(compressedBitmapDevasam, POSConst.ALIGNMENT_CENTER, 500)
+                            .feedLine(1)
+                        printer.printBitmap(receiptBitmap, POSConst.ALIGNMENT_CENTER, 600)
+                            .feedLine(1)
+                        printer.printBitmap(compressedBitmapDevi, POSConst.ALIGNMENT_CENTER, 500)
+                            .cutHalfAndFeed(1)
+
+                        compressedBitmapDevasam.recycle()
+                        compressedBitmapDevi.recycle()
+                        receiptBitmap.recycle()
+
+                        delay(2000)
+                    }
+                }
+
+                redirect()
             }
-
-            redirect()
         }
     }
-
 
     @SuppressLint("DefaultLocale")
     private fun generateReceiptBitmap(
         transID: String,
         allCartItems: List<PersonWithItems>,
-        currentDate: String
+        currentDate: String,
+        devathaName: String
     ): Bitmap {
         val width = 576
+        val paint = Paint().apply { isAntiAlias = true }
 
         val tempBitmap = Bitmap.createBitmap(width, 10000, Bitmap.Config.ARGB_8888)
         val tempCanvas = Canvas(tempBitmap)
-        val paint = Paint().apply { isAntiAlias = true }
 
+        // Header
         paint.textSize = 30f
         paint.color = Color.BLACK
         paint.textAlign = Paint.Align.CENTER
         tempCanvas.drawText("വഴിപാട് രസീത്", width / 2f, 40f, paint)
         tempCanvas.drawText("Vazhipadu Receipt", width / 2f, 80f, paint)
 
-
-        var yOffset = 140f
+        var yOffset = 130f
         paint.textAlign = Paint.Align.LEFT
         paint.textSize = 22f
-        tempCanvas.drawText("രസീത് നം (Receipt No) : $transID", 20f, yOffset, paint)
-        yOffset += 25f
-        tempCanvas.drawText("തീയതി (Date) : $currentDate", 20f, yOffset, paint)
-        yOffset += 25f
+        tempCanvas.drawText("രസീത് നം (Receipt No): $transID", 20f, yOffset, paint)
+        yOffset += 35f
+        tempCanvas.drawText("തീയതി (Date): $currentDate", 20f, yOffset, paint)
+        val melkavuDevathaInMalayalam: String
+        val melkavuDevathaInEnglish: String
+        when (devathaName) {
+            "MELKAVU\nBHAGAVATI" -> {
+                melkavuDevathaInMalayalam = getLocalizedDevathaName(R.string.melkavu_devi, "ml")
+                melkavuDevathaInEnglish = getLocalizedDevathaName(R.string.melkavu_devi, "en")
+            }
+            "KEEZHKAVU\nBHAGAVATI" -> {
+                melkavuDevathaInMalayalam = getLocalizedDevathaName(R.string.keezhkavu_devi, "ml")
+                melkavuDevathaInEnglish = getLocalizedDevathaName(R.string.keezhkavu_devi, "en")
+            }
+            "SHIVAN\n" -> {
+                melkavuDevathaInMalayalam = getLocalizedDevathaName(R.string.shiva, "ml")
+                melkavuDevathaInEnglish = getLocalizedDevathaName(R.string.shiva, "en")
+            }
+            else -> {
+                melkavuDevathaInMalayalam = getLocalizedDevathaName(R.string.ayyappa, "ml")
+                melkavuDevathaInEnglish = getLocalizedDevathaName(R.string.ayyappa, "en")
+            }
+        }
+        yOffset += 35f
+        tempCanvas.drawText("ദേവത (Devatha): $melkavuDevathaInMalayalam", 20f, yOffset, paint)
+        yOffset += 35f
+        tempCanvas.drawText(melkavuDevathaInEnglish, 205f, yOffset, paint)
+        yOffset += 35f
+
         paint.strokeWidth = 1f
         tempCanvas.drawLine(20f, yOffset, width - 20f, yOffset, paint)
         yOffset += 40f
@@ -239,7 +293,7 @@ class PaymentVazhipaduActivity : AppCompatActivity() {
             val starIndex = nakshatrasEn.indexOfFirst { it.equals(starName, ignoreCase = true) }
             if (starIndex >= 0) {
                 tempCanvas.drawText(nakshatrasMl[starIndex], width - 20f, yOffset, paint)
-                tempCanvas.drawText(nakshatrasEn[starIndex], width - 20f, yOffset + 25f, paint)
+                tempCanvas.drawText(nakshatrasEn[starIndex], width - 20f, yOffset + 30f, paint)
             } else {
                 tempCanvas.drawText("Unknown", width - 20f, yOffset, paint)
                 tempCanvas.drawText("Unknown", width - 20f, yOffset + 25f, paint)
@@ -249,36 +303,7 @@ class PaymentVazhipaduActivity : AppCompatActivity() {
             personWithItems.items.forEach { item ->
                 paint.textAlign = Paint.Align.LEFT
                 paint.textSize = 20f
-
-                val melkavuDevathaInMalayalam: String?
-                val melkavuDevathaInEnglish: String?
-
-                when (item.vaSubTempleName) {
-                    "MELKAVU\nBHAGAVATI" -> {
-                        melkavuDevathaInMalayalam = getLocalizedDevathaName(R.string.melkavu_devi, "ml")
-                        melkavuDevathaInEnglish = getLocalizedDevathaName(R.string.melkavu_devi, "en")
-                    }
-                    "KEEZHKAVU\nBHAGAVATI"-> {
-                        melkavuDevathaInMalayalam = getLocalizedDevathaName(R.string.keezhkavu_devi, "ml")
-                        melkavuDevathaInEnglish = getLocalizedDevathaName(R.string.keezhkavu_devi, "en")
-                    }
-                    "SHIVAN\n" -> {
-                        melkavuDevathaInMalayalam = getLocalizedDevathaName(R.string.shiva, "ml")
-                        melkavuDevathaInEnglish = getLocalizedDevathaName(R.string.shiva, "en")
-                    }
-                    else -> {
-                        melkavuDevathaInMalayalam = getLocalizedDevathaName(R.string.ayyappa, "ml")
-                        melkavuDevathaInEnglish = getLocalizedDevathaName(R.string.ayyappa, "en")
-                    }
-                }
-
-
-                tempCanvas.drawText(melkavuDevathaInMalayalam, 20f, yOffset, paint)
-                yOffset += 25f
-
-                tempCanvas.drawText(melkavuDevathaInEnglish, 20f, yOffset, paint)
-                yOffset += 25f
-
+                yOffset += 15f
                 val nameLines = splitText(item.vaOfferingsName, width - 40, paint)
                 nameLines.forEach { line ->
                     tempCanvas.drawText(line, 20f, yOffset, paint)
@@ -300,31 +325,33 @@ class PaymentVazhipaduActivity : AppCompatActivity() {
             yOffset += 20f
         }
 
-
-
+        yOffset += 20f
         paint.textSize = 30f
         paint.textAlign = Paint.Align.RIGHT
-        yOffset += 20f
         val totalAmountStr = String.format("%.2f", totalAmount)
         tempCanvas.drawText("ആകെ തുക (Total Amount): $totalAmountStr", width - 20f, yOffset, paint)
+        yOffset += 35f
         paint.textSize = 22f
-        yOffset += 30f
         tempCanvas.drawText("UPI Reference No: $transID", width - 20f, yOffset, paint)
-        yOffset += 30f
 
+        yOffset += 40f
 
         val finalBitmap = Bitmap.createBitmap(width, yOffset.toInt(), Bitmap.Config.ARGB_8888)
         val finalCanvas = Canvas(finalBitmap)
         finalCanvas.drawBitmap(tempBitmap, 0f, 0f, null)
 
+        tempBitmap.recycle()
+
         return finalBitmap
     }
+
 
     @SuppressLint("DefaultLocale")
     private fun generateReceiptBitmapMl(
         transID: String,
         allCartItems: List<PersonWithItems>,
-        currentDate: String
+        currentDate: String,
+        devatha: String
     ): Bitmap {
         val width = 576
 
@@ -344,6 +371,26 @@ class PaymentVazhipaduActivity : AppCompatActivity() {
         tempCanvas.drawText("രസീത് നം : $transID", 20f, yOffset, paint)
         yOffset += 25f
         tempCanvas.drawText("തീയതി : $currentDate", 20f, yOffset, paint)
+        val melkavuDevathaInMalayalam: String = when (devatha) {
+            "മേൽക്കാവിൽ\nഭഗവതി" -> {
+                getLocalizedDevathaName(R.string.melkavu_devi, "ml")
+            }
+
+            "കീഴ്ക്കാവിൽ\nഭഗവതി" -> {
+                getLocalizedDevathaName(R.string.keezhkavu_devi, "ml")
+            }
+
+            "അയ്യപ്പൻ\n" -> {
+                getLocalizedDevathaName(R.string.shiva, "ml")
+            }
+
+            else -> {
+                getLocalizedDevathaName(R.string.ayyappa, "ml")
+            }
+        }
+        yOffset += 25f
+        tempCanvas.drawText("ദേവത: $melkavuDevathaInMalayalam", 20f, yOffset, paint)
+
         yOffset += 25f
         paint.strokeWidth = 1f
         tempCanvas.drawLine(20f, yOffset, width - 20f, yOffset, paint)
@@ -367,32 +414,12 @@ class PaymentVazhipaduActivity : AppCompatActivity() {
 
             yOffset += 40f
             personWithItems.items.forEach { item ->
-                val melkavuDevathaInMalayalam: String = when (item.vaSubTempleName) {
-                    "മേൽക്കാവിൽ\nഭഗവതി" -> {
-                        getLocalizedDevathaName(R.string.melkavu_devi, "ml")
-                    }
-
-                    "കീഴ്ക്കാവിൽ\nഭഗവതി"-> {
-                        getLocalizedDevathaName(R.string.keezhkavu_devi, "ml")
-                    }
-
-                    "അയ്യപ്പൻ\n" -> {
-                        getLocalizedDevathaName(R.string.shiva, "ml")
-                    }
-
-                    else -> {
-                        getLocalizedDevathaName(R.string.ayyappa, "ml")
-                    }
-                }
-
                 val offeringName = item.vaOfferingsNameMa
                 val amountStr = String.format("%.2f", item.vaOfferingsAmount)
 
                 paint.color = Color.BLACK
                 paint.textSize = 22f
                 paint.textAlign = Paint.Align.LEFT
-                tempCanvas.drawText(melkavuDevathaInMalayalam, 20f, yOffset, paint)
-                yOffset += 25f
                 tempCanvas.drawText(offeringName, 20f, yOffset, paint)
 
                 paint.textAlign = Paint.Align.RIGHT
@@ -426,6 +453,8 @@ class PaymentVazhipaduActivity : AppCompatActivity() {
         val finalCanvas = Canvas(finalBitmap)
         finalCanvas.drawBitmap(tempBitmap, 0f, 0f, null)
 
+        tempBitmap.recycle()
+
         return finalBitmap
     }
 
@@ -434,7 +463,8 @@ class PaymentVazhipaduActivity : AppCompatActivity() {
     private fun generateReceiptBitmapTa(
         transID: String,
         allCartItems: List<PersonWithItems>,
-        currentDate: String
+        currentDate: String,
+        devatha: String
     ): Bitmap {
         val width = 576
 
@@ -453,9 +483,39 @@ class PaymentVazhipaduActivity : AppCompatActivity() {
         paint.textAlign = Paint.Align.LEFT
         paint.textSize = 22f
         tempCanvas.drawText("ரசீது எண் (രസീത് നം) : $transID", 20f, yOffset, paint)
-        yOffset += 25f
+        yOffset += 35f
         tempCanvas.drawText("தேதி (തീയതി) : $currentDate", 20f, yOffset, paint)
-        yOffset += 25f
+        val melkavuDevathaInMalayalam: String?
+        val melkavuDevathaInTamil: String?
+        when (devatha) {
+            "மேல்காவில்\nபகவதி" -> {
+                melkavuDevathaInMalayalam =
+                    getLocalizedDevathaName(R.string.melkavu_devi, "ml")
+                melkavuDevathaInTamil = getLocalizedDevathaName(R.string.melkavu_devi, "ta")
+            }
+
+            "கீழ்காவில்\nபகவதி" -> {
+                melkavuDevathaInMalayalam =
+                    getLocalizedDevathaName(R.string.keezhkavu_devi, "ml")
+                melkavuDevathaInTamil =
+                    getLocalizedDevathaName(R.string.keezhkavu_devi, "ta")
+            }
+
+            "சிவன்\n" -> {
+                melkavuDevathaInMalayalam = getLocalizedDevathaName(R.string.shiva, "ml")
+                melkavuDevathaInTamil = getLocalizedDevathaName(R.string.shiva, "ta")
+            }
+
+            else -> {
+                melkavuDevathaInMalayalam = getLocalizedDevathaName(R.string.ayyappa, "ml")
+                melkavuDevathaInTamil = getLocalizedDevathaName(R.string.ayyappa, "ta")
+            }
+        }
+        yOffset += 35f
+        tempCanvas.drawText("தேவி (ദേവത): $melkavuDevathaInMalayalam", 20f, yOffset, paint)
+        yOffset += 35f
+        tempCanvas.drawText(melkavuDevathaInTamil, 200f, yOffset, paint)
+        yOffset += 35f
         paint.strokeWidth = 1f
         tempCanvas.drawLine(20f, yOffset, width - 20f, yOffset, paint)
         yOffset += 40f
@@ -489,33 +549,6 @@ class PaymentVazhipaduActivity : AppCompatActivity() {
             personWithItems.items.forEach { item ->
                 paint.textAlign = Paint.Align.LEFT
                 paint.textSize = 20f
-
-                val melkavuDevathaInMalayalam: String?
-                val melkavuDevathaInTamil: String?
-                when (item.vaSubTempleName) {
-                    "மேல்காவில்\nபகவதி" -> {
-                        melkavuDevathaInMalayalam = getLocalizedDevathaName(R.string.melkavu_devi, "ml")
-                        melkavuDevathaInTamil = getLocalizedDevathaName(R.string.melkavu_devi, "ta")
-                    }
-                    "கீழ்காவில்\nபகவதி"-> {
-                        melkavuDevathaInMalayalam = getLocalizedDevathaName(R.string.keezhkavu_devi, "ml")
-                        melkavuDevathaInTamil = getLocalizedDevathaName(R.string.keezhkavu_devi, "ta")
-                    }
-                    "சிவன்\n" -> {
-                        melkavuDevathaInMalayalam = getLocalizedDevathaName(R.string.shiva, "ml")
-                        melkavuDevathaInTamil = getLocalizedDevathaName(R.string.shiva, "ta")
-                    }
-                    else -> {
-                        melkavuDevathaInMalayalam = getLocalizedDevathaName(R.string.ayyappa, "ml")
-                        melkavuDevathaInTamil = getLocalizedDevathaName(R.string.ayyappa, "ta")
-                    }
-                }
-                tempCanvas.drawText(melkavuDevathaInMalayalam, 20f, yOffset, paint)
-                yOffset += 25f
-
-                tempCanvas.drawText(melkavuDevathaInTamil, 20f, yOffset, paint)
-                yOffset += 25f
-
                 val nameLines = splitText(item.vaOfferingsNameTa, width - 40, paint)
                 nameLines.forEach { line ->
                     tempCanvas.drawText(line, 20f, yOffset, paint)
@@ -554,6 +587,8 @@ class PaymentVazhipaduActivity : AppCompatActivity() {
         val finalCanvas = Canvas(finalBitmap)
         finalCanvas.drawBitmap(tempBitmap, 0f, 0f, null)
 
+        tempBitmap.recycle()
+
         return finalBitmap
     }
 
@@ -562,7 +597,8 @@ class PaymentVazhipaduActivity : AppCompatActivity() {
     private fun generateReceiptBitmapKa(
         transID: String,
         allCartItems: List<PersonWithItems>,
-        currentDate: String
+        currentDate: String,
+        devatha: String
     ): Bitmap {
         val width = 576
 
@@ -581,9 +617,41 @@ class PaymentVazhipaduActivity : AppCompatActivity() {
         paint.textAlign = Paint.Align.LEFT
         paint.textSize = 22f
         tempCanvas.drawText("ರಸೀದಿ ಸಂಖ್ಯೆ (രസീത് നം) : $transID", 20f, yOffset, paint)
-        yOffset += 25f
+        yOffset += 35f
         tempCanvas.drawText("ದಿನಾಂಕ (തീയതി) : $currentDate", 20f, yOffset, paint)
-        yOffset += 25f
+        val melkavuDevathaInMalayalam: String?
+        val melkavuDevathaInKannada: String?
+
+        when (devatha) {
+            "ಮೇಲ್ಕಾವು\nದೇವಿ" -> {
+                melkavuDevathaInMalayalam =
+                    getLocalizedDevathaName(R.string.melkavu_devi, "ml")
+                melkavuDevathaInKannada =
+                    getLocalizedDevathaName(R.string.melkavu_devi, "kn")
+            }
+
+            "ಕೀಳ್ಕಾವು\nದೇವಿ" -> {
+                melkavuDevathaInMalayalam =
+                    getLocalizedDevathaName(R.string.keezhkavu_devi, "ml")
+                melkavuDevathaInKannada =
+                    getLocalizedDevathaName(R.string.keezhkavu_devi, "kn")
+            }
+
+            "ಶಿವ\n" -> {
+                melkavuDevathaInMalayalam = getLocalizedDevathaName(R.string.shiva, "ml")
+                melkavuDevathaInKannada = getLocalizedDevathaName(R.string.shiva, "kn")
+            }
+
+            else -> {
+                melkavuDevathaInMalayalam = getLocalizedDevathaName(R.string.ayyappa, "ml")
+                melkavuDevathaInKannada = getLocalizedDevathaName(R.string.ayyappa, "kn")
+            }
+        }
+        yOffset += 35f
+        tempCanvas.drawText("ದೇವತಾ (ദേവത): $melkavuDevathaInMalayalam", 20f, yOffset, paint)
+        yOffset += 35f
+        tempCanvas.drawText(melkavuDevathaInKannada, 200f, yOffset, paint)
+        yOffset += 35f
         paint.strokeWidth = 1f
         tempCanvas.drawLine(20f, yOffset, width - 20f, yOffset, paint)
         yOffset += 40f
@@ -617,35 +685,6 @@ class PaymentVazhipaduActivity : AppCompatActivity() {
             personWithItems.items.forEach { item ->
                 paint.textAlign = Paint.Align.LEFT
                 paint.textSize = 20f
-
-                val melkavuDevathaInMalayalam: String?
-                val melkavuDevathaInKannada: String?
-
-                when (item.vaSubTempleName) {
-                    "ಮೇಲ್ಕಾವು\nದೇವಿ" -> {
-                        melkavuDevathaInMalayalam = getLocalizedDevathaName(R.string.melkavu_devi, "ml")
-                        melkavuDevathaInKannada = getLocalizedDevathaName(R.string.melkavu_devi, "kn")
-                    }
-                    "ಕೀಳ್ಕಾವು\nದೇವಿ"-> {
-                        melkavuDevathaInMalayalam = getLocalizedDevathaName(R.string.keezhkavu_devi, "ml")
-                        melkavuDevathaInKannada = getLocalizedDevathaName(R.string.keezhkavu_devi, "kn")
-                    }
-                    "ಶಿವ\n" -> {
-                        melkavuDevathaInMalayalam = getLocalizedDevathaName(R.string.shiva, "ml")
-                        melkavuDevathaInKannada = getLocalizedDevathaName(R.string.shiva, "kn")
-                    }
-                    else -> {
-                        melkavuDevathaInMalayalam = getLocalizedDevathaName(R.string.ayyappa, "ml")
-                        melkavuDevathaInKannada = getLocalizedDevathaName(R.string.ayyappa, "kn")
-                    }
-                }
-
-                tempCanvas.drawText(melkavuDevathaInMalayalam, 20f, yOffset, paint)
-                yOffset += 25f
-
-                tempCanvas.drawText(melkavuDevathaInKannada, 20f, yOffset, paint)
-                yOffset += 25f
-
                 val nameLines = splitText(item.vaOfferingsNameKa, width - 40, paint)
                 nameLines.forEach { line ->
                     tempCanvas.drawText(line, 20f, yOffset, paint)
@@ -684,6 +723,8 @@ class PaymentVazhipaduActivity : AppCompatActivity() {
         val finalCanvas = Canvas(finalBitmap)
         finalCanvas.drawBitmap(tempBitmap, 0f, 0f, null)
 
+        tempBitmap.recycle()
+
         return finalBitmap
     }
 
@@ -691,7 +732,8 @@ class PaymentVazhipaduActivity : AppCompatActivity() {
     private fun generateReceiptBitmapTe(
         transID: String,
         allCartItems: List<PersonWithItems>,
-        currentDate: String
+        currentDate: String,
+        devatha: String
     ): Bitmap {
         val width = 576
 
@@ -710,9 +752,42 @@ class PaymentVazhipaduActivity : AppCompatActivity() {
         paint.textAlign = Paint.Align.LEFT
         paint.textSize = 22f
         tempCanvas.drawText("రసీదు సంఖ్య (രസീത് നം) : $transID", 20f, yOffset, paint)
-        yOffset += 25f
+        yOffset += 35f
         tempCanvas.drawText("తేదీ (തീയതി) : $currentDate", 20f, yOffset, paint)
-        yOffset += 25f
+
+        val melkavuDevathaInMalayalam: String?
+        val melkavuDevathaInTelugu: String?
+
+        when (devatha) {
+            "మెల్కావిల\nభగవతి" -> {
+                melkavuDevathaInMalayalam =
+                    getLocalizedDevathaName(R.string.melkavu_devi, "ml")
+                melkavuDevathaInTelugu =
+                    getLocalizedDevathaName(R.string.melkavu_devi, "te")
+            }
+
+            "కీజ్\u200Cకావిల్\nభగవతి" -> {
+                melkavuDevathaInMalayalam =
+                    getLocalizedDevathaName(R.string.keezhkavu_devi, "ml")
+                melkavuDevathaInTelugu =
+                    getLocalizedDevathaName(R.string.keezhkavu_devi, "te")
+            }
+
+            "శివన్\n" -> {
+                melkavuDevathaInMalayalam = getLocalizedDevathaName(R.string.shiva, "ml")
+                melkavuDevathaInTelugu = getLocalizedDevathaName(R.string.shiva, "te")
+            }
+
+            else -> {
+                melkavuDevathaInMalayalam = getLocalizedDevathaName(R.string.ayyappa, "ml")
+                melkavuDevathaInTelugu = getLocalizedDevathaName(R.string.ayyappa, "te")
+            }
+        }
+        yOffset += 35f
+        tempCanvas.drawText("దేవత (ദേവത): $melkavuDevathaInMalayalam", 20f, yOffset, paint)
+        yOffset += 35f
+        tempCanvas.drawText(melkavuDevathaInTelugu, 200f, yOffset, paint)
+        yOffset += 35f
         paint.strokeWidth = 1f
         tempCanvas.drawLine(20f, yOffset, width - 20f, yOffset, paint)
         yOffset += 40f
@@ -746,35 +821,6 @@ class PaymentVazhipaduActivity : AppCompatActivity() {
             personWithItems.items.forEach { item ->
                 paint.textAlign = Paint.Align.LEFT
                 paint.textSize = 20f
-
-                val melkavuDevathaInMalayalam: String?
-                val melkavuDevathaInTelugu: String?
-
-                when (item.vaSubTempleName) {
-                    "మెల్కావిల\nభగవతి" -> {
-                        melkavuDevathaInMalayalam = getLocalizedDevathaName(R.string.melkavu_devi, "ml")
-                        melkavuDevathaInTelugu = getLocalizedDevathaName(R.string.melkavu_devi, "te")
-                    }
-                    "కీజ్\u200Cకావిల్\nభగవతి"-> {
-                        melkavuDevathaInMalayalam = getLocalizedDevathaName(R.string.keezhkavu_devi, "ml")
-                        melkavuDevathaInTelugu = getLocalizedDevathaName(R.string.keezhkavu_devi, "te")
-                    }
-                    "శివన్\n" -> {
-                        melkavuDevathaInMalayalam = getLocalizedDevathaName(R.string.shiva, "ml")
-                        melkavuDevathaInTelugu = getLocalizedDevathaName(R.string.shiva, "te")
-                    }
-                    else -> {
-                        melkavuDevathaInMalayalam = getLocalizedDevathaName(R.string.ayyappa, "ml")
-                        melkavuDevathaInTelugu = getLocalizedDevathaName(R.string.ayyappa, "te")
-                    }
-                }
-
-                tempCanvas.drawText(melkavuDevathaInMalayalam, 20f, yOffset, paint)
-                yOffset += 25f
-
-                tempCanvas.drawText(melkavuDevathaInTelugu, 20f, yOffset, paint)
-                yOffset += 25f
-
                 val nameLines = splitText(item.vaOfferingsNameTe, width - 40, paint)
                 nameLines.forEach { line ->
                     tempCanvas.drawText(line, 20f, yOffset, paint)
@@ -813,6 +859,8 @@ class PaymentVazhipaduActivity : AppCompatActivity() {
         val finalCanvas = Canvas(finalBitmap)
         finalCanvas.drawBitmap(tempBitmap, 0f, 0f, null)
 
+        tempBitmap.recycle()
+
         return finalBitmap
     }
 
@@ -820,7 +868,8 @@ class PaymentVazhipaduActivity : AppCompatActivity() {
     private fun generateReceiptBitmapHi(
         transID: String,
         allCartItems: List<PersonWithItems>,
-        currentDate: String
+        currentDate: String,
+        devatha: String
     ): Bitmap {
         val width = 576
 
@@ -841,7 +890,37 @@ class PaymentVazhipaduActivity : AppCompatActivity() {
         tempCanvas.drawText("रसीद संख्या (രസീത് നം) : $transID", 20f, yOffset, paint)
         yOffset += 25f
         tempCanvas.drawText("तारीख (തീയതി) : $currentDate", 20f, yOffset, paint)
-        yOffset += 25f
+        val melkavuDevathaInMalayalam: String?
+        val melkavuDevathaInHindi: String?
+
+        when (devatha) {
+            "मेल्काविल\nभगवती" -> {
+                melkavuDevathaInMalayalam =
+                    getLocalizedDevathaName(R.string.melkavu_devi, "ml")
+                melkavuDevathaInHindi = getLocalizedDevathaName(R.string.melkavu_devi, "hi")
+            }
+
+            "कीझ्काविल\nभगवती" -> {
+                melkavuDevathaInMalayalam =
+                    getLocalizedDevathaName(R.string.keezhkavu_devi, "ml")
+                melkavuDevathaInHindi =
+                    getLocalizedDevathaName(R.string.keezhkavu_devi, "hi")
+            }
+
+            "शिवन\n" -> {
+                melkavuDevathaInMalayalam = getLocalizedDevathaName(R.string.shiva, "ml")
+                melkavuDevathaInHindi = getLocalizedDevathaName(R.string.shiva, "hi")
+            }
+
+            else -> {
+                melkavuDevathaInMalayalam = getLocalizedDevathaName(R.string.ayyappa, "ml")
+                melkavuDevathaInHindi = getLocalizedDevathaName(R.string.ayyappa, "hi")
+            }
+        }
+        yOffset += 35f
+        tempCanvas.drawText("దేవత (ദേവത): $melkavuDevathaInMalayalam", 20f, yOffset, paint)
+        yOffset += 35f
+        tempCanvas.drawText(melkavuDevathaInHindi, 200f, yOffset, paint)
         paint.strokeWidth = 1f
         tempCanvas.drawLine(20f, yOffset, width - 20f, yOffset, paint)
         yOffset += 40f
@@ -876,27 +955,7 @@ class PaymentVazhipaduActivity : AppCompatActivity() {
                 paint.textAlign = Paint.Align.LEFT
                 paint.textSize = 20f
 
-                val melkavuDevathaInMalayalam: String?
-                val melkavuDevathaInHindi: String?
 
-                when (item.vaSubTempleName) {
-                    "मेल्काविल\nभगवती" -> {
-                        melkavuDevathaInMalayalam = getLocalizedDevathaName(R.string.melkavu_devi, "ml")
-                        melkavuDevathaInHindi = getLocalizedDevathaName(R.string.melkavu_devi, "hi")
-                    }
-                    "कीझ्काविल\nभगवती"-> {
-                        melkavuDevathaInMalayalam = getLocalizedDevathaName(R.string.keezhkavu_devi, "ml")
-                        melkavuDevathaInHindi = getLocalizedDevathaName(R.string.keezhkavu_devi, "hi")
-                    }
-                    "शिवन\n" -> {
-                        melkavuDevathaInMalayalam = getLocalizedDevathaName(R.string.shiva, "ml")
-                        melkavuDevathaInHindi = getLocalizedDevathaName(R.string.shiva, "hi")
-                    }
-                    else -> {
-                        melkavuDevathaInMalayalam = getLocalizedDevathaName(R.string.ayyappa, "ml")
-                        melkavuDevathaInHindi = getLocalizedDevathaName(R.string.ayyappa, "hi")
-                    }
-                }
 
                 tempCanvas.drawText(melkavuDevathaInMalayalam, 20f, yOffset, paint)
                 yOffset += 25f
@@ -942,6 +1001,8 @@ class PaymentVazhipaduActivity : AppCompatActivity() {
         val finalCanvas = Canvas(finalBitmap)
         finalCanvas.drawBitmap(tempBitmap, 0f, 0f, null)
 
+        tempBitmap.recycle()
+
         return finalBitmap
     }
 
@@ -950,14 +1011,20 @@ class PaymentVazhipaduActivity : AppCompatActivity() {
         val lines = mutableListOf<String>()
         var start = 0
         val length = text.length
+
         while (start < length) {
-            val count = paint.breakText(text, start, length, true, maxWidth.toFloat(), null)
-            lines.add(text.substring(start, start + count))
-            start += count
+            val breakIndex = paint.breakText(text.substring(start), true, maxWidth.toFloat(), null)
+            if (breakIndex > 0) {
+                lines.add(text.substring(start, start + breakIndex))
+                start += breakIndex
+            } else {
+                lines.add(text.substring(start, start + 1))
+                start++
+            }
         }
+
         return lines
     }
-
 
 
     private fun redirect() {
@@ -995,7 +1062,6 @@ class PaymentVazhipaduActivity : AppCompatActivity() {
 
         return localizedDevathaName
     }
-
 
 
 }
