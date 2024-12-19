@@ -148,16 +148,26 @@ class PaymentActivity : AppCompatActivity() {
         val cd = sessionManager.getCompanyDetails()
         if (cd != null) {
             val currentDate = SimpleDateFormat("dd-MMM-yyyy hh:mm a", Locale.getDefault()).format(Date())
-            val drawableDevasam = ContextCompat.getDrawable(this, R.drawable.print_header_logo)
-            val bitmapDevasam = (drawableDevasam as BitmapDrawable).bitmap.copy(Bitmap.Config.ARGB_8888, true)
+            val drawableDevasam = ContextCompat.getDrawable(
+                this@PaymentActivity,
+                R.drawable.print_header_logo
+            ) as BitmapDrawable
+            val drawableDevi = ContextCompat.getDrawable(
+                this@PaymentActivity,
+                R.drawable.print_bottom_logo
+            ) as BitmapDrawable
 
-            val drawableDevi = ContextCompat.getDrawable(this, R.drawable.print_bottom_logo)
-            val bitmapDevi = (drawableDevi as BitmapDrawable).bitmap.copy(Bitmap.Config.ARGB_8888, true)
+            val bitmapDevasam = drawableDevasam.bitmap.copy(Bitmap.Config.ARGB_8888, true)
+            val compressedBitmapDevasam =
+                Bitmap.createScaledBitmap(bitmapDevasam, 550, 200, true)
 
+            val bitmapDevi = drawableDevi.bitmap.copy(Bitmap.Config.ARGB_8888, true)
+            val compressedBitmapDevi = Bitmap.createScaledBitmap(bitmapDevi, 500, 100, true)
             val amountValue: Float = amount!!.toFloat()
 
             POSPrinter(curConnect)
-                .printBitmap(bitmapDevasam, POSConst.ALIGNMENT_CENTER, 590)
+                .printBitmap(compressedBitmapDevasam, POSConst.ALIGNMENT_CENTER, 500)
+                .feedLine(1)
                 .printText("Receipt No : $orderID\n", POSConst.ALIGNMENT_LEFT, POSConst.STS_NORMAL, POSConst.TXT_1WIDTH or POSConst.TXT_1HEIGHT)
                 .printText("Date : $currentDate\n", POSConst.ALIGNMENT_LEFT, POSConst.STS_NORMAL, POSConst.TXT_1WIDTH or POSConst.TXT_1HEIGHT)
                 .feedLine(1)
@@ -168,7 +178,7 @@ class PaymentActivity : AppCompatActivity() {
                 .printText("E-Kanikka for : $devatha\n\n", POSConst.ALIGNMENT_RIGHT, POSConst.STS_NORMAL , POSConst.TXT_1WIDTH or POSConst.TXT_1HEIGHT)
                 .printText("Amount Paid : ${String.format("%.2f", amountValue)}\n", POSConst.ALIGNMENT_RIGHT, POSConst.FNT_BOLD, POSConst.TXT_1WIDTH or POSConst.TXT_2HEIGHT)
                 .printText("UPI Reference No: $transID\n\n", POSConst.ALIGNMENT_RIGHT, POSConst.STS_NORMAL, POSConst.TXT_1WIDTH or POSConst.TXT_1HEIGHT)
-                .printBitmap(bitmapDevi, POSConst.ALIGNMENT_CENTER, 500)
+                .printBitmap(compressedBitmapDevi, POSConst.ALIGNMENT_CENTER, 500)
                 .cutHalfAndFeed(1)
         }
 

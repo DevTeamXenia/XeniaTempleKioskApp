@@ -185,7 +185,7 @@ class PaymentVazhipaduActivity : AppCompatActivity() {
 
                         val bitmapDevasam = drawableDevasam.bitmap.copy(Bitmap.Config.ARGB_8888, true)
                         val compressedBitmapDevasam =
-                            Bitmap.createScaledBitmap(bitmapDevasam, 500, 100, true)
+                            Bitmap.createScaledBitmap(bitmapDevasam, 550, 200, true)
 
                         val bitmapDevi = drawableDevi.bitmap.copy(Bitmap.Config.ARGB_8888, true)
                         val compressedBitmapDevi = Bitmap.createScaledBitmap(bitmapDevi, 500, 100, true)

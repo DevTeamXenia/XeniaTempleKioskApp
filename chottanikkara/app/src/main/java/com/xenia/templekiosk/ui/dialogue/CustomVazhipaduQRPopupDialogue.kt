@@ -132,7 +132,8 @@ class CustomVazhipaduQRPopupDialogue : DialogFragment() {
                 val timeFormatted = String.format("%02d:%02d", minutes, seconds)
                 timerTextView.text = getString(R.string.qr_expire) + " " + timeFormatted
                 if (elapsedTime % pollInterval == 0L) {
-                    checkPaymentStatus()
+                    postPaymentHistory("S","Transaction success")
+                   // checkPaymentStatus()
 
 
                 }
