@@ -41,11 +41,17 @@ interface VazhipaduDao {
     @Query("SELECT COALESCE(SUM(vaOfferingsAmount), 0) FROM vazhipadu")
     suspend fun getTotalAmount(): Double
 
-    @Query("UPDATE Vazhipadu SET vaName = :newName, vaIsCompleted = 1 WHERE vaIsCompleted = 0")
-    suspend fun updateNameAndSetCompleted(newName: String)
+    @Query("UPDATE Vazhipadu SET vaName = :newName,vaStar = :englishNakshatra,vaStarLa = :selectedNakshatra, vaIsCompleted = 1 WHERE vaIsCompleted = 0")
+    suspend fun updateNameAndSetCompleted(
+        newName: String,
+        englishNakshatra: String?,
+        selectedNakshatra: String?
+    )
 
     @Query("UPDATE Vazhipadu SET vaName = :newName WHERE vaIsCompleted = 0")
-    suspend fun updateName(newName: String)
+    suspend fun updateName(
+        newName: String
+    )
 
     @Query("UPDATE Vazhipadu SET vaIsCompleted = 0 WHERE vaName = :name AND vaStar = :star")
     suspend fun updateToIncompleteByNameAndStar(name: String, star: String)

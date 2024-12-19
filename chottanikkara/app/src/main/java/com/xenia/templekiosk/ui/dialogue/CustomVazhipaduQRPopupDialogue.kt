@@ -133,8 +133,6 @@ class CustomVazhipaduQRPopupDialogue : DialogFragment() {
                 timerTextView.text = getString(R.string.qr_expire) + " " + timeFormatted
                 if (elapsedTime % pollInterval == 0L) {
                    checkPaymentStatus()
-
-
                 }
             }
 

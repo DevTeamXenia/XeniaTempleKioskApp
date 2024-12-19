@@ -338,7 +338,11 @@ class VazhipaduActivity : AppCompatActivity(), CategoryAdapter.OnCategoryClickLi
             val userStar = binding.editStar?.text.toString()
             if (userName.isNotEmpty() && userStar.isNotEmpty()) {
                 lifecycleScope.launch {
-                    vazhipaduRepository.updateNameAndSetCompleted(userName)
+                    vazhipaduRepository.updateNameAndSetCompleted(
+                        userName,
+                        englishNakshatra,
+                        selectedNakshatra
+                    )
                     updateButtonState()
                     binding.editName?.setText("")
                     binding.editStar?.setText("")
@@ -364,7 +368,7 @@ class VazhipaduActivity : AppCompatActivity(), CategoryAdapter.OnCategoryClickLi
 
     private fun completeAndNavigate(userName: String) {
         lifecycleScope.launch {
-            vazhipaduRepository.updateNameAndSetCompleted(userName)
+            vazhipaduRepository.updateNameAndSetCompleted(userName,englishNakshatra,selectedNakshatra)
             val intent = Intent(this@VazhipaduActivity, SummaryActivity::class.java).apply {
                 putExtra("USER_NAME", userName)
                 putExtra("STAR", englishNakshatra)

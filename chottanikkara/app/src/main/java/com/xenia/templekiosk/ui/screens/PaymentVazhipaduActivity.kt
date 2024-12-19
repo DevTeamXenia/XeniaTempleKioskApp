@@ -233,7 +233,7 @@ class PaymentVazhipaduActivity : AppCompatActivity() {
         val tempBitmap = Bitmap.createBitmap(width, 10000, Bitmap.Config.ARGB_8888)
         val tempCanvas = Canvas(tempBitmap)
 
-        // Header
+
         paint.textSize = 30f
         paint.color = Color.BLACK
         paint.textAlign = Paint.Align.CENTER
@@ -292,6 +292,7 @@ class PaymentVazhipaduActivity : AppCompatActivity() {
             tempCanvas.drawText(personWithItems.personName, 20f, yOffset, paint)
 
             paint.textAlign = Paint.Align.RIGHT
+
             val nakshatrasMl = getLocalizedNakshatras("ml")
             val nakshatrasEn = getLocalizedNakshatras("en")
             val starName = personWithItems.personStar.trim()
@@ -303,6 +304,7 @@ class PaymentVazhipaduActivity : AppCompatActivity() {
                 tempCanvas.drawText("Unknown", width - 20f, yOffset, paint)
                 tempCanvas.drawText("Unknown", width - 20f, yOffset + 25f, paint)
             }
+
             yOffset += 60f
 
             personWithItems.items.forEach { item ->
@@ -403,7 +405,6 @@ class PaymentVazhipaduActivity : AppCompatActivity() {
         tempCanvas.drawLine(20f, yOffset, width - 20f, yOffset, paint)
         yOffset += 40f
 
-        val nakshatras = resources.getStringArray(R.array.nakshatras)
         var totalAmount = 0.0
 
         allCartItems.forEach { personWithItems ->
@@ -415,9 +416,7 @@ class PaymentVazhipaduActivity : AppCompatActivity() {
 
             paint.textAlign = Paint.Align.RIGHT
 
-            val starIndex = personWithItems.personStar.toIntOrNull() ?: 0
-            val starText = if (starIndex in nakshatras.indices) nakshatras[starIndex] else "Unknown"
-            tempCanvas.drawText(starText, width - 20f, yOffset, paint)
+            tempCanvas.drawText(personWithItems.personStarLa, width - 20f, yOffset, paint)
 
             yOffset += 40f
             personWithItems.items.forEach { item ->
@@ -545,18 +544,10 @@ class PaymentVazhipaduActivity : AppCompatActivity() {
             tempCanvas.drawText(personWithItems.personName, 20f, yOffset, paint)
 
             paint.textAlign = Paint.Align.RIGHT
-            val nakshatrasMl = getLocalizedNakshatras("ml")
-            val nakshatrasTa = getLocalizedNakshatras("ta")
-            val nakshatrasEn = getLocalizedNakshatras("en")
-            val starName = personWithItems.personStar.trim()
-            val starIndex = nakshatrasEn.indexOfFirst { it.equals(starName, ignoreCase = true) }
-            if (starIndex >= 0) {
-                tempCanvas.drawText(nakshatrasMl[starIndex], width - 20f, yOffset, paint)
-                tempCanvas.drawText(nakshatrasTa[starIndex], width - 20f, yOffset + 25f, paint)
-            } else {
-                tempCanvas.drawText("Unknown", width - 20f, yOffset, paint)
-                tempCanvas.drawText("Unknown", width - 20f, yOffset + 25f, paint)
-            }
+
+            tempCanvas.drawText(personWithItems.personStar, width - 20f, yOffset, paint)
+            tempCanvas.drawText(personWithItems.personStarLa, width - 20f, yOffset + 25f, paint)
+
             yOffset += 60f
 
             personWithItems.items.forEach { item ->
@@ -686,18 +677,10 @@ class PaymentVazhipaduActivity : AppCompatActivity() {
             tempCanvas.drawText(personWithItems.personName, 20f, yOffset, paint)
 
             paint.textAlign = Paint.Align.RIGHT
-            val nakshatrasMl = getLocalizedNakshatras("ml")
-            val nakshatrasKa = getLocalizedNakshatras("kn")
-            val nakshatrasEn = getLocalizedNakshatras("en")
-            val starName = personWithItems.personStar.trim()
-            val starIndex = nakshatrasEn.indexOfFirst { it.equals(starName, ignoreCase = true) }
-            if (starIndex >= 0) {
-                tempCanvas.drawText(nakshatrasMl[starIndex], width - 20f, yOffset, paint)
-                tempCanvas.drawText(nakshatrasKa[starIndex], width - 20f, yOffset + 25f, paint)
-            } else {
-                tempCanvas.drawText("Unknown", width - 20f, yOffset, paint)
-                tempCanvas.drawText("Unknown", width - 20f, yOffset + 25f, paint)
-            }
+
+            tempCanvas.drawText(personWithItems.personStar, width - 20f, yOffset, paint)
+            tempCanvas.drawText(personWithItems.personStarLa, width - 20f, yOffset + 25f, paint)
+
             yOffset += 60f
 
             personWithItems.items.forEach { item ->
@@ -827,18 +810,10 @@ class PaymentVazhipaduActivity : AppCompatActivity() {
             tempCanvas.drawText(personWithItems.personName, 20f, yOffset, paint)
 
             paint.textAlign = Paint.Align.RIGHT
-            val nakshatrasMl = getLocalizedNakshatras("ml")
-            val nakshatrasTe = getLocalizedNakshatras("te")
-            val nakshatrasEn = getLocalizedNakshatras("en")
-            val starName = personWithItems.personStar.trim()
-            val starIndex = nakshatrasEn.indexOfFirst { it.equals(starName, ignoreCase = true) }
-            if (starIndex >= 0) {
-                tempCanvas.drawText(nakshatrasMl[starIndex], width - 20f, yOffset, paint)
-                tempCanvas.drawText(nakshatrasTe[starIndex], width - 20f, yOffset + 25f, paint)
-            } else {
-                tempCanvas.drawText("Unknown", width - 20f, yOffset, paint)
-                tempCanvas.drawText("Unknown", width - 20f, yOffset + 25f, paint)
-            }
+
+            tempCanvas.drawText(personWithItems.personStar, width - 20f, yOffset, paint)
+            tempCanvas.drawText(personWithItems.personStarLa, width - 20f, yOffset + 25f, paint)
+
             yOffset += 60f
 
             personWithItems.items.forEach { item ->
@@ -965,18 +940,10 @@ class PaymentVazhipaduActivity : AppCompatActivity() {
             tempCanvas.drawText(personWithItems.personName, 20f, yOffset, paint)
 
             paint.textAlign = Paint.Align.RIGHT
-            val nakshatrasMl = getLocalizedNakshatras("ml")
-            val nakshatrasHi = getLocalizedNakshatras("hi")
-            val nakshatrasEn = getLocalizedNakshatras("en")
-            val starName = personWithItems.personStar.trim()
-            val starIndex = nakshatrasEn.indexOfFirst { it.equals(starName, ignoreCase = true) }
-            if (starIndex >= 0) {
-                tempCanvas.drawText(nakshatrasMl[starIndex], width - 20f, yOffset, paint)
-                tempCanvas.drawText(nakshatrasHi[starIndex], width - 20f, yOffset + 25f, paint)
-            } else {
-                tempCanvas.drawText("Unknown", width - 20f, yOffset, paint)
-                tempCanvas.drawText("Unknown", width - 20f, yOffset + 25f, paint)
-            }
+
+            tempCanvas.drawText(personWithItems.personStar, width - 20f, yOffset, paint)
+            tempCanvas.drawText(personWithItems.personStarLa, width - 20f, yOffset + 25f, paint)
+
             yOffset += 60f
 
             personWithItems.items.forEach { item ->

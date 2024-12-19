@@ -56,9 +56,13 @@ class VazhipaduRepository(private val vazhipaduDao: VazhipaduDao) {
         }
     }
 
-    suspend fun updateNameAndSetCompleted(newName: String) {
+    suspend fun updateNameAndSetCompleted(
+        newName: String,
+        englishNakshatra: String?,
+        selectedNakshatra: String?
+    ) {
         withContext(Dispatchers.IO) {
-            vazhipaduDao.updateNameAndSetCompleted(newName)
+            vazhipaduDao.updateNameAndSetCompleted(newName,englishNakshatra,selectedNakshatra)
         }
     }
 
