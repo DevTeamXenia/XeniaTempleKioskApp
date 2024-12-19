@@ -50,6 +50,12 @@ class VazhipaduRepository(private val vazhipaduDao: VazhipaduDao) {
         }
     }
 
+    suspend fun updateName(newName: String) {
+        withContext(Dispatchers.IO) {
+            vazhipaduDao.updateName(newName)
+        }
+    }
+
     suspend fun updateNameAndSetCompleted(newName: String) {
         withContext(Dispatchers.IO) {
             vazhipaduDao.updateNameAndSetCompleted(newName)

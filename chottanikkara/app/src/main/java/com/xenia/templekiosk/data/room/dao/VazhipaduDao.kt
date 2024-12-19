@@ -44,6 +44,9 @@ interface VazhipaduDao {
     @Query("UPDATE Vazhipadu SET vaName = :newName, vaIsCompleted = 1 WHERE vaIsCompleted = 0")
     suspend fun updateNameAndSetCompleted(newName: String)
 
+    @Query("UPDATE Vazhipadu SET vaName = :newName WHERE vaIsCompleted = 0")
+    suspend fun updateName(newName: String)
+
     @Query("UPDATE Vazhipadu SET vaIsCompleted = 0 WHERE vaName = :name AND vaStar = :star")
     suspend fun updateToIncompleteByNameAndStar(name: String, star: String)
 

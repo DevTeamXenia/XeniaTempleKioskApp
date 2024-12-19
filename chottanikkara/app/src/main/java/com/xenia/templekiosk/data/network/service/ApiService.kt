@@ -6,6 +6,7 @@ import com.xenia.templekiosk.data.network.model.CompanyResponse
 import com.xenia.templekiosk.data.network.model.LoginResponse
 import com.xenia.templekiosk.data.network.model.OrderRequest
 import com.xenia.templekiosk.data.network.model.OrderResponse
+import com.xenia.templekiosk.data.network.model.OrderVazhipaduResponse
 import com.xenia.templekiosk.data.network.model.PaymentRequest
 import com.xenia.templekiosk.data.network.model.PaymentResponse
 import com.xenia.templekiosk.data.network.model.PaymentStatus
@@ -75,6 +76,6 @@ interface ApiService {
         @Query("userId") userId: Int,
         @Query("companyId") companyId: Int,
         @Body request: TK_Vazhipadi
-    ): OrderResponse
+    ): OrderVazhipaduResponse
 
 }

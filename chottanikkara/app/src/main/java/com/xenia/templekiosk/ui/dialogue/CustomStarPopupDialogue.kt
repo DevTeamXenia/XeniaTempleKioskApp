@@ -28,10 +28,6 @@ class CustomStarPopupDialogue : DialogFragment() {
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         return object : Dialog(requireActivity(), theme) {
-            @Deprecated("Deprecated in Java")
-            override fun onBackPressed() {
-                // Do nothing to disable back press
-            }
         }.apply {
             requestWindowFeature(Window.FEATURE_NO_TITLE)
             window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))

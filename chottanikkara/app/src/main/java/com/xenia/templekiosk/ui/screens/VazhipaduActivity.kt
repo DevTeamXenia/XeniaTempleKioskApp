@@ -316,7 +316,7 @@ class VazhipaduActivity : AppCompatActivity(), CategoryAdapter.OnCategoryClickLi
                 selectedCardName = cardNames[id]
                 isCardClick = true
                 lifecycleScope.launch {
-                    vazhipaduRepository.updateNameAndSetCompleted(binding.editName?.text.toString())
+                    vazhipaduRepository.updateName(binding.editName?.text.toString())
                     fetchDetails()
                 }
             }

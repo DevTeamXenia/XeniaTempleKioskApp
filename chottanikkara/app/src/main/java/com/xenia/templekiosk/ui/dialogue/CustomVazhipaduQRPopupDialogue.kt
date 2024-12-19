@@ -132,8 +132,7 @@ class CustomVazhipaduQRPopupDialogue : DialogFragment() {
                 val timeFormatted = String.format("%02d:%02d", minutes, seconds)
                 timerTextView.text = getString(R.string.qr_expire) + " " + timeFormatted
                 if (elapsedTime % pollInterval == 0L) {
-                    postPaymentHistory("S","Transaction success")
-                   // checkPaymentStatus()
+                    checkPaymentStatus()
 
 
                 }
@@ -201,6 +200,7 @@ class CustomVazhipaduQRPopupDialogue : DialogFragment() {
     private fun postPaymentHistory(status: String, statusDesc: String) {
         CoroutineScope(Dispatchers.Main).launch {
             try {
+                var orderId = ""
                 lifecycleScope.launch {
                     val totalAmount: Double = amount.toDoubleOrNull() ?: 0.0
                     val allCartItems = vazhipaduRepository.getAllVazhipaduItems()
@@ -234,6 +234,7 @@ class CustomVazhipaduQRPopupDialogue : DialogFragment() {
                             }
 
                             if (response.status == "success") {
+                                orderId = response.data.orderId.toString()
                                 success = true
                             } else {
                                 retryCount++
@@ -247,7 +248,7 @@ class CustomVazhipaduQRPopupDialogue : DialogFragment() {
                         println("Failed to process payment history after 3 retries.")
                     }
 
-                    handleTransactionStatus(status)
+                    handleTransactionStatus(status,orderId)
 
                 }
             } catch (e: Exception) {
@@ -256,11 +257,12 @@ class CustomVazhipaduQRPopupDialogue : DialogFragment() {
         }
     }
 
-    private fun handleTransactionStatus(status: String) {
+    private fun handleTransactionStatus(status: String, orderNumber: String) {
         val intent = Intent(requireContext(), PaymentVazhipaduActivity::class.java).apply {
             putExtra("status", status)
             putExtra("amount", amount)
             putExtra("transID", transactionReferenceID)
+            putExtra("orderID", orderNumber)
         }
         startActivity(intent)
         dismiss()
