@@ -9,6 +9,7 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.MotionEvent
+import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import androidx.activity.addCallback
@@ -55,6 +56,7 @@ class VazhipaduActivity : AppCompatActivity(), CategoryAdapter.OnCategoryClickLi
     private lateinit var inactivityDialog: CustomInactivityDialog
     private var selectedCategoryId: Int = 1
     private var selectedCardId: Int? = null
+    private var spanCount: Int? = 3
     private var selectedCardName: String? = null
     private var englishNakshatra: String? = null
     private var selectedNakshatra: String? = null
@@ -381,7 +383,14 @@ class VazhipaduActivity : AppCompatActivity(), CategoryAdapter.OnCategoryClickLi
     }
 
     private fun fetchDetails() {
-        getOfferingCategory()
+        if(sessionManager.getCompanyDetails()?.isCategoryEnable == true){
+            binding.linOfferCat?.visibility = View.VISIBLE
+            getOfferingCategory()
+        }else{
+            spanCount = 4
+            binding.linOfferCat?.visibility = View.GONE
+            fetchOfferingsForCategory(selectedCategoryId)
+        }
     }
 
     private fun getOfferingCategory() {
@@ -480,7 +489,7 @@ class VazhipaduActivity : AppCompatActivity(), CategoryAdapter.OnCategoryClickLi
                                     filteredItems
                                 )
                                 binding.relOffers?.layoutManager =
-                                    GridLayoutManager(this@VazhipaduActivity, 3)
+                                    GridLayoutManager(this@VazhipaduActivity, spanCount!!)
                                 binding.relOffers?.adapter = offeringAdapter
                             } else {
                                 offeringAdapter.updateData(items, filteredItems)
@@ -561,6 +570,12 @@ class VazhipaduActivity : AppCompatActivity(), CategoryAdapter.OnCategoryClickLi
             vaOfferingsNameTe = item.offeringsNameTe,
             vaOfferingsNameHi = item.offeringsNameHi,
             vaOfferingsAmount = item.offeringsAmount,
+            vaCategoryName = item.categoryName,
+            vaCategoryNameHi = item.categoryNameHi,
+            vaCategoryNameMa = item.categoryNameMa,
+            vaCategoryNameKa = item.categoryNameKa,
+            vaCategoryNameTa = item.categoryNameTa,
+            vaCategoryNameTe = item.categoryNameTe,
             vaSubTempleId = selectedCardId!!,
             vaSubTempleName = selectedCardName!!,
             vaIsCompleted = false

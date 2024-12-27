@@ -36,10 +36,19 @@ class HomeActivity : AppCompatActivity(), CustomInactivityDialog.InactivityCallb
         inactivityDialog = CustomInactivityDialog(this)
         inactivityHandler = InactivityHandler(this, supportFragmentManager, inactivityDialog,customQRPopupDialog)
 
-        binding.cardMelkavu.setOnClickListener { selectDevatha(Constants.MELVAKUBHAGAVATI) }
-        binding.cardKeezhkavu.setOnClickListener { selectDevatha(Constants.KEEZHKAVUBHAGAVATI) }
-        binding.cardShiva.setOnClickListener { selectDevatha(Constants.SHIVA) }
-        binding.cardAyyappa.setOnClickListener { selectDevatha(Constants.AYYAPPA) }
+        binding.cardMelkavu.setOnClickListener {
+            selectDevatha(getString(R.string.melkavu_devi))
+        }
+        binding.cardKeezhkavu.setOnClickListener {
+            selectDevatha(getString(R.string.keezhkavu_devi))
+        }
+        binding.cardShiva.setOnClickListener {
+            selectDevatha(getString(R.string.shiva))
+        }
+        binding.cardAyyappa.setOnClickListener {
+            selectDevatha(getString(R.string.ayyappa))
+        }
+
 
         binding.leftHome.setOnClickListener {
             startActivity(Intent(applicationContext, LanguageActivity::class.java))

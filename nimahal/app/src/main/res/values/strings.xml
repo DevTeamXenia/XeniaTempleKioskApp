@@ -1,0 +1,38 @@
+<resources>
+    <string name="app_name" translatable="false">nimahal</string>
+    <string name="choose_your_language" translatable="false">Choose your Language</string>
+    <string name="todo" translatable="false">TODO</string>
+    <string name="ml_donation" translatable="false">സംഭാവന</string>
+    <string name="EN_donation" translatable="false">DONATION</string>
+
+    <string name="donation_for">DONATION FOR</string>
+    <string name="subscription">Subscription</string>
+    <string name="swalath_majlis">Swalath Majlis</string>
+    <string name="nikkah">Nikkah</string>
+    <string name="nabi_dinam">Nabi Dinam</string>
+    <string name="badhreengalude_dinam">Badhreengalude Dinam</string>
+    <string name="jeelani_dinam">Jeelani Dinam</string>
+    <string name="backet_piriv">Backet Piriv</string>
+
+
+    <string name="details_for_donation">DETAILS FOR DONATION</string>
+    <string name="name">Name</string>
+    <string name="phone_number">Phone Number</string>
+    <string name="enter_amount">Enter Amount</string>
+    <string name="pay">Pay</string>
+    <string name="mandatory" translatable="false"> *</string>
+    <string name="scan_this_qr_code">Scan this QR Code</string>
+    <string name="retry">Retry</string>
+    <string name="no_internet_connection">No Internet Connection</string>
+
+
+    <string name="amount">Amount</string>
+    <string name="qr_expire">QR expires in :</string>
+    <string name="thank_you">Thank You!</string>
+    <string name="your_payment_was_successful">Your payment was successful!</string>
+    <string name="payment_failed">Payment Failed</string>
+    <string name="it_seems_we_have_not_received_money">It seems we have not received money</string>
+    <string name="transcation_id">Transcation ID : </string>
+    <string name="pay_name">name :</string>
+
+</resources>

@@ -100,15 +100,15 @@ class DonationActivity : AppCompatActivity(), CustomInactivityDialog.InactivityC
         binding.txtName.text = getString(R.string.name)
         binding.txtStar.text = getString(R.string.select_your_janma_nakshatra)
         when (selectDevatha) {
-            Constants.MELVAKUBHAGAVATI -> {
+            "MELKAVU\nBHAGAVATI" -> {
                 binding.txtDevadha?.text = getString(R.string.melkavu_devi)
                 binding.imgDevadha?.setImageResource(R.drawable.ic_melkavu)
             }
-            Constants.KEEZHKAVUBHAGAVATI -> {
+            "KEEZHKAVU\nBHAGAVATI" -> {
                 binding.txtDevadha?.text = getString(R.string.keezhkavu_devi)
                 binding.imgDevadha?.setImageResource(R.drawable.ic_kizhkavu)
             }
-            Constants.SHIVA -> {
+            "SHIVAN\n" -> {
                 binding.txtDevadha?.text = getString(R.string.shiva)
                 binding.imgDevadha?.setImageResource(R.drawable.ic_shiva)
             }

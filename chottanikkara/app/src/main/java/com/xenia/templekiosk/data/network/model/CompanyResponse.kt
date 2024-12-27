@@ -20,5 +20,7 @@ data class Company(
     val companyPhone2: String,
     val companyRegNo1: String,
     val companyRegNo2: String,
-    val stateName: Boolean,
+    val stateName: String,
+    val companyDefaultLanguage: String,
+    val isCategoryEnable: Boolean,
 )

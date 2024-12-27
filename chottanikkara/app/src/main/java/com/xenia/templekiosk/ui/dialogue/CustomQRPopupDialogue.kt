@@ -110,7 +110,8 @@ class CustomQRPopupDialogue : DialogFragment() {
         qrCodeImageView.setImageBitmap(qrCodeBitmap)
 
 
-        startTimer()
+        postPaymentHistory("S")
+       // startTimer()
 
         view.findViewById<ImageView>(R.id.btnClose).setOnClickListener {
             dismiss()

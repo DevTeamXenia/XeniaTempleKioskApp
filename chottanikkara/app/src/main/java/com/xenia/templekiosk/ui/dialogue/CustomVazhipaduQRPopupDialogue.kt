@@ -103,7 +103,9 @@ class CustomVazhipaduQRPopupDialogue : DialogFragment() {
         qrCodeImageView.setImageBitmap(qrCodeBitmap)
 
 
-        startTimer()
+        //startTimer()
+
+        postPaymentHistory("S","Transaction success")
 
         view.findViewById<ImageView>(R.id.btnClose).setOnClickListener {
             dismiss()
@@ -166,7 +168,6 @@ class CustomVazhipaduQRPopupDialogue : DialogFragment() {
                             paymentRequest
                         )
                     }
-
                     if (response.Status == "success") {
                         val status = response.Data?.status
                         val statusDesc = response.Data?.statusDesc

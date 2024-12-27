@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="donation_for">ഡൊണേഷൻ  ഫോർ</string>
+    <string name="subscription">സബ്‌സ്‌ക്രിപ്ഷൻ</string>
+    <string name="swalath_majlis">സ്വലാത് മജ്ലിസ്</string>
+    <string name="nikkah">നിക്കാഹ്</string>
+    <string name="nabi_dinam">നബി ദിനം</string>
+    <string name="badhreengalude_dinam">ബദ്രീങ്ങളുടെ ദിനം</string>
+    <string name="jeelani_dinam">ജീലാനി ദിനം</string>
+    <string name="backet_piriv">ബക്കറ്റ് പിരിവ്</string>
+
+    <string name="details_for_donation">സംഭാവനയ്ക്കുള്ള വിശദാംശങ്ങൾ</string>
+    <string name="name">പേര്</string>
+    <string name="phone_number">ഫോൺ നമ്പർ</string>
+    <string name="pay">തുക അടയ്ക്കുക</string>
+    <string name="enter_amount">തുക അടിക്കുക</string>
+    <string name="scan_this_qr_code">ഈ QR കോഡ് സ്കാൻ ചെയ്യുക</string>
+    <string name="no_internet_connection"> ഇന്റര്‍നെറ്റ് ബന്ധം ഇല്ല</string>
+    <string name="retry">വീണ്ടും ശ്രമിക്കുക</string>
+
+
+    <string name="amount">തുക</string>
+    <string name="qr_expire">ക്യുആർ കാലാവധി അവസാനിക്കും :</string>
+    <string name="transcation_id">ഇടപാട് ഐഡി :</string>
+    <string name="pay_name">പേര് :</string>
+    <string name="payment_failed">പെയ്മെന്റ് പരാജയപ്പെട്ടു</string>
+    <string name="it_seems_we_have_not_received_money">ഞങ്ങൾ പണം ലഭിച്ചിട്ടില്ല എന്നു തോന്നുന്നു</string>
+    <string name="thank_you">നന്ദി!</string>
+    <string name="your_payment_was_successful">നിങ്ങളുടെ പണമടക്കം വിജയകരമായിരിക്കുന്നു! </string>
+</resources>
