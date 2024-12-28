@@ -34,6 +34,7 @@ import java.util.Date
 import java.util.Locale
 
 
+@Suppress("DEPRECATION")
 class PaymentActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityPaymentBinding
@@ -185,8 +186,8 @@ class PaymentActivity : AppCompatActivity() {
                     "ml" -> generateReceiptBitmapMl(currentDate)
                     "ta" -> generateReceiptBitmapTa(currentDate)
                     "kn" -> generateReceiptBitmapKa(currentDate)
-                    "te" -> generateReceiptBitmapTe(currentDate,selectedLanguage)
-                    "hi" -> generateReceiptBitmapHi(currentDate,selectedLanguage)
+                    "te" -> generateReceiptBitmapTe(currentDate)
+                    "hi" -> generateReceiptBitmapHi(currentDate)
                     else -> throw IllegalArgumentException("Unsupported language: $selectedLanguage")
                 }
 
@@ -236,12 +237,13 @@ class PaymentActivity : AppCompatActivity() {
         tempCanvas.drawText("Phone No (ഫോൺ നമ്പർ) : $phoneNo", 20f, yOffset, paint)
         yOffset += 35f
         val englishNakshatras = getArrayForLocale("en", R.array.nakshatras)
-        val translatedNakshatras = getArrayForLocale("ml", R.array.nakshatras)
+        val malayalamNakshatras = getArrayForLocale("ml", R.array.nakshatras)
         val starIndex = englishNakshatras.indexOf(star)
-        val translatedStar = if (starIndex != -1) translatedNakshatras[starIndex] else star
-        tempCanvas.drawText("Birth Star (ജന്മനക്ഷത്രം) : $star", 20f, yOffset, paint)
+        val malayalamStar = if (starIndex != -1) malayalamNakshatras[starIndex] else star
+
+        tempCanvas.drawText("Birth Star (ജന്മനക്ഷത്രം) : $malayalamStar", 20f, yOffset, paint)
         yOffset += 35f
-        tempCanvas.drawText(translatedStar!!, 270f, yOffset, paint)
+        tempCanvas.drawText(star!!, 290f, yOffset, paint)
         yOffset += 40f
         paint.textAlign = Paint.Align.RIGHT
         val melkavuDevathaInMalayalam: String
@@ -402,7 +404,7 @@ class PaymentActivity : AppCompatActivity() {
 
         tempCanvas.drawText("Birth Star (ജന്മനക്ഷത്രം) : $malayalamStar", 20f, yOffset, paint)
         yOffset += 35f
-        tempCanvas.drawText(tamilStar!!, 270f, yOffset, paint)
+        tempCanvas.drawText(tamilStar!!, 280f, yOffset, paint)
         yOffset += 40f
         paint.textAlign = Paint.Align.RIGHT
 
@@ -424,10 +426,10 @@ class PaymentActivity : AppCompatActivity() {
 
         tempCanvas.drawText("E-Kanikka for : $devathaMalayalam", width - 20f, yOffset, paint)
         yOffset += 35f
-        tempCanvas.drawText(devathaTamil, 560f, yOffset, paint)
+        tempCanvas.drawText(devathaTamil, 550f, yOffset, paint)
 
         yOffset += 40f
-        paint.textSize = 35f
+        paint.textSize = 30f
         paint.textAlign = Paint.Align.RIGHT
         yOffset += 40f
         val amountDouble = amount?.toDoubleOrNull() ?: 0.0
@@ -458,7 +460,8 @@ class PaymentActivity : AppCompatActivity() {
         paint.textSize = 30f
         paint.color = Color.BLACK
         paint.textAlign = Paint.Align.CENTER
-        tempCanvas.drawText("ಎ ಕನಿಕಾ ರಸೀದಿ", width / 2f, 40f, paint)
+        tempCanvas.drawText("ഇ-കാണിക്ക രസീത്", width / 2f, 40f, paint)
+        tempCanvas.drawText("ಎ ಕನಿಕಾ ರಸೀದಿ", width / 2f, 80f, paint)
 
         var yOffset = 100f
 
@@ -503,7 +506,7 @@ class PaymentActivity : AppCompatActivity() {
             else -> getLocalizedDevathaName(R.string.ayyappa, "kn")
         }
 
-        tempCanvas.drawText("ಎ ಕನಿಕಾ (ഇ-കാണിക്ക) : $devatha", width - 20f, yOffset, paint)
+        tempCanvas.drawText("ಎ ಕನಿಕಾ (ഇ-കാണിക്ക) : $devathaMalayalam", width - 20f, yOffset, paint)
         yOffset += 35f
         tempCanvas.drawText(devathaKannada, 560f, yOffset, paint)
 
@@ -529,7 +532,7 @@ class PaymentActivity : AppCompatActivity() {
     }
 
     @SuppressLint("DefaultLocale")
-    private fun generateReceiptBitmapTe(currentDate: String, selectedLanguage: String): Bitmap {
+    private fun generateReceiptBitmapTe(currentDate: String): Bitmap {
         val width = 576
 
         val tempBitmap = Bitmap.createBitmap(width, 1000, Bitmap.Config.ARGB_8888)
@@ -539,7 +542,8 @@ class PaymentActivity : AppCompatActivity() {
         paint.textSize = 30f
         paint.color = Color.BLACK
         paint.textAlign = Paint.Align.CENTER
-        tempCanvas.drawText("ఈ కనికా ರಸೀದಿ", width / 2f, 40f, paint)
+        tempCanvas.drawText("ഇ-കാണിക്ക രസീത്", width / 2f, 40f, paint)
+        tempCanvas.drawText("ఈ కనికా ರಸೀದಿ", width / 2f, 80f, paint)
 
         var yOffset = 100f
 
@@ -553,10 +557,40 @@ class PaymentActivity : AppCompatActivity() {
         yOffset += 35f
         tempCanvas.drawText("ఫోన్ సంఖ్య (ഫോൺ നമ്പർ) : $phoneNo", 20f, yOffset, paint)
         yOffset += 35f
-        tempCanvas.drawText("జన్మ నక్షత్రం (ജന്മനക്ഷത്രം) : $star", 20f, yOffset, paint)
+        val englishNakshatras = getArrayForLocale("en", R.array.nakshatras)
+        val malayalamNakshatras = getArrayForLocale("ml", R.array.nakshatras)
+        val kannadaNakshatras = getArrayForLocale("kn", R.array.nakshatras)
+
+        val starIndex = englishNakshatras.indexOf(star)
+
+        val malayalamStar = if (starIndex != -1) malayalamNakshatras[starIndex] else star
+        val teluguStar = if (starIndex != -1) kannadaNakshatras[starIndex] else star
+
+        tempCanvas.drawText("జన్మ నక్షత్రం (ജന്മനക്ഷത്രം) : $malayalamStar", 20f, yOffset, paint)
+        yOffset += 35f
+        tempCanvas.drawText(teluguStar!!, 280f, yOffset, paint)
+
         yOffset += 40f
         paint.textAlign = Paint.Align.RIGHT
-        tempCanvas.drawText("ఈ కనికా : $devatha", width - 20f, yOffset, paint)
+        val devathaMalayalam = when (devatha) {
+            "ಮೇಲ್ಕಾವು\nದೇವಿ" -> getLocalizedDevathaName(R.string.melkavu_devi, "ml")
+            "ಕೀಳ್ಕಾವು\nದೇವಿ" -> getLocalizedDevathaName(R.string.keezhkavu_devi, "ml")
+            "ಶಿವ\n"  -> getLocalizedDevathaName(R.string.shiva, "ml")
+            "ನಾಗಂ\n" -> getLocalizedDevathaName(R.string.nagam, "ml")
+            else -> getLocalizedDevathaName(R.string.ayyappa, "ml")
+        }
+
+        val devathaTelugu = when (devatha) {
+            "ಮೇಲ್ಕಾವು\nದೇವಿ" -> getLocalizedDevathaName(R.string.melkavu_devi, "kn")
+            "ಕೀಳ್ಕಾವು\nದೇವಿ" -> getLocalizedDevathaName(R.string.keezhkavu_devi, "kn")
+            "ಶಿವ\n" -> getLocalizedDevathaName(R.string.shiva, "kn")
+            "ನಾಗಂ\n" -> getLocalizedDevathaName(R.string.nagam, "kn")
+            else -> getLocalizedDevathaName(R.string.ayyappa, "kn")
+        }
+
+        tempCanvas.drawText("ఈ కనికా (ഇ-കാണിക്ക) : $devathaMalayalam", width - 20f, yOffset, paint)
+        yOffset += 35f
+        tempCanvas.drawText(devathaTelugu, 560f, yOffset, paint)
 
         yOffset += 40f
         paint.textSize = 35f
@@ -580,7 +614,7 @@ class PaymentActivity : AppCompatActivity() {
     }
 
     @SuppressLint("DefaultLocale")
-    private fun generateReceiptBitmapHi(currentDate: String, selectedLanguage: String): Bitmap {
+    private fun generateReceiptBitmapHi(currentDate: String): Bitmap {
         val width = 576
 
         val tempBitmap = Bitmap.createBitmap(width, 1000, Bitmap.Config.ARGB_8888)
@@ -590,7 +624,8 @@ class PaymentActivity : AppCompatActivity() {
         paint.textSize = 30f
         paint.color = Color.BLACK
         paint.textAlign = Paint.Align.CENTER
-        tempCanvas.drawText("ए कनिका रसीद", width / 2f, 40f, paint)
+        tempCanvas.drawText("ഇ-കാണിക്ക രസീത്", width / 2f, 40f, paint)
+        tempCanvas.drawText("ए कनिका रसीद", width / 2f, 80f, paint)
 
         var yOffset = 100f
 
@@ -604,11 +639,39 @@ class PaymentActivity : AppCompatActivity() {
         yOffset += 35f
         tempCanvas.drawText("फोन नंबर (ഫോൺ നമ്പർ) : $phoneNo", 20f, yOffset, paint)
         yOffset += 35f
-        tempCanvas.drawText("जन्म नक्षत्र (ജന്മനക്ഷത്രം) : $star", 20f, yOffset, paint)
+        val englishNakshatras = getArrayForLocale("en", R.array.nakshatras)
+        val malayalamNakshatras = getArrayForLocale("ml", R.array.nakshatras)
+        val hindiNakshatras = getArrayForLocale("hi", R.array.nakshatras)
+
+        val starIndex = englishNakshatras.indexOf(star)
+
+        val malayalamStar = if (starIndex != -1) malayalamNakshatras[starIndex] else star
+        val hindiStar = if (starIndex != -1) hindiNakshatras[starIndex] else star
+        tempCanvas.drawText("जन्म नक्षत्र (ജന്മനക്ഷത്രം) : $malayalamStar", 20f, yOffset, paint)
+        yOffset += 35f
+        tempCanvas.drawText(hindiStar!!, 280f, yOffset, paint)
         yOffset += 40f
         paint.textAlign = Paint.Align.RIGHT
-        tempCanvas.drawText("ए कनिका : $devatha", width - 20f, yOffset, paint)
+        val devathaMalayalam = when (devatha) {
+            "ಮೇಲ್ಕಾವು\nದೇವಿ" -> getLocalizedDevathaName(R.string.melkavu_devi, "ml")
+            "ಕೀಳ್ಕಾವು\nದೇವಿ" -> getLocalizedDevathaName(R.string.keezhkavu_devi, "ml")
+            "ಶಿವ\n"  -> getLocalizedDevathaName(R.string.shiva, "ml")
+            "ನಾಗಂ\n" -> getLocalizedDevathaName(R.string.nagam, "ml")
+            else -> getLocalizedDevathaName(R.string.ayyappa, "ml")
+        }
 
+        val devathaHindi = when (devatha) {
+            "ಮೇಲ್ಕಾವು\nದೇವಿ" -> getLocalizedDevathaName(R.string.melkavu_devi, "hi")
+            "ಕೀಳ್ಕಾವು\nದೇವಿ" -> getLocalizedDevathaName(R.string.keezhkavu_devi, "hi")
+            "ಶಿವ\n" -> getLocalizedDevathaName(R.string.shiva, "hi")
+            "ನಾಗಂ\n" -> getLocalizedDevathaName(R.string.nagam, "hi")
+            else -> getLocalizedDevathaName(R.string.ayyappa, "hi")
+        }
+
+
+        tempCanvas.drawText("ए कनिका (ഇ-കാണിക്ക): $devathaMalayalam", width - 20f, yOffset, paint)
+        yOffset += 35f
+        tempCanvas.drawText(devathaHindi, 515f, yOffset, paint)
         yOffset += 40f
         paint.textSize = 35f
         paint.textAlign = Paint.Align.RIGHT
