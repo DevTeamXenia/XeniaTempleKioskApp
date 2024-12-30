@@ -208,6 +208,7 @@ class VazhipaduActivity : AppCompatActivity(), CategoryAdapter.OnCategoryClickLi
                 if (cartCount > 0) {
                     if (hasIncompleteItems && countForEmptyOrNullNameAndStar > 0) {
                         if (userName.isEmpty()) {
+                            showKeyboard(binding.editName)
                             showSnackbar(binding.root, "Please enter your name")
                         } else if (star.isEmpty()) {
                             showSnackbar(binding.root, "Please select your star")
@@ -241,6 +242,7 @@ class VazhipaduActivity : AppCompatActivity(), CategoryAdapter.OnCategoryClickLi
                 if (cartCount > 0) {
                     if (hasIncompleteItems && countForEmptyOrNullNameAndStar > 0) {
                         if (userName.isEmpty()) {
+                            showKeyboard(binding.editName)
                             showSnackbar(binding.root, "Please enter your name")
                         } else if (star.isEmpty()) {
                             showSnackbar(binding.root, "Please select your star")

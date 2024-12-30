@@ -109,9 +109,6 @@ class PaymentActivity : AppCompatActivity() {
         }
     }
 
-
-
-
     private val connectListener = IPOSListener { code, _ ->
         when (code) {
             POSConnect.CONNECT_SUCCESS -> {
@@ -208,7 +205,6 @@ class PaymentActivity : AppCompatActivity() {
             }
         }
     }
-
 
     @SuppressLint("DefaultLocale")
     private fun generateReceiptBitmap(currentDate: String): Bitmap {
@@ -692,8 +688,6 @@ class PaymentActivity : AppCompatActivity() {
 
         return finalBitmap
     }
-
-
 
     private fun redirect(){
         Handler(mainLooper).postDelayed({
