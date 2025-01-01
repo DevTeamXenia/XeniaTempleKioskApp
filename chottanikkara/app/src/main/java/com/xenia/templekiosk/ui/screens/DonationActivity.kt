@@ -29,7 +29,6 @@ import com.xenia.templekiosk.utils.common.CommonMethod.isInternetAvailable
 import com.xenia.templekiosk.utils.common.CommonMethod.setLocale
 import com.xenia.templekiosk.utils.common.CommonMethod.showLoader
 import com.xenia.templekiosk.utils.common.CommonMethod.showSnackbar
-import com.xenia.templekiosk.utils.common.Constants
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -50,6 +49,7 @@ class DonationActivity : AppCompatActivity(), CustomInactivityDialog.InactivityC
     private lateinit var inactivityDialog: CustomInactivityDialog
     private var selectedNakshatra: String? = null
     private var selectDevatha: String? = null
+    private var selectDevathaEn: String? = null
     private var donationAmount: Double? = null
 
 
@@ -63,6 +63,7 @@ class DonationActivity : AppCompatActivity(), CustomInactivityDialog.InactivityC
         setLocale(this, selectedLanguage)
 
         selectDevatha = intent.getStringExtra("SD")
+        selectDevathaEn = intent.getStringExtra("SD_EN")
 
         initUI()
         updateButtonState()
@@ -224,7 +225,7 @@ class DonationActivity : AppCompatActivity(), CustomInactivityDialog.InactivityC
                                 binding.editName.text.toString(),
                                 binding.editPhno.text.toString(),
                                 selectedNakshatra ?: "",
-                                selectDevatha!!
+                                selectDevathaEn!!
 
                             )
                             customQRPopupDialog.show(supportFragmentManager, "CustomPopup")

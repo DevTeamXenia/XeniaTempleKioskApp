@@ -5,5 +5,6 @@ data class TK_VazhipaduDetails(
     val vaPhoneNumber: String,
     val vaOfferingsId: Int,
     val vaOfferingsAmount: Double,
-    val vaSubTempleId: Int
+    val vaSubTempleId: Int,
+    val vaStar: String
 )

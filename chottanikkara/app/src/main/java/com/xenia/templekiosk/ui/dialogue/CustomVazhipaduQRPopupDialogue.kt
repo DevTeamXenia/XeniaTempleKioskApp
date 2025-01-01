@@ -213,7 +213,8 @@ class CustomVazhipaduQRPopupDialogue : DialogFragment() {
                                 vaPhoneNumber = "",
                                 vaOfferingsId = cartItem.vaOfferingsId,
                                 vaOfferingsAmount = cartItem.vaOfferingsAmount,
-                                vaSubTempleId = cartItem.vaSubTempleId
+                                vaSubTempleId = cartItem.vaSubTempleId,
+                                vaStar = cartItem.vaStar
                             )
                         }
                     )

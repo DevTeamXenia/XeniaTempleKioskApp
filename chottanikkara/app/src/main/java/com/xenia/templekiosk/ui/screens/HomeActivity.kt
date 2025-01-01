@@ -12,7 +12,10 @@ import com.xenia.templekiosk.ui.dialogue.CustomInactivityDialog
 import com.xenia.templekiosk.ui.dialogue.CustomQRPopupDialogue
 import com.xenia.templekiosk.utils.InactivityHandler
 import com.xenia.templekiosk.utils.common.CommonMethod.setLocale
-import com.xenia.templekiosk.utils.common.Constants
+import com.xenia.templekiosk.utils.common.Constants.AYYAPPA
+import com.xenia.templekiosk.utils.common.Constants.KEEZHKAVUBHAGAVATI
+import com.xenia.templekiosk.utils.common.Constants.MELVAKUBHAGAVATI
+import com.xenia.templekiosk.utils.common.Constants.SHIVA
 import org.koin.android.ext.android.inject
 
 class HomeActivity : AppCompatActivity(), CustomInactivityDialog.InactivityCallback,
@@ -37,16 +40,16 @@ class HomeActivity : AppCompatActivity(), CustomInactivityDialog.InactivityCallb
         inactivityHandler = InactivityHandler(this, supportFragmentManager, inactivityDialog,customQRPopupDialog)
 
         binding.cardMelkavu.setOnClickListener {
-            selectDevatha(getString(R.string.melkavu_devi))
+            selectDevatha(getString(R.string.melkavu_devi),MELVAKUBHAGAVATI)
         }
         binding.cardKeezhkavu.setOnClickListener {
-            selectDevatha(getString(R.string.keezhkavu_devi))
+            selectDevatha(getString(R.string.keezhkavu_devi), KEEZHKAVUBHAGAVATI)
         }
         binding.cardShiva.setOnClickListener {
-            selectDevatha(getString(R.string.shiva))
+            selectDevatha(getString(R.string.shiva), SHIVA)
         }
         binding.cardAyyappa.setOnClickListener {
-            selectDevatha(getString(R.string.ayyappa))
+            selectDevatha(getString(R.string.ayyappa), AYYAPPA)
         }
 
 
@@ -65,9 +68,10 @@ class HomeActivity : AppCompatActivity(), CustomInactivityDialog.InactivityCallb
         binding.txtAyyappa.text = getString(R.string.ayyappa)
     }
 
-    private fun selectDevatha(devatha: String) {
+    private fun selectDevatha(devatha: String, devathaEn: String) {
         val intent = Intent(this, DonationActivity::class.java)
         intent.putExtra("SD", devatha)
+        intent.putExtra("SD_EN", devathaEn)
         startActivity(intent)
     }
 
