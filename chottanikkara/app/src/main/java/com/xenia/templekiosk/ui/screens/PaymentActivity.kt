@@ -49,6 +49,7 @@ class PaymentActivity : AppCompatActivity() {
     private var devatha: String? = null
     private var orderID: String? = null
     private var phoneNo: String? = null
+    private var selectedLanguage: String? = null
 
 
     @SuppressLint("SetTextI18n")
@@ -56,7 +57,8 @@ class PaymentActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityPaymentBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
+        selectedLanguage = sharedPreferences.getString("SL", "en") ?: "en"
+        setLocale(this@PaymentActivity, selectedLanguage)
         status = intent.getStringExtra("status")
         amount = intent.getStringExtra("amount")
         transID = intent.getStringExtra("transID")
@@ -67,18 +69,24 @@ class PaymentActivity : AppCompatActivity() {
         phoneNo = intent.getStringExtra("phno")
 
 
-        if(status.equals("S")){
+        if (status.equals("S")) {
             binding.linSuccess.visibility = View.VISIBLE
             binding.linFailed.visibility = View.GONE
-            binding.txtAmount.text = getString(R.string.amount)+" "+ amount
-            binding.txtTransId.text = getString(R.string.transcation_id) +" "+ transID
-            if(name!!.isNotEmpty()){
+            binding.txtAmount.text = getString(R.string.amount) + " " + amount
+            binding.txtTransId.text = getString(R.string.transcation_id) + " " + transID
+            if (name!!.isNotEmpty()) {
                 binding.txtName.visibility = View.VISIBLE
-                binding.txtName.text = getString(R.string.pay_name) +" "+ name
+                binding.txtName.text = getString(R.string.pay_name) + " " + name
             }
-            binding.txtStar.text = getString(R.string.star) +" "+ star
+
+            val englishNakshatras = getArrayForLocale("en", R.array.nakshatras)
+            val translatedNakshatras = getArrayForLocale(selectedLanguage!!, R.array.nakshatras)
+            val starIndex = englishNakshatras.indexOf(star)
+            val translatedStar = if (starIndex != -1) translatedNakshatras[starIndex] else star
+            binding.txtStar.text = getString(R.string.star) + " " + translatedStar
+
             configPrinter()
-        }else{
+        } else {
             binding.linSuccess.visibility = View.GONE
             binding.linFailed.visibility = View.VISIBLE
             redirect()
@@ -154,10 +162,9 @@ class PaymentActivity : AppCompatActivity() {
     @SuppressLint("DefaultLocale")
     private fun initReceiptPrint() {
         lifecycleScope.launch {
-            val currentDate = SimpleDateFormat("dd-MMM-yyyy hh:mm a", Locale.getDefault()).format(Date())
-            val selectedLanguage = sharedPreferences.getString("SL", "en") ?: "en"
+            val currentDate =
+                SimpleDateFormat("dd-MMM-yyyy hh:mm a", Locale.getDefault()).format(Date())
 
-            setLocale(this@PaymentActivity, selectedLanguage)
 
             val drawableDevasam = ContextCompat.getDrawable(
                 this@PaymentActivity,
@@ -249,24 +256,33 @@ class PaymentActivity : AppCompatActivity() {
                 melkavuDevathaInMalayalam = getLocalizedDevathaName(R.string.melkavu_devi, "ml")
                 melkavuDevathaInEnglish = getLocalizedDevathaName(R.string.melkavu_devi, "en")
             }
+
             "KEEZHKAVU\nBHAGAVATI" -> {
                 melkavuDevathaInMalayalam = getLocalizedDevathaName(R.string.keezhkavu_devi, "ml")
                 melkavuDevathaInEnglish = getLocalizedDevathaName(R.string.keezhkavu_devi, "en")
             }
+
             "SHIVAN\n" -> {
                 melkavuDevathaInMalayalam = getLocalizedDevathaName(R.string.shiva, "ml")
                 melkavuDevathaInEnglish = getLocalizedDevathaName(R.string.shiva, "en")
             }
+
             "NAGAM\n" -> {
                 melkavuDevathaInMalayalam = getLocalizedDevathaName(R.string.nagam, "ml")
                 melkavuDevathaInEnglish = getLocalizedDevathaName(R.string.nagam, "en")
             }
+
             else -> {
                 melkavuDevathaInMalayalam = getLocalizedDevathaName(R.string.ayyappa, "ml")
                 melkavuDevathaInEnglish = getLocalizedDevathaName(R.string.ayyappa, "en")
             }
         }
-        tempCanvas.drawText("E-Kanikka for : $melkavuDevathaInMalayalam", width - 20f, yOffset, paint)
+        tempCanvas.drawText(
+            "E-Kanikka for : $melkavuDevathaInMalayalam",
+            width - 20f,
+            yOffset,
+            paint
+        )
         yOffset += 35f
         tempCanvas.drawText(melkavuDevathaInEnglish, 560f, yOffset, paint)
         yOffset += 40f
@@ -327,15 +343,19 @@ class PaymentActivity : AppCompatActivity() {
             "MELKAVU\nBHAGAVATI" -> {
                 melkavuDevathaInMalayalam = getLocalizedDevathaName(R.string.melkavu_devi, "ml")
             }
+
             "KEEZHKAVU\nBHAGAVATI" -> {
                 melkavuDevathaInMalayalam = getLocalizedDevathaName(R.string.keezhkavu_devi, "ml")
             }
+
             "SHIVAN\n" -> {
                 melkavuDevathaInMalayalam = getLocalizedDevathaName(R.string.shiva, "ml")
             }
+
             "NAGAM\n" -> {
                 melkavuDevathaInMalayalam = getLocalizedDevathaName(R.string.nagam, "ml")
             }
+
             else -> {
                 melkavuDevathaInMalayalam = getLocalizedDevathaName(R.string.ayyappa, "ml")
             }
@@ -377,10 +397,10 @@ class PaymentActivity : AppCompatActivity() {
         tempCanvas.drawText("ഇ-കാണിക്ക രസീത്", width / 2f, 40f, paint)
         tempCanvas.drawText("தானம் ரசீது", width / 2f, 80f, paint)
 
-        var yOffset = 100f
+        var yOffset = 150f
 
         paint.textAlign = Paint.Align.LEFT
-        paint.textSize = 22f
+        paint.textSize = 20f
         tempCanvas.drawText("ரசீது எண் (രസീത് നം): $orderID", 20f, yOffset, paint)
         yOffset += 35f
         tempCanvas.drawText("தேதி (തീയതി): $currentDate", 20f, yOffset, paint)
@@ -398,9 +418,9 @@ class PaymentActivity : AppCompatActivity() {
         val malayalamStar = if (starIndex != -1) malayalamNakshatras[starIndex] else star
         val tamilStar = if (starIndex != -1) tamilNakshatras[starIndex] else star
 
-        tempCanvas.drawText("Birth Star (ജന്മനക്ഷത്രം) : $malayalamStar", 20f, yOffset, paint)
+        tempCanvas.drawText("பிறந்த நட்சத்திரம் (ജന്മനക്ഷത്രം) : $malayalamStar", 20f, yOffset, paint)
         yOffset += 35f
-        tempCanvas.drawText(tamilStar!!, 280f, yOffset, paint)
+        tempCanvas.drawText(tamilStar!!, 360f, yOffset, paint)
         yOffset += 40f
         paint.textAlign = Paint.Align.RIGHT
 
@@ -459,7 +479,7 @@ class PaymentActivity : AppCompatActivity() {
         tempCanvas.drawText("ഇ-കാണിക്ക രസീത്", width / 2f, 40f, paint)
         tempCanvas.drawText("ಎ ಕನಿಕಾ ರಸೀದಿ", width / 2f, 80f, paint)
 
-        var yOffset = 100f
+        var yOffset = 150f
 
         paint.textAlign = Paint.Align.LEFT
         paint.textSize = 22f
@@ -489,7 +509,7 @@ class PaymentActivity : AppCompatActivity() {
         val devathaMalayalam = when (devatha) {
             "ಮೇಲ್ಕಾವು\nದೇವಿ" -> getLocalizedDevathaName(R.string.melkavu_devi, "ml")
             "ಕೀಳ್ಕಾವು\nದೇವಿ" -> getLocalizedDevathaName(R.string.keezhkavu_devi, "ml")
-            "ಶಿವ\n"  -> getLocalizedDevathaName(R.string.shiva, "ml")
+            "ಶಿವ\n" -> getLocalizedDevathaName(R.string.shiva, "ml")
             "ನಾಗಂ\n" -> getLocalizedDevathaName(R.string.nagam, "ml")
             else -> getLocalizedDevathaName(R.string.ayyappa, "ml")
         }
@@ -541,7 +561,7 @@ class PaymentActivity : AppCompatActivity() {
         tempCanvas.drawText("ഇ-കാണിക്ക രസീത്", width / 2f, 40f, paint)
         tempCanvas.drawText("ఈ కనికా ರಸೀದಿ", width / 2f, 80f, paint)
 
-        var yOffset = 100f
+        var yOffset = 150f
 
         paint.textAlign = Paint.Align.LEFT
         paint.textSize = 22f
@@ -571,7 +591,7 @@ class PaymentActivity : AppCompatActivity() {
         val devathaMalayalam = when (devatha) {
             "ಮೇಲ್ಕಾವು\nದೇವಿ" -> getLocalizedDevathaName(R.string.melkavu_devi, "ml")
             "ಕೀಳ್ಕಾವು\nದೇವಿ" -> getLocalizedDevathaName(R.string.keezhkavu_devi, "ml")
-            "ಶಿವ\n"  -> getLocalizedDevathaName(R.string.shiva, "ml")
+            "ಶಿವ\n" -> getLocalizedDevathaName(R.string.shiva, "ml")
             "ನಾಗಂ\n" -> getLocalizedDevathaName(R.string.nagam, "ml")
             else -> getLocalizedDevathaName(R.string.ayyappa, "ml")
         }
@@ -594,7 +614,12 @@ class PaymentActivity : AppCompatActivity() {
         yOffset += 40f
         val amountDouble = amount?.toDoubleOrNull() ?: 0.0
         val formattedAmount = String.format("%.2f", amountDouble)
-        tempCanvas.drawText("మొత్తం మొత్తం (ആകെ തുക): $formattedAmount", width - 20f, yOffset, paint)
+        tempCanvas.drawText(
+            "మొత్తం మొత్తం (ആകെ തുക): $formattedAmount",
+            width - 20f,
+            yOffset,
+            paint
+        )
 
         yOffset += 35f
         paint.textSize = 22f
@@ -623,7 +648,7 @@ class PaymentActivity : AppCompatActivity() {
         tempCanvas.drawText("ഇ-കാണിക്ക രസീത്", width / 2f, 40f, paint)
         tempCanvas.drawText("ए कनिका रसीद", width / 2f, 80f, paint)
 
-        var yOffset = 100f
+        var yOffset = 150f
 
         paint.textAlign = Paint.Align.LEFT
         paint.textSize = 22f
@@ -651,7 +676,7 @@ class PaymentActivity : AppCompatActivity() {
         val devathaMalayalam = when (devatha) {
             "ಮೇಲ್ಕಾವು\nದೇವಿ" -> getLocalizedDevathaName(R.string.melkavu_devi, "ml")
             "ಕೀಳ್ಕಾವು\nದೇವಿ" -> getLocalizedDevathaName(R.string.keezhkavu_devi, "ml")
-            "ಶಿವ\n"  -> getLocalizedDevathaName(R.string.shiva, "ml")
+            "ಶಿವ\n" -> getLocalizedDevathaName(R.string.shiva, "ml")
             "ನಾಗಂ\n" -> getLocalizedDevathaName(R.string.nagam, "ml")
             else -> getLocalizedDevathaName(R.string.ayyappa, "ml")
         }
@@ -689,12 +714,16 @@ class PaymentActivity : AppCompatActivity() {
         return finalBitmap
     }
 
-    private fun redirect(){
+    private fun redirect() {
         Handler(mainLooper).postDelayed({
-            startActivity(Intent(applicationContext, LanguageActivity::class.java))
+            val intent = Intent(applicationContext, LanguageActivity::class.java).apply {
+                flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            }
+            startActivity(intent)
             finish()
         }, 1000)
     }
+
 
     private fun getLocalizedDevathaName(devathaNameKey: Int, languageCode: String): String {
         val configuration = resources.configuration

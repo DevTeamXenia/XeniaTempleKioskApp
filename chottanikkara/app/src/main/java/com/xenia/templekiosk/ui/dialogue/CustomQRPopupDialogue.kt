@@ -45,6 +45,7 @@ class CustomQRPopupDialogue : DialogFragment() {
     private var star: String = ""
     private var phno: String = ""
     private var devatha: String = ""
+    private var devathaEn: String = ""
 
     private var pollingTimer: CountDownTimer? = null
     private var paymentStatusJob: Job? = null
@@ -61,7 +62,7 @@ class CustomQRPopupDialogue : DialogFragment() {
         name: String,
         phno: String,
         star: String,
-        devatha: String
+        devatha: String,
     ) {
         this.amount = amount
         this.url = url
@@ -238,6 +239,7 @@ class CustomQRPopupDialogue : DialogFragment() {
             putExtra("name", name)
             putExtra("star", star)
             putExtra("devatha", devatha)
+            putExtra("devathaEn", devathaEn)
             putExtra("orderID", orderId.toString())
             putExtra("phno",phno)
         }

@@ -257,9 +257,10 @@ class PaymentVazhipaduActivity : AppCompatActivity() {
         yOffset += 35f
         tempCanvas.drawText(deityName, 210f, yOffset, paint)
         yOffset += 35f
+        paint.textSize = 28f
         tempCanvas.drawText("വിഭാഗം (Category): $categoryNameMa", 20f, yOffset, paint)
         yOffset += 35f
-        tempCanvas.drawText(categoryName, 220f, yOffset, paint)
+        tempCanvas.drawText(categoryName, 260f, yOffset, paint)
         yOffset += 35f
 
         paint.strokeWidth = 1f
@@ -360,6 +361,7 @@ class PaymentVazhipaduActivity : AppCompatActivity() {
         yOffset += 35f
         tempCanvas.drawText("ദേവത : $deityName", 20f, yOffset, paint)
         yOffset += 35f
+        paint.textSize = 28f
         tempCanvas.drawText("വിഭാഗം : $categoryName", 20f, yOffset, paint)
         yOffset += 35f
 
@@ -478,9 +480,10 @@ class PaymentVazhipaduActivity : AppCompatActivity() {
         yOffset += 35f
         tempCanvas.drawText(devathaTamil, 210f, yOffset, paint)
         yOffset += 35f
+        paint.textSize = 28f
         tempCanvas.drawText("വിഭാഗം (Category): $categoryNameMa", 20f, yOffset, paint)
         yOffset += 35f
-        tempCanvas.drawText(categoryNameTa, 220f, yOffset, paint)
+        tempCanvas.drawText(categoryNameTa, 260f, yOffset, paint)
         yOffset += 35f
 
         paint.strokeWidth = 1f
@@ -604,9 +607,10 @@ class PaymentVazhipaduActivity : AppCompatActivity() {
         yOffset += 35f
         tempCanvas.drawText(devathaKannada, 210f, yOffset, paint)
         yOffset += 35f
+        paint.textSize = 28f
         tempCanvas.drawText("വിഭാഗം (Category): $categoryNameMa", 20f, yOffset, paint)
         yOffset += 35f
-        tempCanvas.drawText(categoryNameKa, 220f, yOffset, paint)
+        tempCanvas.drawText(categoryNameKa, 260f, yOffset, paint)
         yOffset += 35f
 
         paint.strokeWidth = 1f
@@ -729,9 +733,10 @@ class PaymentVazhipaduActivity : AppCompatActivity() {
         yOffset += 35f
         tempCanvas.drawText(devathaTelugu, 210f, yOffset, paint)
         yOffset += 35f
+        paint.textSize = 28f
         tempCanvas.drawText("വിഭാഗം (Category): $categoryNameMa", 20f, yOffset, paint)
         yOffset += 35f
-        tempCanvas.drawText(categoryNameKa, 220f, yOffset, paint)
+        tempCanvas.drawText(categoryNameKa, 260f, yOffset, paint)
         yOffset += 35f
 
         paint.strokeWidth = 1f
@@ -854,9 +859,10 @@ class PaymentVazhipaduActivity : AppCompatActivity() {
         yOffset += 35f
         tempCanvas.drawText(devathaHindi, 210f, yOffset, paint)
         yOffset += 35f
+        paint.textSize = 28f
         tempCanvas.drawText("വിഭാഗം (Category): $categoryNameMa", 20f, yOffset, paint)
         yOffset += 35f
-        tempCanvas.drawText(categoryNameHi, 220f, yOffset, paint)
+        tempCanvas.drawText(categoryNameHi, 260f, yOffset, paint)
         yOffset += 35f
 
         paint.strokeWidth = 1f
@@ -931,10 +937,11 @@ class PaymentVazhipaduActivity : AppCompatActivity() {
 
     private fun redirect() {
         Handler(mainLooper).postDelayed({
-            lifecycleScope.launch {
-                startActivity(Intent(applicationContext, LanguageActivity::class.java))
-                finish()
+            val intent = Intent(applicationContext, LanguageActivity::class.java).apply {
+                flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             }
+            startActivity(intent)
+            finish()
         }, 1000)
     }
 
