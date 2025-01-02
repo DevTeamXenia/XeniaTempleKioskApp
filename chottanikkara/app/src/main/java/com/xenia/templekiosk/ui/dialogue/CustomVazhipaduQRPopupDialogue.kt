@@ -102,9 +102,8 @@ class CustomVazhipaduQRPopupDialogue : DialogFragment() {
         val qrCodeBitmap = generateUPIQRCode(url)
         qrCodeImageView.setImageBitmap(qrCodeBitmap)
 
-        postPaymentHistory("S","Transaction success")
 
-       // startTimer()
+        startTimer()
 
         view.findViewById<ImageView>(R.id.btnClose).setOnClickListener {
             dismiss()
