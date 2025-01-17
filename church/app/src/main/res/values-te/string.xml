@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+        <string name="home">హోమ్</string>
+
+
+        //home_screen
+        <string name="kanika">ఈ కనికా</string>
+        <string name="melkavu_devi">మెల్కావిల\nభగవతి</string>
+        <string name="keezhkavu_devi">కీజ్‌కావిల్\nభగవతి</string>
+        <string name="ayyappa">అయ్యప్పన్\n</string>
+        <string name="shiva">శివన్\n</string>
+        <string name="nagam">నాగం\n</string>
+
+
+
+        donation_screen
+        <string name="fill_out_your_details">మీ వివరాలను పూరించండి</string>
+        <string name="donation_amount">కన్నికా మొత్తం</string>
+        <string name="_10_000">₹10,000</string>
+        <string name="pay">చమొత్తం చెల్లించు</string>
+        <string name="phone_number">ఫోన్ సంఖ్య</string>
+        <string name="_91">+91</string>
+        <string name="name">పేరు</string>
+        <string name="select_your_janma_nakshatra">మీ జన్మ నక్షత్రాన్ని ఎంచుకోండి</string>
+
+        //Popup_Screen
+        <string name="amount_10_000">మొత్తం   ₹ 10,000 /-</string>
+        <string name="scan_this_code_to_pay">ఈ కోడ్‌ను స్కాన్ చేసి చెల్లించండి</string>
+        <string name="expire">QR కాలం ముగుస్తుంది :</string>
+
+        //payment_Screen
+        <string name="thank_you">ధన్యవాదాలు!</string>
+        <string name="your_payment_was_successful">మీ చెల్లింపు విజయవంతమైంది! </string>
+        <string name="amount">మొత్తం : </string>
+        <string name="transcation_id">లావాదేవీ సంఖ్య : </string>
+        <string name="star">తార</string>
+        <string name="pay_name">పేరు :</string>
+        <string name="payment_failed">చెల్లింపు విఫలం అయింది</string>
+        <string name="it_seems_we_have_not_received_money">మేము డబ్బు పొందలేదని కనిపిస్తున్నది</string>
+        <string name="do_you_want_to_do_close_this_page">మీరు ఈ పేజీని మూసివేయాలనుకుంటున్నారా?</string>
+        <string name="cancel">రద్దు</string>
+        <string name="yes">అవును</string>
+        <string name="no">లేదు</string>
+        <string name="no_internet_connection">ఇంటర్నెట్ కనెక్షన్ లేదు</string>
+        <string name="retry">మళ్లీ ప్రయత్నించండి</string>
+        <string name="you_have_been_inactive_for_a_while_please_touch_the_screen_to_continue">ನೀವು ಕೆಲವು ಕಾಲ ನಿರಿಕ್ಷಣೆ ಮಾಡಿಲ್ಲ. ಮುಂದುವರಿಯಲು ದಯವಿಟ್ಟು ಪರದೆಯನ್ನು ಸ್ಪರ್ಶಿಸಿ.</string>
+        <string name="qr_expire">క్యూఆర్ గడువు ముగియడానికి :</string>
+
+        <string name="vazhipadu">వాజిపాడు</string>
+        <string name="donation">దానం</string>
+        <string name="more_people">ఇంకా ఎక్కువ మంది</string>
+        <string name="pay_vazhipadu">చెల్లించు: ₹%1$s</string>
+
+
+
+        <string-array name="nakshatras">
+                <item>అశ్విని</item>
+                <item>భరణి</item>
+                <item>కృత్తిక</item>
+                <item>రోహిణి</item>
+                <item>మృగశిర</item>
+                <item>ఆర్ద్ర</item>
+                <item>పునర్వసు</item>
+                <item>పపుష్యమి</item>
+                <item>ఆశ్లేష</item>
+                <item>మాఘ</item>
+                <item>పూర్వ ఫల్గుని</item>
+                <item>ఉత్తర ఫల్గుని</item>
+                <item>హస్త</item>
+                <item>చిత్త</item>
+                <item>స్వాతి</item>
+                <item>విశాఖ</item>
+                <item>అనురాధ</item>
+                <item>జ్యేష్ట</item>
+                <item>మూల</item>
+                <item>పపూర్వాషాడ</item>
+                <item>ఉత్తరాషాడ</item>
+                <item>శ్రావణ</item>
+                <item>ధనిష్ఠ</item>
+                <item>శతభిష</item>
+                <item>పూర్వాభాద్ర</item>
+                <item>ఉత్తరాభాద్ర</item>
+                <item>రేవతి</item>
+        </string-array>
+
+</resources>

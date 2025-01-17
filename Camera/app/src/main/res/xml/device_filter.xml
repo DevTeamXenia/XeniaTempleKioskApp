@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- This will match any USB device with the Video class -->
+    <usb-device class="14" /> <!-- USB_CLASS_VIDEO -->
+</resources>

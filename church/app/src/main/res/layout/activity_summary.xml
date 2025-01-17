@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.screens.SummaryActivity">
+
+    <LinearLayout
+        android:id="@+id/linTop"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:background="@color/primaryColor"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="40dp"
+            android:fontFamily="@font/poppins_regular"
+            android:text="@string/my_cart"
+            android:textColor="@color/white"
+            android:textSize="30sp" />
+
+    </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/relSummary"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/linTop"
+        android:layout_marginTop="10dp" />
+
+    <LinearLayout
+        android:id="@+id/linBottom"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal"
+        android:background="@drawable/rounded_top_with_stroke">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1">
+
+            <LinearLayout
+                android:id="@+id/addMore"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="40dp"
+                android:layout_marginEnd="70dp"
+                android:padding="15dp"
+                android:background="@drawable/button_border"
+                android:layout_weight="1">
+
+                <ImageView
+                    android:id="@+id/home_icon"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginEnd="10dp"
+                    android:contentDescription="@string/todo"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/ic_more"
+                    app:tint="@color/primaryColor" />
+
+                <TextView
+                    android:id="@+id/txt_people"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="0dp"
+                    android:text="@string/more_people"
+                    android:fontFamily="@font/poppins_regular"
+                    android:textColor="@color/secondaryColor"
+                    android:textSize="14sp" />
+
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="4">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_pay"
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:layout_marginEnd="20dp"
+                android:layout_gravity="center"
+                android:backgroundTint="@color/primaryColor"
+                android:textColor="@color/white"
+                android:textSize="26sp"
+                app:cornerRadius="10dp"
+                tools:ignore="RtlSymmetry" />
+
+        </LinearLayout>
+
+
+
+
+    </LinearLayout>
+
+
+</RelativeLayout>

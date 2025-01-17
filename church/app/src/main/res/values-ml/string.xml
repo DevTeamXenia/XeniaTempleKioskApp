@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+
+    <string name="home">ഹോം</string>
+
+    //home_screen
+    <string name="kanika">ഇ-കാണിക്ക</string>
+    <string name="melkavu_devi">മേൽക്കാവിൽ\nഭഗവതി</string>
+    <string name="keezhkavu_devi">കീഴ്ക്കാവിൽ\nഭഗവതി</string>
+    <string name="ayyappa">അയ്യപ്പൻ\n</string>
+    <string name="shiva">ശിവൻ\n</string>
+    <string name="nagam">നാഗം\n</string>
+
+    donation_screen
+    <string name="fill_out_your_details">നിങ്ങളുടെ വിശദാംശങ്ങൾ പൂരിപ്പിക്കുക</string>
+    <string name="donation_amount">കാണിക്ക തുക</string>
+    <string name="_10_000">₹10,000</string>
+    <string name="pay">തുക അടയ്ക്കുക</string>
+    <string name="phone_number">ഫോൺ നമ്പർ</string>
+    <string name="_91">+91</string>
+    <string name="name">പേര്</string>
+    <string name="select_your_janma_nakshatra">നിങ്ങളുടെ ജന്മ നക്ഷത്രം തിരഞ്ഞെടുക്കുക</string>
+
+    //Popup_Screen
+    <string name="amount_10_000"> തുക ₹ 10,000 /-</string>
+    <string name="scan_this_code_to_pay">ഈ കോഡ് സ്കാൻ ചെയ്ത് പണം നൽകുക</string>
+    <string name="expire">QR അവസാനിക്കും :</string>
+
+    //payment_Screen
+    <string name="thank_you">നന്ദി!</string>
+    <string name="your_payment_was_successful">നിങ്ങളുടെ പണമടക്കം വിജയകരമായിരിക്കുന്നു! </string>
+    <string name="amount">തുക :</string>
+    <string name="transcation_id">ഇടപാട് ഐഡി :</string>
+    <string name="star">ജന്മ നക്ഷത്രം</string>
+    <string name="pay_name">പേര് :</string>
+    <string name="payment_failed">പെയ്മെന്റ് പരാജയപ്പെട്ടു</string>
+    <string name="it_seems_we_have_not_received_money">ഞങ്ങൾ പണം ലഭിച്ചിട്ടില്ല എന്നു തോന്നുന്നു</string>
+    <string name="do_you_want_to_do_close_this_page">നിങ്ങൾ ഈ പേജ് അടയ്ക്കാൻ ആഗ്രഹിക്കുന്നുണ്ടോ?</string>
+    <string name="cancel">റദ്ദാക്കുക</string>
+    <string name="yes">അതെ</string>
+    <string name="no">ഇല്ല</string>
+    <string name="no_internet_connection"> ഇന്റര്‍നെറ്റ് ബന്ധം ഇല്ല</string>
+    <string name="retry">വീണ്ടും ശ്രമിക്കുക</string>
+    <string name="you_have_been_inactive_for_a_while_please_touch_the_screen_to_continue">തുടരാൻ ആഗ്രഹിക്കുന്നുണ്ടോ?</string>
+    <string name="qr_expire">ക്യുആർ കാലാവധി അവസാനിക്കും :</string>
+
+    <string name="vazhipadu">നേർച്ച</string>
+    <string name="donation">സംഭാവന</string>
+    <string name="more_people">കൂടുതൽ ആളുകൾ</string>
+    <string name="pay_vazhipadu">തുക: ₹%1$s</string>
+
+    <string-array name="nakshatras">
+        <item>അശ്വതി</item>
+        <item>ഭരണി</item>
+        <item>കാർത്തിക</item>
+        <item>രോഹിണി</item>
+        <item>മകയിരം</item>
+        <item>തിരുവാതിര</item>
+        <item>പുണർതം</item>
+        <item>പൂയം</item>
+        <item>ആയില്യം</item>
+        <item>മകം</item>
+        <item>പൂരം</item>
+        <item>ഉത്രം</item>
+        <item>അത്തം</item>
+        <item>ചിത്തിര</item>
+        <item>ചോതി</item>
+        <item>വിശാഖം</item>
+        <item>അനിഴം</item>rror: resource color/
+        <item>തൃക്കേട്ട</item>
+        <item>മൂലം</item>
+        <item>പൂരാടം</item>
+        <item>ഉത്രാടം</item>
+        <item>തിരുവോണം</item>
+        <item>അവിട്ടം</item>
+        <item>ചതയം</item>
+        <item>പൂരുരുട്ടാതി</item>
+        <item>ഉത്രട്ടാതി</item>
+        <item>രേവതി</item>
+    </string-array>
+
+</resources>
