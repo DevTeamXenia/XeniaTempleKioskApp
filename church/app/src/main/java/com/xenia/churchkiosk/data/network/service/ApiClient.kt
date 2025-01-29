@@ -5,7 +5,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 object ApiClient {
 
-    private const val BASE_URL = "https://developer.xeniamobi.com/api/"
+    private const val BASE_URL = "https://temple.xeniapos.com/api/"
 
     private val retrofit: Retrofit by lazy {
         Retrofit.Builder()
